@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moulin des Moines — Bon de Commande Épicerie Bio 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --terra:    #C87864;
+  --terra-d:  #A05A48;
+  --terra-l:  #F2D4CC;
+  --brown:    #78503C;
+  --brown-l:  #9E6A52;
+  --cream:    #FDF5EE;
+  --cream-d:  #F0E0D0;
+  --gold:     #D2B469;
+  --gold-l:   #F5E8C4;
+  --green:    #1A5C2E;
+  --green-l:  #EAF4EC;
+  --text:     #2C1A10;
+  --muted:    #8A6A5A;
+  --white:    #FFFFFF;
+  --shadow:   0 4px 24px rgba(120,80,60,0.10);
+  --shadow-lg:0 8px 40px rgba(120,80,60,0.16);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;}
+
+/* ══ HEADER ═════════════════════════════════════════════════ */
+header{background:var(--brown);position:relative;overflow:hidden;}
+header::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(255,255,255,0.02) 30px,rgba(255,255,255,0.02) 60px);
+}
+.header-inner{
+  max-width:1100px;margin:0 auto;padding:32px 24px 24px;
+  position:relative;z-index:1;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.brand{display:flex;flex-direction:column;gap:6px;}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--white);line-height:1.1;letter-spacing:.01em;}
+.brand-sub{font-size:.75rem;font-weight:300;color:rgba(255,255,255,.65);letter-spacing:.12em;text-transform:uppercase;}
+.header-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.promo-pill{
+  background:var(--terra);color:var(--white);padding:10px 22px;border-radius:50px;
+  font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;
+  display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,.25);white-space:nowrap;
+}
+.promo-pill .pct{font-size:1.5rem;color:var(--gold);}
+.gold-line{height:3px;background:linear-gradient(90deg,var(--terra),var(--gold),var(--terra-l),var(--gold));}
+
+/* ══ PALIERS ════════════════════════════════════════════════ */
+.paliers-section{
+  background:var(--cream);border-bottom:2px solid var(--cream-d);
+  padding:16px 24px;
+}
+.paliers-inner{max-width:1100px;margin:0 auto;}
+.paliers-label{
+  font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;
+  color:var(--brown);margin-bottom:10px;display:flex;align-items:center;gap:8px;
+}
+.paliers-label::before{content:'';width:4px;height:16px;background:var(--gold);border-radius:3px;}
+.paliers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px;}
+.palier{
+  border-radius:10px;padding:12px;border:2px solid transparent;
+  position:relative;overflow:hidden;transition:all .3s;
+}
+.pal-0{background:#f5f0eb;border-color:#d8c8b8;}
+.pal-1{background:#fffbf0;border-color:#d2b469;}
+.pal-2{background:#f0f6ff;border-color:#6fa8d2;}
+.pal-3{background:var(--green-l);border-color:#1a5c2e;}
+.palier.active{transform:translateY(-2px);}
+.pal-0.active{box-shadow:0 6px 18px rgba(0,0,0,.1);}
+.pal-1.active{box-shadow:0 6px 18px rgba(210,180,105,.3);}
+.pal-2.active{box-shadow:0 6px 18px rgba(111,168,210,.25);}
+.pal-3.active{box-shadow:0 6px 18px rgba(26,92,46,.2);}
+.pal-badge{
+  position:absolute;top:6px;right:6px;font-size:.55rem;font-weight:700;
+  padding:2px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;
+  opacity:0;transition:opacity .3s;
+}
+.palier.active .pal-badge{opacity:1;}
+.pal-1 .pal-badge{background:var(--gold);color:var(--brown);}
+.pal-2 .pal-badge{background:#2980b9;color:#fff;}
+.pal-3 .pal-badge{background:var(--green);color:#fff;}
+.pal-0 .pal-badge{background:var(--muted);color:#fff;}
+.pal-icon{font-size:1.2rem;margin-bottom:4px;}
+.pal-pct{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;line-height:1;margin-bottom:2px;}
+.pal-0 .pal-pct{color:var(--muted);}
+.pal-1 .pal-pct{color:#b8941a;}
+.pal-2 .pal-pct{color:#2980b9;}
+.pal-3 .pal-pct{color:var(--green);}
+.pal-name{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.pal-0 .pal-name{color:var(--muted);}
+.pal-1 .pal-name{color:#9a7010;}
+.pal-2 .pal-name{color:#1a608a;}
+.pal-3 .pal-name{color:var(--green);}
+.pal-seuil{font-size:.7rem;font-weight:400;}
+.pal-0 .pal-seuil{color:var(--muted);}
+.pal-1 .pal-seuil{color:#9a7010;}
+.pal-2 .pal-seuil{color:#1a608a;}
+.pal-3 .pal-seuil{color:var(--green);}
+.progress-wrap{background:var(--cream-d);border-radius:20px;height:6px;margin:6px 0 3px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--gold),var(--green));transition:width .5s cubic-bezier(.34,1.56,.64,1);width:0%;}
+.progress-txt{font-size:.68rem;color:var(--muted);text-align:right;}
+
+/* ══ INFO BAR ═══════════════════════════════════════════════ */
+.info-bar{
+  background:var(--green-l);border-bottom:2px solid var(--green);
+  padding:10px 24px;display:flex;align-items:center;justify-content:center;
+  gap:32px;flex-wrap:wrap;font-size:.82rem;color:var(--green);font-weight:500;
+}
+.info-bar span{display:flex;align-items:center;gap:6px;}
+
+/* ══ STICKY ═════════════════════════════════════════════════ */
+.sticky-total{
+  position:sticky;top:0;z-index:100;background:var(--brown);color:var(--white);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;box-shadow:0 4px 20px rgba(0,0,0,.2);
+  border-radius:0 0 12px 12px;
+}
+.sticky-total .totals{display:flex;gap:28px;align-items:center;flex-wrap:wrap;}
+.t-item{display:flex;flex-direction:column;gap:1px;}
+.t-label{font-size:.68rem;opacity:.65;text-transform:uppercase;letter-spacing:.08em;}
+.t-value{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--gold);}
+.t-value.warn{color:#F4A261;}
+.t-value.ok{color:#6FCF97;}
+.remise-tag{
+  font-size:.78rem;padding:5px 14px;border-radius:20px;font-weight:600;
+  background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);
+  border:1px solid rgba(255,255,255,.15);transition:all .3s;white-space:nowrap;
+}
+.remise-tag.p1{background:rgba(210,180,105,.25);color:var(--gold-l);border-color:rgba(210,180,105,.4);}
+.remise-tag.p2{background:rgba(41,128,185,.25);color:#7ec8f5;border-color:rgba(41,128,185,.4);}
+.remise-tag.p3{background:rgba(26,92,46,.3);color:#6FCF97;border-color:rgba(26,92,46,.5);}
+
+/* ══ MAIN ════════════════════════════════════════════════════ */
+main{max-width:1100px;margin:0 auto;padding:28px 24px 80px;}
+.section-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;
+  color:var(--brown);margin-bottom:14px;padding-bottom:8px;
+  border-bottom:2px solid var(--terra-l);display:flex;align-items:center;gap:10px;
+}
+.section-title::before{content:'';width:5px;height:20px;background:var(--terra);border-radius:3px;flex-shrink:0;}
+
+/* ══ GAMME BLOCK ════════════════════════════════════════════ */
+.gamme-block{
+  background:var(--white);border-radius:14px;overflow:hidden;margin-bottom:20px;
+  box-shadow:var(--shadow);border:1px solid var(--cream-d);animation:slideUp .5s ease both;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.gamme-block:nth-child(1){animation-delay:.05s}
+.gamme-block:nth-child(2){animation-delay:.10s}
+.gamme-block:nth-child(3){animation-delay:.15s}
+.gamme-block:nth-child(4){animation-delay:.20s}
+.gamme-block:nth-child(5){animation-delay:.25s}
+.gamme-header{
+  background:var(--brown);padding:12px 18px;
+  display:flex;align-items:center;gap:10px;
+  font-weight:600;font-size:.88rem;color:var(--white);letter-spacing:.02em;
+}
+.gamme-count{
+  margin-left:auto;font-size:.7rem;background:rgba(255,255,255,.15);
+  padding:2px 9px;border-radius:20px;font-weight:400;
+}
+
+/* ══ TABLE EN-TÊTE ══════════════════════════════════════════ */
+.table-head{
+  display:grid;
+  grid-template-columns: 1fr 100px 110px 65px 80px 85px 120px 90px;
+  padding:8px 16px;background:var(--cream);border-bottom:1px solid var(--cream-d);
+  font-size:.67rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;gap:6px;
+}
+.tc{text-align:center;}.tr{text-align:right;}
+
+/* ══ PRODUCT ROW ════════════════════════════════════════════ */
+.product-row{
+  display:grid;
+  grid-template-columns: 1fr 100px 110px 65px 80px 85px 120px 90px;
+  align-items:center;padding:9px 16px;gap:6px;
+  border-bottom:1px solid var(--cream-d);transition:background .15s;
+}
+.product-row:last-child{border-bottom:none;}
+.product-row:hover{background:#FEFAF6;}
+.product-row:nth-child(even){background:#FAF7F3;}
+.product-row:nth-child(even):hover{background:#FEFAF6;}
+
+.prod-name{font-size:.83rem;font-weight:500;color:var(--text);line-height:1.3;}
+.prod-ean{font-size:.65rem;color:var(--muted);font-family:monospace;letter-spacing:.02em;}
+.prod-ref{font-size:.7rem;color:var(--muted);font-style:italic;}
+.prod-format{font-size:.78rem;color:var(--muted);text-align:center;}
+.prod-prix-ht{font-size:.8rem;color:var(--muted);text-align:right;text-decoration:line-through;text-decoration-color:var(--terra-l);}
+.prod-prix-promo{font-size:.86rem;font-weight:700;text-align:right;color:var(--muted);transition:color .3s;}
+.prod-unites{font-size:.75rem;font-weight:600;color:var(--muted);text-align:right;transition:color .3s;min-width:0;}
+
+/* Saisie colis */
+.colis-input-wrap{
+  display:flex;align-items:center;border:1.5px solid var(--gold);border-radius:7px;
+  overflow:hidden;background:var(--white);box-shadow:0 1px 5px rgba(210,180,105,.15);
+}
+.colis-btn{
+  width:24px;height:30px;background:var(--gold-l);border:none;cursor:pointer;
+  font-size:.95rem;font-weight:700;color:var(--brown);
+  display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;
+}
+.colis-btn:hover{background:var(--gold);}
+.colis-input{
+  width:100%;height:30px;border:none;text-align:center;
+  font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:700;color:var(--brown);
+  background:transparent;outline:none;min-width:0;
+}
+.colis-input::-webkit-inner-spin-button,.colis-input::-webkit-outer-spin-button{-webkit-appearance:none;}
+.colis-input[type=number]{-moz-appearance:textfield;}
+
+/* Tag VRAC */
+.tag-vrac{
+  font-size:.6rem;font-weight:700;background:var(--terra-l);color:var(--terra-d);
+  padding:1px 6px;border-radius:4px;margin-left:5px;vertical-align:middle;
+}
+.tag-sg{
+  font-size:.6rem;font-weight:700;background:#e8f5ee;color:var(--green);
+  padding:1px 6px;border-radius:4px;margin-left:5px;vertical-align:middle;
+}
+.tag-lac{
+  font-size:.6rem;font-weight:700;background:#e8f0ff;color:#5046a0;
+  padding:1px 6px;border-radius:4px;margin-left:5px;vertical-align:middle;
+}
+
+/* ══ RÉCAP ══════════════════════════════════════════════════ */
+.recap-bar{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;
+}
+.recap-item{
+  background:var(--brown);border-radius:12px;padding:16px 18px;text-align:center;
+  box-shadow:0 4px 16px rgba(120,80,60,.12);
+}
+.recap-item.orange{background:var(--terra);}
+.recap-item.brown2{background:var(--brown-l);}
+.recap-label{font-size:.66rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
+.recap-value{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--gold-l);line-height:1;}
+.recap-value.small{font-size:1.2rem;}
+.recap-value.warn{color:#F4A261;}
+.recap-value.ok{color:#6FCF97;}
+.recap-sub{font-size:.63rem;color:rgba(255,255,255,.35);margin-top:3px;}
+
+/* ══ FORMULAIRE ═════════════════════════════════════════════ */
+.client-card{
+  background:var(--white);border-radius:14px;padding:24px;
+  border:1px solid var(--cream-d);box-shadow:var(--shadow);margin-bottom:22px;
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+.field label{display:block;font-size:.7rem;font-weight:600;color:var(--brown-l);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
+.field input{
+  width:100%;padding:10px 13px;border:1.5px solid var(--cream-d);border-radius:8px;
+  font-family:'Outfit',sans-serif;font-size:.88rem;color:var(--text);
+  background:var(--cream);outline:none;transition:all .2s;
+}
+.field input:focus{border-color:var(--terra);box-shadow:0 0 0 3px rgba(200,120,100,.13);background:var(--white);}
+.req{color:var(--terra);}
+
+/* ══ BOUTONS ════════════════════════════════════════════════ */
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
+.btn{
+  padding:14px 20px;border:none;border-radius:10px;
+  font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:9px;transition:all .2s;
+}
+.btn-pdf{background:var(--brown);color:var(--white);box-shadow:0 4px 14px rgba(120,80,60,.25);}
+.btn-pdf:hover{background:var(--brown-l);transform:translateY(-1px);}
+.btn-send{background:var(--terra);color:var(--white);box-shadow:0 4px 14px rgba(200,120,100,.3);}
+.btn-send:hover{background:var(--terra-d);transform:translateY(-1px);}
+.btn:active{transform:translateY(0)!important;}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none!important;}
+
+/* ══ SUCCESS ════════════════════════════════════════════════ */
+#success-msg{
+  display:none;background:var(--green-l);border:2px solid var(--green);
+  border-radius:14px;padding:24px 28px;text-align:center;animation:slideUp .4s ease;
+}
+#success-msg h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--green);margin-bottom:8px;}
+#success-msg p{font-size:.88rem;color:var(--green);}
+#order-recap{
+  margin-top:16px;text-align:left;background:var(--white);border-radius:8px;padding:14px;
+  font-size:.72rem;color:var(--text);white-space:pre-wrap;font-family:'Courier New',monospace;
+  border:1px solid var(--cream-d);max-height:260px;overflow-y:auto;
+}
+
+/* ══ FOOTER ═════════════════════════════════════════════════ */
+footer{
+  text-align:center;padding:14px 24px;font-size:.76rem;color:var(--muted);
+  border-top:1px solid var(--cream-d);background:var(--white);
+}
+
+/* ══ RESPONSIVE ═════════════════════════════════════════════ */
+@media(max-width:760px){
+  .paliers-grid{grid-template-columns:1fr 1fr;}
+  .table-head{display:none;}
+  .product-row{grid-template-columns:1fr auto;grid-template-rows:auto auto auto;}
+  .prod-ean,.prod-prix-ht,.prod-format{display:none;}
+  .recap-bar{grid-template-columns:1fr 1fr;}
+  .btn-row{grid-template-columns:1fr;}
+  .form-grid{grid-template-columns:1fr;}
+  .header-inner{flex-direction:column;}
+  .brand-name{font-size:1.7rem;}
+}
+@media print{
+  .sticky-total,.btn-row,#success-msg,.paliers-section{display:none!important;}
+  body{background:#fff;}main{padding:0;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-name">🌾 Moulin des Moines</div>
+      <div class="brand-sub">Créateur &amp; Producteur Bio · Alsace depuis 1972</div>
+    </div>
+    <div class="header-right">
+      <div class="promo-pill">
+        <span>Remise progressive</span>
+        <span class="pct" id="badge-pct">dès 10 colis</span>
+      </div>
+    </div>
+  </div>
+  <div class="gold-line"></div>
+</header>
+
+<!-- ══ PALIERS ══════════════════════════════════════════════ -->
+<div class="paliers-section">
+  <div class="paliers-inner">
+    <div class="paliers-label">🎯 Paliers de remise — Pâtes &amp; Spécialités Bio 2026</div>
+    <div class="paliers-grid">
+      <div class="palier pal-0 active" id="pal-0">
+        <div class="pal-badge">En cours</div>
+        <div class="pal-icon">🛒</div>
+        <div class="pal-pct">0%</div>
+        <div class="pal-name">Aucune remise</div>
+        <div class="pal-seuil">Moins de 10 colis</div>
+      </div>
+      <div class="palier pal-1" id="pal-1">
+        <div class="pal-badge">✓ Actif</div>
+        <div class="pal-icon">⭐</div>
+        <div class="pal-pct">−7%</div>
+        <div class="pal-name">Palier Bronze</div>
+        <div class="pal-seuil">Dès 10 colis</div>
+      </div>
+      <div class="palier pal-2" id="pal-2">
+        <div class="pal-badge">✓ Actif</div>
+        <div class="pal-icon">💎</div>
+        <div class="pal-pct">−10%</div>
+        <div class="pal-name">Palier Argent</div>
+        <div class="pal-seuil">Dès 15 colis</div>
+      </div>
+      <div class="palier pal-3" id="pal-3">
+        <div class="pal-badge">✓ Actif</div>
+        <div class="pal-icon">🏆</div>
+        <div class="pal-pct">−12%</div>
+        <div class="pal-name">Palier Or</div>
+        <div class="pal-seuil">Dès 20 colis</div>
+      </div>
+    </div>
+    <div class="progress-wrap"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-txt" id="progress-txt">Ajoutez 10 colis pour débloquer −7%</div>
+  </div>
+</div>
+
+<!-- ══ INFO BAR ═════════════════════════════════════════════ -->
+<div class="info-bar">
+  <span>📅 Catalogue 2026</span>
+  <span>📦 Remise dès 10 colis</span>
+  <span>🌿 Certifiés Agriculture Biologique AB</span>
+  <span>🏭 Fabriqués en Alsace</span>
+</div>
+
+<!-- ══ STICKY TOTAL ═════════════════════════════════════════ -->
+<div class="sticky-total">
+  <div class="totals">
+    <div class="t-item">
+      <div class="t-label">Nb Colis</div>
+      <div class="t-value" id="st-colis">0</div>
+    </div>
+    <div class="t-item">
+      <div class="t-label">Nb Unités</div>
+      <div class="t-value" id="st-unites">0</div>
+    </div>
+    <div class="t-item">
+      <div class="t-label">Total HT</div>
+      <div class="t-value" id="st-total">0,00 €</div>
+    </div>
+    <div class="t-item">
+      <div class="t-label">TVA 5,5%</div>
+      <div class="t-value" id="st-tva">0,00 €</div>
+    </div>
+    <div class="t-item">
+      <div class="t-label">Total TTC</div>
+      <div class="t-value" id="st-ttc">0,00 €</div>
+    </div>
+  </div>
+  <div class="remise-tag" id="remise-tag">🏷️ Aucune remise active</div>
+</div>
+
+<!-- ══ MAIN ══════════════════════════════════════════════════ -->
+<main>
+  <div class="section-title" style="margin-top:4px">Épicerie Bio — Catalogue 2026</div>
+
+  <!-- ── 5.1 PÂTES À L'ÉPEAUTRE ───────────────────────────── -->
+  <div class="gamme-block">
+    <div class="gamme-header">🌾 5.1 — Pâtes à l'Épeautre <span class="gamme-count">4 références</span></div>
+    <div class="table-head">
+      <div>Désignation</div>
+      <div>Code EAN</div>
+      <div>Réf. article</div>
+      <div class="tc">Format</div>
+      <div class="tr">PCB</div>
+      <div class="tr">PU HT</div>
+      <div class="tc">Nb Colis</div>
+      <div class="tr">Total HT</div>
+    </div>
+
+    <div class="product-row" data-price="2.75" data-pcb="12">
+      <div class="prod-name">Penne d'épeautre* bio</div>
+      <div class="prod-ean">3547430030046</div>
+      <div class="prod-ref">PENEPE</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">2,75 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="26.00" data-pcb="1">
+      <div class="prod-name">Penne d'épeautre* bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430002516</div>
+      <div class="prod-ref">PENEPEVRAC</div>
+      <div class="prod-format">5 kg</div>
+      <div class="prod-prix-ht tr">26,00 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.75" data-pcb="12">
+      <div class="prod-name">Spaghettines d'épeautre* demi-complètes bio</div>
+      <div class="prod-ean">3547430021951</div>
+      <div class="prod-ref">SPAEPE500</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">2,75 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="26.90" data-pcb="1">
+      <div class="prod-name">Spaghettines d'épeautre* demi-complètes bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430003636</div>
+      <div class="prod-ref">SPAEPEVRAC</div>
+      <div class="prod-format">5 kg</div>
+      <div class="prod-prix-ht tr">26,90 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+  </div>
+
+  <!-- ── 5.2 PÂTES AU PETIT ÉPEAUTRE ──────────────────────── -->
+  <div class="gamme-block">
+    <div class="gamme-header">🌱 5.2 — Pâtes au Petit Épeautre <span class="gamme-count">1 référence</span></div>
+    <div class="table-head">
+      <div>Désignation</div>
+      <div>Code EAN</div>
+      <div>Réf. article</div>
+      <div class="tc">Format</div>
+      <div class="tr">PCB</div>
+      <div class="tr">PU HT</div>
+      <div class="tc">Nb Colis</div>
+      <div class="tr">Total HT</div>
+    </div>
+
+    <div class="product-row" data-price="2.10" data-pcb="10">
+      <div class="prod-name">Spaghettines de petit épeautre complètes bio</div>
+      <div class="prod-ean">3547430034365</div>
+      <div class="prod-ref">SPAPET</div>
+      <div class="prod-format">250 g</div>
+      <div class="prod-prix-ht tr">2,10 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+  </div>
+
+  <!-- ── 5.3 PÂTES AU BLÉ ──────────────────────────────────── -->
+  <div class="gamme-block">
+    <div class="gamme-header">🍝 5.3 — Pâtes au Blé <span class="gamme-count">10 références</span></div>
+    <div class="table-head">
+      <div>Désignation</div>
+      <div>Code EAN</div>
+      <div>Réf. article</div>
+      <div class="tc">Format</div>
+      <div class="tr">PCB</div>
+      <div class="tr">PU HT</div>
+      <div class="tc">Nb Colis</div>
+      <div class="tr">Total HT</div>
+    </div>
+
+    <div class="product-row" data-price="13.50" data-pcb="1">
+      <div class="prod-name">Penne bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430009409</div>
+      <div class="prod-ref">PENBLCVRAC</div>
+      <div class="prod-format">5 kg</div>
+      <div class="prod-prix-ht tr">13,50 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.75" data-pcb="12">
+      <div class="prod-name">Penne tricolore bio</div>
+      <div class="prod-ean">3547430019583</div>
+      <div class="prod-ref">PENTRI</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">1,75 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="16.00" data-pcb="1">
+      <div class="prod-name">Penne tricolore bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430004299</div>
+      <div class="prod-ref">PENTRI5KG</div>
+      <div class="prod-format">5 kg</div>
+      <div class="prod-prix-ht tr">16,00 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.45" data-pcb="12">
+      <div class="prod-name">Spaghetti bio</div>
+      <div class="prod-ean">3547430019699</div>
+      <div class="prod-ref">SPABLC</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">1,45 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="14.30" data-pcb="1">
+      <div class="prod-name">Spaghetti bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430004268</div>
+      <div class="prod-ref">SPABLC5</div>
+      <div class="prod-format">5 kg</div>
+      <div class="prod-prix-ht tr">14,30 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.75" data-pcb="12">
+      <div class="prod-name">Spaghetti tricolores bio</div>
+      <div class="prod-ean">3547430019811</div>
+      <div class="prod-ref">SPATRI</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">1,75 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="16.70" data-pcb="1">
+      <div class="prod-name">Spaghetti tricolores bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430001919</div>
+      <div class="prod-ref">SPATRI05</div>
+      <div class="prod-format">5 kg</div>
+      <div class="prod-prix-ht tr">16,70 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.45" data-pcb="12">
+      <div class="prod-name">Spaghetti complets bio</div>
+      <div class="prod-ean">3547430019613</div>
+      <div class="prod-ref">SPACPT</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">1,45 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="14.30" data-pcb="1">
+      <div class="prod-name">Spaghetti complets bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430002257</div>
+      <div class="prod-ref">SPACOMVRAC</div>
+      <div class="prod-format">5 kg</div>
+      <div class="prod-prix-ht tr">14,30 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.45" data-pcb="12">
+      <div class="prod-name">Spaghetti demi-complets bio</div>
+      <div class="prod-ean">3547430019668</div>
+      <div class="prod-ref">SPADCP</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">1,45 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="14.00" data-pcb="1">
+      <div class="prod-name">Spaghetti demi-complets bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430009157</div>
+      <div class="prod-ref">SPADEMVRAC</div>
+      <div class="prod-format">5 kg</div>
+      <div class="prod-prix-ht tr">14,00 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+  </div>
+
+  <!-- ── 5.4 PÂTES AU KAMUT® ───────────────────────────────── -->
+  <div class="gamme-block">
+    <div class="gamme-header">🌾 5.4 — Pâtes au Kamut® <span class="gamme-count">2 références</span></div>
+    <div class="table-head">
+      <div>Désignation</div>
+      <div>Code EAN</div>
+      <div>Réf. article</div>
+      <div class="tc">Format</div>
+      <div class="tr">PCB</div>
+      <div class="tr">PU HT</div>
+      <div class="tc">Nb Colis</div>
+      <div class="tr">Total HT</div>
+    </div>
+
+    <div class="product-row" data-price="3.20" data-pcb="12">
+      <div class="prod-name">Spaghetti de blé Khorasan KAMUT® bio</div>
+      <div class="prod-ean">3547439030022</div>
+      <div class="prod-ref">SPAKAM500</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">3,20 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="31.50" data-pcb="1">
+      <div class="prod-name">Spaghetti de blé Khorasan KAMUT® bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547436001926</div>
+      <div class="prod-ref">SPAKAM05</div>
+      <div class="prod-format">5 kg</div>
+      <div class="prod-prix-ht tr">31,50 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+  </div>
+
+  <!-- ── 5.5 PÂTES SANS GLUTEN ────────────────────────────── -->
+  <div class="gamme-block">
+    <div class="gamme-header">🌽 5.5 — Pâtes au Riz, Maïs — Sans Gluten <span class="gamme-count">5 références</span></div>
+    <div class="table-head">
+      <div>Désignation</div>
+      <div>Code EAN</div>
+      <div>Réf. article</div>
+      <div class="tc">Format</div>
+      <div class="tr">PCB</div>
+      <div class="tr">PU HT</div>
+      <div class="tc">Nb Colis</div>
+      <div class="tr">Total HT</div>
+    </div>
+
+    <div class="product-row" data-price="2.75" data-pcb="8">
+      <div class="prod-name">Penne au riz sans gluten bio <span class="tag-sg">SANS GLUTEN</span></div>
+      <div class="prod-ean">3547430000406</div>
+      <div class="prod-ref">PENRIZ</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">2,75 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.75" data-pcb="8">
+      <div class="prod-name">Pennes de maïs sans gluten bio <span class="tag-sg">SANS GLUTEN</span></div>
+      <div class="prod-ean">3547430388832</div>
+      <div class="prod-ref">PENMAI</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">2,75 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.75" data-pcb="16">
+      <div class="prod-name">Spaghetti de maïs sans gluten bio <span class="tag-sg">SANS GLUTEN</span></div>
+      <div class="prod-ean">3547430388887</div>
+      <div class="prod-ref">SPAMAI</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">2,75 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.55" data-pcb="8">
+      <div class="prod-name">Spirales au riz bio sans gluten <span class="tag-sg">SANS GLUTEN</span></div>
+      <div class="prod-ean">3547430000413</div>
+      <div class="prod-ref">SPIRIZ</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">2,55 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.55" data-pcb="8">
+      <div class="prod-name">Torsades de maïs sans gluten bio <span class="tag-sg">SANS GLUTEN</span></div>
+      <div class="prod-ean">3547430388849</div>
+      <div class="prod-ref">TORMAI</div>
+      <div class="prod-format">500 g</div>
+      <div class="prod-prix-ht tr">2,55 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+  </div>
+
+  <!-- ── 3.6 HUILES & VINAIGRES ──────────────────────────── -->
+  <div class="gamme-block">
+    <div class="gamme-header">🫒 3.6 — Huiles &amp; Vinaigres <span class="gamme-count">17 références</span></div>
+    <div class="table-head">
+      <div>Désignation</div>
+      <div>Code EAN</div>
+      <div>Réf. article</div>
+      <div class="tc">Format</div>
+      <div class="tr">PCB</div>
+      <div class="tr">PU HT</div>
+      <div class="tc">Nb Colis</div>
+      <div class="tr">Total HT</div>
+    </div>
+
+    <div class="product-row" data-price="3.88" data-pcb="6">
+      <div class="prod-name">Huile de colza vierge extra bio</div>
+      <div class="prod-ean">3547439950283</div>
+      <div class="prod-ref">HUICOL</div>
+      <div class="prod-format">50 cl</div>
+      <div class="prod-prix-ht tr">3,88 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="32.90" data-pcb="1">
+      <div class="prod-name">Huile de colza vierge extra bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430005418</div>
+      <div class="prod-ref">HUICOL05</div>
+      <div class="prod-format">5 l</div>
+      <div class="prod-prix-ht tr">32,90 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="9.28" data-pcb="6">
+      <div class="prod-name">Huile d'olive vierge extra bio</div>
+      <div class="prod-ean">3547439950238</div>
+      <div class="prod-ref">HUIOLI</div>
+      <div class="prod-format">50 cl</div>
+      <div class="prod-prix-ht tr">9,28 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="77.04" data-pcb="1">
+      <div class="prod-name">Huile d'olive vierge extra bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430002370</div>
+      <div class="prod-ref">HUIOLI05</div>
+      <div class="prod-format">5 l</div>
+      <div class="prod-prix-ht tr">77,04 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="4.92" data-pcb="6">
+      <div class="prod-name">Huile de pépins de raisin</div>
+      <div class="prod-ean">3547439950276</div>
+      <div class="prod-ref">HUIRAI</div>
+      <div class="prod-format">50 cl</div>
+      <div class="prod-prix-ht tr">4,92 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="7.26" data-pcb="6">
+      <div class="prod-name">Huile de sésame bio</div>
+      <div class="prod-ean">3547439950269</div>
+      <div class="prod-ref">HUISES</div>
+      <div class="prod-format">50 cl</div>
+      <div class="prod-prix-ht tr">7,26 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="3.70" data-pcb="6">
+      <div class="prod-name">Huile de tournesol vierge bio</div>
+      <div class="prod-ean">3547439950221</div>
+      <div class="prod-ref">HUITOU</div>
+      <div class="prod-format">50 cl</div>
+      <div class="prod-prix-ht tr">3,70 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="23.80" data-pcb="1">
+      <div class="prod-name">Huile de tournesol vierge bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430005425</div>
+      <div class="prod-ref">HUITOU05</div>
+      <div class="prod-format">5 l</div>
+      <div class="prod-prix-ht tr">23,80 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="24.40" data-pcb="1">
+      <div class="prod-name">Huile de tournesol désodorisé bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430013499</div>
+      <div class="prod-ref">HUITOUDES05</div>
+      <div class="prod-format">5 l</div>
+      <div class="prod-prix-ht tr">24,40 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.30" data-pcb="6">
+      <div class="prod-name">Vinaigre de cidre doux bio</div>
+      <div class="prod-ean">3547439950214</div>
+      <div class="prod-ref">VINCID50</div>
+      <div class="prod-format">50 cl</div>
+      <div class="prod-prix-ht tr">2,30 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.72" data-pcb="6">
+      <div class="prod-name">Vinaigre de cidre doux bio</div>
+      <div class="prod-ean">3547439950016</div>
+      <div class="prod-ref">VINCID</div>
+      <div class="prod-format">75 cl</div>
+      <div class="prod-prix-ht tr">2,72 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="54.57" data-pcb="1">
+      <div class="prod-name">Vinaigre de cidre doux bio <span class="tag-vrac">VRAC</span></div>
+      <div class="prod-ean">3547430005074</div>
+      <div class="prod-ref">VINCID20</div>
+      <div class="prod-format">20 l</div>
+      <div class="prod-prix-ht tr">54,57 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="4.02" data-pcb="6">
+      <div class="prod-name">Vinaigre de vin blanc bio</div>
+      <div class="prod-ean">3547439950511</div>
+      <div class="prod-ref">VINBLCECH</div>
+      <div class="prod-format">50 cl</div>
+      <div class="prod-prix-ht tr">4,02 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.95" data-pcb="6">
+      <div class="prod-name">Vinaigre de vin rouge bio</div>
+      <div class="prod-ean">3547439950115</div>
+      <div class="prod-ref">VINROU</div>
+      <div class="prod-format">50 cl</div>
+      <div class="prod-prix-ht tr">2,95 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="10.99" data-pcb="12">
+      <div class="prod-name">Vinaigre des 4 voleurs bio</div>
+      <div class="prod-ean">3760048990905</div>
+      <div class="prod-ref">VIN4VOL50</div>
+      <div class="prod-format">50 cl</div>
+      <div class="prod-prix-ht tr">10,99 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="7.14" data-pcb="12">
+      <div class="prod-name">Elixir de vinaigre de cidre aux 20 extraits végétaux Uberti bio</div>
+      <div class="prod-ean">3760048990394</div>
+      <div class="prod-ref">VINCIDUBE75</div>
+      <div class="prod-format">75 cl</div>
+      <div class="prod-prix-ht tr">7,14 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="7.30" data-pcb="12">
+      <div class="prod-name">Elixir de vinaigre de cidre aux 50 extraits végétaux Uberti bio</div>
+      <div class="prod-ean">3760048993456</div>
+      <div class="prod-ref">VIN50EXTVEGF</div>
+      <div class="prod-format">75 cl</div>
+      <div class="prod-prix-ht tr">7,30 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="7.30" data-pcb="15">
+      <div class="prod-name">Elixir de vinaigre de cidre aux 50 extraits végétaux Uberti bio</div>
+      <div class="prod-ean">3760048990011</div>
+      <div class="prod-ref">VINCIDPLAUBER</div>
+      <div class="prod-format">1 l</div>
+      <div class="prod-prix-ht tr">7,30 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="5.51" data-pcb="12">
+      <div class="prod-name">Elixir de vinaigre de cidre détox à la spiruline et à la menthe Uberti bio</div>
+      <div class="prod-ean">3760048994576</div>
+      <div class="prod-ref">VINSPIMEN</div>
+      <div class="prod-format">50 cl</div>
+      <div class="prod-prix-ht tr">5,51 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+  </div>
+
+  <!-- ── 3.7 BOCAUX & LACTOFERMENTÉS ──────────────────────── -->
+  <div class="gamme-block">
+    <div class="gamme-header">🥫 3.7 — Bocaux &amp; Lactofermentés <span class="gamme-count">17 références</span></div>
+    <div class="table-head">
+      <div>Désignation</div>
+      <div>Code EAN</div>
+      <div>Réf. article</div>
+      <div class="tc">Format</div>
+      <div class="tr">PCB</div>
+      <div class="tr">PU HT</div>
+      <div class="tc">Nb Colis</div>
+      <div class="tr">Total HT</div>
+    </div>
+
+    <div class="product-row" data-price="2.31" data-pcb="12">
+      <div class="prod-name">Artichauts au naturel bio</div>
+      <div class="prod-ean">3547436003647</div>
+      <div class="prod-ref">ARTBOC</div>
+      <div class="prod-format">320 g</div>
+      <div class="prod-prix-ht tr">2,31 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.87" data-pcb="12">
+      <div class="prod-name">Betteraves en cube bio</div>
+      <div class="prod-ean">3547436003470</div>
+      <div class="prod-ref">BETBOC</div>
+      <div class="prod-format">345 g</div>
+      <div class="prod-prix-ht tr">1,87 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.93" data-pcb="12">
+      <div class="prod-name">Carottes rondelles bio</div>
+      <div class="prod-ean">3547436003456</div>
+      <div class="prod-ref">CARRONBOC</div>
+      <div class="prod-format">345 g</div>
+      <div class="prod-prix-ht tr">1,93 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.66" data-pcb="12">
+      <div class="prod-name">Haricots blancs au naturel bio</div>
+      <div class="prod-ean">3547436003616</div>
+      <div class="prod-ref">HARBLABOC</div>
+      <div class="prod-format">375 g</div>
+      <div class="prod-prix-ht tr">1,66 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.88" data-pcb="12">
+      <div class="prod-name">Macédoine de légumes bio</div>
+      <div class="prod-ean">3547436003623</div>
+      <div class="prod-ref">MACLEGBOC</div>
+      <div class="prod-format">375 g</div>
+      <div class="prod-prix-ht tr">1,88 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.88" data-pcb="12">
+      <div class="prod-name">Maïs doux au naturel bio</div>
+      <div class="prod-ean">3547436003463</div>
+      <div class="prod-ref">MAIBOC</div>
+      <div class="prod-format">369 g</div>
+      <div class="prod-prix-ht tr">1,88 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.05" data-pcb="12">
+      <div class="prod-name">Olives vertes marinées aux herbes bio</div>
+      <div class="prod-ean">3547436003524</div>
+      <div class="prod-ref">OLIVERMAR</div>
+      <div class="prod-format">345 g</div>
+      <div class="prod-prix-ht tr">2,05 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.61" data-pcb="12">
+      <div class="prod-name">Pois chiches au naturel bio</div>
+      <div class="prod-ean">3547436003609</div>
+      <div class="prod-ref">POICHIBOC</div>
+      <div class="prod-format">375 g</div>
+      <div class="prod-prix-ht tr">1,61 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.89" data-pcb="12">
+      <div class="prod-name">Ratatouille «Pisto» bio</div>
+      <div class="prod-ean">3547436003500</div>
+      <div class="prod-ref">RATESP</div>
+      <div class="prod-format">345 g</div>
+      <div class="prod-prix-ht tr">1,89 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.88" data-pcb="12">
+      <div class="prod-name">Sauce tomate à l'huile d'olive bio</div>
+      <div class="prod-ean">3547436003487</div>
+      <div class="prod-ref">SAUTOM</div>
+      <div class="prod-format">345 g</div>
+      <div class="prod-prix-ht tr">1,88 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="3.36" data-pcb="6">
+      <div class="prod-name">Betterave rouge lactofermentée bio <span class="tag-lac">LACTO</span></div>
+      <div class="prod-ean">3022820420711</div>
+      <div class="prod-ref">LACBET</div>
+      <div class="prod-format">380 g</div>
+      <div class="prod-prix-ht tr">3,36 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.75" data-pcb="6">
+      <div class="prod-name">Carottes lactofermentées bio <span class="tag-lac">LACTO</span></div>
+      <div class="prod-ean">3022820420612</div>
+      <div class="prod-ref">LACCAR</div>
+      <div class="prod-format">380 g</div>
+      <div class="prod-prix-ht tr">2,75 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.69" data-pcb="6">
+      <div class="prod-name">Choucroute lactofermentée bio <span class="tag-lac">LACTO</span></div>
+      <div class="prod-ean">3022820420414</div>
+      <div class="prod-ref">LACCHOUCR</div>
+      <div class="prod-format">380 g</div>
+      <div class="prod-prix-ht tr">2,69 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="3.21" data-pcb="6">
+      <div class="prod-name">Chou rouge lactofermenté bio <span class="tag-lac">LACTO</span></div>
+      <div class="prod-ean">3022820420315</div>
+      <div class="prod-ref">LACCHOROU</div>
+      <div class="prod-format">380 g</div>
+      <div class="prod-prix-ht tr">3,21 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.96" data-pcb="6">
+      <div class="prod-name">Cocktail de légumes lactofermentés bio <span class="tag-lac">LACTO</span></div>
+      <div class="prod-ean">3022820420216</div>
+      <div class="prod-ref">LACLEG</div>
+      <div class="prod-format">380 g</div>
+      <div class="prod-prix-ht tr">2,96 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="4.45" data-pcb="6">
+      <div class="prod-name">Kimchi lactofermenté bio <span class="tag-lac">LACTO</span></div>
+      <div class="prod-ean">3022820421121</div>
+      <div class="prod-ref">LACKIM</div>
+      <div class="prod-format">380 g</div>
+      <div class="prod-prix-ht tr">4,45 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="4.65" data-pcb="6">
+      <div class="prod-name">Radis noirs lactofermentés bio <span class="tag-lac">LACTO</span></div>
+      <div class="prod-ean">3022820000340</div>
+      <div class="prod-ref">LACRAD</div>
+      <div class="prod-format">380 g</div>
+      <div class="prod-prix-ht tr">4,65 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+  </div>
+
+  <!-- ── 3.8 SOUPES ────────────────────────────────────────── -->
+  <div class="gamme-block">
+    <div class="gamme-header">🍲 3.8 — Soupes <span class="gamme-count">5 références</span></div>
+    <div class="table-head">
+      <div>Désignation</div>
+      <div>Code EAN</div>
+      <div>Réf. article</div>
+      <div class="tc">Format</div>
+      <div class="tr">PCB</div>
+      <div class="tr">PU HT</div>
+      <div class="tc">Nb Colis</div>
+      <div class="tr">Total HT</div>
+    </div>
+
+    <div class="product-row" data-price="1.99" data-pcb="12">
+      <div class="prod-name">Crème de carottes, persil et cumin bio</div>
+      <div class="prod-ean">3547436003593</div>
+      <div class="prod-ref">CRECARFIN</div>
+      <div class="prod-format">500 ml</div>
+      <div class="prod-prix-ht tr">1,99 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.99" data-pcb="12">
+      <div class="prod-name">Crème de légumes bio</div>
+      <div class="prod-ean">3547436003562</div>
+      <div class="prod-ref">CRELEG</div>
+      <div class="prod-format">500 ml</div>
+      <div class="prod-prix-ht tr">1,99 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="1.90" data-pcb="12">
+      <div class="prod-name">Gaspacho andalou bio</div>
+      <div class="prod-ean">3547436003586</div>
+      <div class="prod-ref">GAZAND</div>
+      <div class="prod-format">500 ml</div>
+      <div class="prod-prix-ht tr">1,90 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.80" data-pcb="6">
+      <div class="prod-name">Soupe de tomate bio</div>
+      <div class="prod-ean">3524420000350</div>
+      <div class="prod-ref">SOUTOM70</div>
+      <div class="prod-format">70 cl</div>
+      <div class="prod-prix-ht tr">2,80 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+    <div class="product-row" data-price="2.33" data-pcb="12">
+      <div class="prod-name">Soupe de tomates à la crème bio</div>
+      <div class="prod-ean">3547436003579</div>
+      <div class="prod-ref">SOUTOM</div>
+      <div class="prod-format">500 ml</div>
+      <div class="prod-prix-ht tr">2,33 €</div>
+      <div class="prod-prix-promo">—</div>
+      <div class="colis-input-wrap"><button class="colis-btn" onclick="adj(this,-1)">−</button><input type="number" class="colis-input" value="0" min="0" oninput="recalc()"><button class="colis-btn" onclick="adj(this,1)">+</button></div>
+      <div class="prod-unites">—</div>
+    </div>
+  </div>
+
+  <!-- ══ RÉCAP ══════════════════════════════════════════════ -->
+  <div class="recap-bar">
+    <div class="recap-item">
+      <div class="recap-label">Total colis</div>
+      <div class="recap-value" id="r-colis">0</div>
+      <div class="recap-sub">remise dès 10 colis</div>
+    </div>
+    <div class="recap-item">
+      <div class="recap-label">Remise appliquée</div>
+      <div class="recap-value small" id="r-remise" style="color:rgba(255,255,255,.3)">—</div>
+      <div class="recap-sub" id="r-remise-sub">selon le palier</div>
+    </div>
+    <div class="recap-item orange">
+      <div class="recap-label">Total HT</div>
+      <div class="recap-value small" id="r-total">0,00 €</div>
+      <div class="recap-sub" id="r-ht-sub">après remise</div>
+    </div>
+    <div class="recap-item brown2">
+      <div class="recap-label">Total TTC</div>
+      <div class="recap-value small" id="r-ttc">0,00 €</div>
+      <div class="recap-sub">TVA 5,5% incluse</div>
+    </div>
+  </div>
+
+  <!-- ══ FORMULAIRE CLIENT ══════════════════════════════════ -->
+  <div class="section-title">Vos informations</div>
+  <div class="client-card">
+    <div class="form-grid">
+      <div class="field">
+        <label>Nom de votre magasin <span class="req">*</span></label>
+        <input type="text" id="f-societe" placeholder="Ex : Bio Marché Lyon, La Vie Claire..." required>
+      </div>
+      <div class="field">
+        <label>Votre email <span class="req">*</span></label>
+        <input type="email" id="f-email" placeholder="votre@email.com" required>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BOUTONS ════════════════════════════════════════════ -->
+  <div class="btn-row">
+    <button class="btn btn-pdf" onclick="window.print()">💾 Enregistrer / Imprimer en PDF</button>
+    <button class="btn btn-send" id="btn-send" onclick="envoyerCommande()">📧 Envoyer ma commande</button>
+  </div>
+
+  <!-- ══ SUCCESS ════════════════════════════════════════════ -->
+  <div id="success-msg">
+    <h3>✅ Commande envoyée avec succès !</h3>
+    <p id="success-detail">Votre commande a été transmise à <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e88b9b98879c87a885879d8481868c8d9b858781868d9bc68b8785">[email&#160;protected]</a></strong>. Notre équipe vous contactera sous 24h.</p>
+    <pre id="order-recap"></pre>
+  </div>
+</main>
+
+<footer>
+  ✅ Certifiés Agriculture Biologique AB &nbsp;|&nbsp;
+  🏭 Fabriqués en Alsace &nbsp;|&nbsp;
+  📅 Catalogue 2026 &nbsp;|&nbsp;
+  ✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd9e8e8d928992bd90928891949399988e90929493988ed39e9290">[email&#160;protected]</a>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ═══════════════════════════════════════════════════════════
+// PALIERS DE REMISE
+// ═══════════════════════════════════════════════════════════
+const PALIERS = [
+  { seuil:  0, remise: 0,    label: 'Aucune remise',  tag: '🏷️ Aucune remise active',         tagClass: '',   palId: 'pal-0' },
+  { seuil: 10, remise: 0.07, label: '−7% Bronze',     tag: '⭐ Remise −7% appliquée',          tagClass: 'p1', palId: 'pal-1' },
+  { seuil: 15, remise: 0.10, label: '−10% Argent',    tag: '💎 Remise −10% appliquée',         tagClass: 'p2', palId: 'pal-2' },
+  { seuil: 20, remise: 0.12, label: '−12% Or',        tag: '🏆 Remise −12% appliquée',         tagClass: 'p3', palId: 'pal-3' },
+];
+
+function getPalier(n) {
+  let p = PALIERS[0];
+  for (const x of PALIERS) { if (n >= x.seuil) p = x; }
+  return p;
+}
+function getNext(n) {
+  for (const x of PALIERS) { if (x.seuil > n) return x; }
+  return null;
+}
+
+// ── +/- boutons ──────────────────────────────────────────────
+function adj(btn, d) {
+  const inp = btn.parentElement.querySelector('.colis-input');
+  inp.value = Math.max(0, (parseInt(inp.value)||0) + d);
+  recalc();
+}
+
+// ── Recalcul global ──────────────────────────────────────────
+function recalc() {
+  let totalColis = 0, totalUnites = 0, htBrut = 0;
+
+  document.querySelectorAll('.product-row').forEach(row => {
+    const colis = parseInt(row.querySelector('.colis-input').value)||0;
+    const pcb   = parseInt(row.dataset.pcb)||1;
+    const prix  = parseFloat(row.dataset.price)||0;
+    totalColis  += colis;
+    totalUnites += colis * pcb;
+    htBrut      += prix * pcb * colis;
+  });
+
+  const palier = getPalier(totalColis);
+  const remise = palier.remise;
+  const ht  = htBrut * (1 - remise);
+  const tva = ht * 0.055;
+  const ttc = ht + tva;
+  const next = getNext(totalColis);
+
+  const fmt = v => v.toFixed(2).replace('.', ',') + ' €';
+
+  // Prix promo ligne par ligne
+  document.querySelectorAll('.product-row').forEach(row => {
+    const colis  = parseInt(row.querySelector('.colis-input').value)||0;
+    const pcb    = parseInt(row.dataset.pcb)||1;
+    const prix   = parseFloat(row.dataset.price)||0;
+    const promoEl = row.querySelector('.prod-prix-promo');
+    const unitEl  = row.querySelector('.prod-unites');
+
+    if (remise > 0) {
+      promoEl.textContent = fmt(prix * (1 - remise));
+      promoEl.style.color = palier.seuil===10 ? '#b8941a' : palier.seuil===15 ? '#2980b9' : 'var(--green)';
+    } else {
+      promoEl.textContent = '—';
+      promoEl.style.color = 'var(--muted)';
+    }
+
+    const nbU = colis * pcb;
+    if (colis > 0) {
+      const lineHT = prix * (1 - remise) * pcb * colis;
+      unitEl.textContent = nbU + ' u — ' + fmt(lineHT);
+      unitEl.style.color = 'var(--green)';
+    } else {
+      unitEl.textContent = '—';
+      unitEl.style.color = 'var(--muted)';
+    }
+  });
+
+  // Sticky
+  const stc = document.getElementById('st-colis');
+  stc.textContent = totalColis;
+  stc.className = 't-value ' + (totalColis===0 ? '' : remise>0 ? 'ok' : 'warn');
+  document.getElementById('st-unites').textContent = totalUnites;
+  document.getElementById('st-total').textContent  = fmt(ht);
+  document.getElementById('st-tva').textContent    = fmt(tva);
+  document.getElementById('st-ttc').textContent    = fmt(ttc);
+
+  const tag = document.getElementById('remise-tag');
+  tag.textContent = palier.tag;
+  tag.className   = 'remise-tag ' + palier.tagClass;
+
+  // Badge header
+  document.getElementById('badge-pct').textContent = remise > 0
+    ? '−' + Math.round(remise*100) + '% appliqué'
+    : 'Remise progressive';
+
+  // Paliers visuels
+  PALIERS.forEach(p => {
+    const el = document.getElementById(p.palId);
+    if (el) el.classList.toggle('active', p === palier);
+  });
+
+  // Progression
+  const fill = document.getElementById('progress-fill');
+  const ptxt = document.getElementById('progress-txt');
+  if (!next) {
+    fill.style.width = '100%';
+    ptxt.textContent = '🏆 Palier Or — remise maximale −12% active !';
+    ptxt.style.color = 'var(--green)';
+  } else {
+    const prev  = PALIERS[PALIERS.indexOf(next)-1];
+    const range = next.seuil - (prev ? prev.seuil : 0);
+    const done  = totalColis - (prev ? prev.seuil : 0);
+    fill.style.width = Math.min(100, Math.round((done/range)*100)) + '%';
+    const manque = next.seuil - totalColis;
+    ptxt.textContent = manque <= 0 ? 'Palier atteint !'
+      : 'Encore ' + manque + ' colis pour débloquer −' + Math.round(next.remise*100) + '%';
+    ptxt.style.color = '';
+  }
+
+  // Récap
+  const rc = document.getElementById('r-colis');
+  rc.textContent = totalColis;
+  rc.className = 'recap-value ' + (totalColis===0 ? '' : remise>0 ? 'ok' : 'warn');
+
+  const rem = document.getElementById('r-remise');
+  rem.textContent = remise > 0 ? '−'+Math.round(remise*100)+'%' : '—';
+  rem.style.color = remise > 0 ? 'var(--gold-l)' : 'rgba(255,255,255,.3)';
+  document.getElementById('r-remise-sub').textContent = palier.label;
+  document.getElementById('r-total').textContent = fmt(ht);
+  document.getElementById('r-ht-sub').textContent = remise > 0 ? 'après '+palier.label : 'prix catalogue';
+  document.getElementById('r-ttc').textContent = fmt(ttc);
+}
+
+function fmt(v){ return v.toFixed(2).replace('.', ',') + ' €'; }
+function vv(id){ return document.getElementById(id).value.trim(); }
+
+// ── Construire le récapitulatif ──────────────────────────────
+function buildRecap() {
+  const societe = vv('f-societe') || '—';
+  const email   = vv('f-email')   || '—';
+  const date    = new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+
+  let lines = [], totalColis = 0, totalUnites = 0, htBrut = 0;
+  document.querySelectorAll('.product-row').forEach(row => {
+    const colis = parseInt(row.querySelector('.colis-input').value)||0;
+    if (!colis) return;
+    const pcb   = parseInt(row.dataset.pcb)||1;
+    const prix  = parseFloat(row.dataset.price)||0;
+    const name  = row.querySelector('.prod-name').textContent.trim();
+    const ref   = row.querySelector('.prod-ref').textContent.trim();
+    const fmt_p = row.querySelector('.prod-format').textContent.trim();
+    const nbU   = colis * pcb;
+    totalColis  += colis;
+    totalUnites += nbU;
+    htBrut      += prix * pcb * colis;
+    lines.push('  • ['+ref+'] '+name+' ('+fmt_p+') — '+colis+' colis / '+nbU+' unités');
+  });
+
+  const palier = getPalier(totalColis);
+  const ht  = htBrut * (1 - palier.remise);
+  const tva = ht * 0.055;
+  const ttc = ht + tva;
+  const fmt = v => v.toFixed(2).replace('.',',')+' €';
+
+  return [
+    '═══════════════════════════════════════════════════',
+    'BON DE COMMANDE — ÉPICERIE BIO 2026',
+    'Moulin des Moines — Catalogue 2026',
+    '═══════════════════════════════════════════════════',
+    '',
+    'CLIENT',
+    '  Magasin  : ' + societe,
+    '  Email    : ' + email,
+    '  Date     : ' + date,
+    '',
+    'PRODUITS COMMANDÉS',
+    ...lines,
+    '───────────────────────────────────────────────────',
+    '  Nb colis       : ' + totalColis,
+    '  Nb unités      : ' + totalUnites,
+    '  Total HT brut  : ' + fmt(htBrut),
+    '  Remise         : ' + palier.label + ' (' + Math.round(palier.remise*100) + '%)',
+    '  Total HT       : ' + fmt(ht),
+    '  TVA 5,5%       : ' + fmt(tva),
+    '  TOTAL TTC      : ' + fmt(ttc),
+    '═══════════════════════════════════════════════════',
+  ].join('\n');
+}
+
+// ── Envoyer la commande ──────────────────────────────────────
+async function envoyerCommande() {
+  const societe = vv('f-societe');
+  const email   = vv('f-email');
+  if (!societe || !email) { alert('Merci de renseigner le nom de votre magasin et votre email.'); return; }
+
+  let totalColis = 0;
+  document.querySelectorAll('.colis-input').forEach(i => totalColis += parseInt(i.value)||0);
+  if (totalColis === 0) { alert('Veuillez sélectionner au moins 1 colis avant d\'envoyer.'); return; }
+
+  const recap = buildRecap();
+  document.getElementById('order-recap').textContent = recap;
+
+  const btn = document.getElementById('btn-send');
+  btn.textContent = '⏳ Envoi en cours...';
+  btn.disabled = true;
+
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/cspoto@moulindesmoines.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject:     'Commande Épicerie Bio — ' + societe + ' — ' + new Date().toLocaleDateString('fr-FR'),
+        _template:    'box',
+        _captcha:     'false',
+        magasin:      societe,
+        email_client: email,
+        remise:       getPalier(totalColis).label,
+        commande:     recap
+      })
+    });
+    const result = await response.json();
+    if (result.success === 'true' || result.success === true) {
+      btn.textContent = '✅ Commande envoyée !';
+      const s = document.getElementById('success-msg');
+      s.styl
