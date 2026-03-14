@@ -102,8 +102,15 @@ body{font-family:"Outfit",sans-serif;min-height:100vh;display:flex;align-items:c
   </div>
 
   <div class="footer">Moulin des Moines &copy; 2026 &nbsp;&middot;&nbsp; Acc&#232;s r&#233;serv&#233; aux utilisateurs autoris&#233;s</div>
-  <div style="text-align:center;margin-top:14px;font-size:12px;color:#a08070">
-    Nouveau commercial ? <a href="inscription.html" style="color:var(--terra);text-decoration:none;font-weight:600">Faire une demande d&#8217;acc&#232;s &#8594;</a>
+  <div style="text-align:center;margin-top:16px;font-size:12px;color:#a08070;display:flex;flex-direction:column;gap:8px">
+    <div>
+      <span style="margin-right:6px">&#128188; Vous &#234;tes commercial ?</span>
+      <a href="inscription-commercial.html" style="color:var(--terra);text-decoration:none;font-weight:600">Demande acc&#232;s commercial &#8594;</a>
+    </div>
+    <div>
+      <span style="margin-right:6px">&#127978; Vous &#234;tes un magasin ?</span>
+      <a href="inscription-client.html" style="color:var(--green);text-decoration:none;font-weight:600">Demande acc&#232;s magasin &#8594;</a>
+    </div>
   </div>
 
 </div>
@@ -115,46 +122,11 @@ body{font-family:"Outfit",sans-serif;min-height:100vh;display:flex;align-items:c
 // Format : { login, password, nom, role }
 // ═══════════════════════════════════════════════════════════
 var COMPTES = [
-  {
-    "login": "admin",
-    "password": "mdm2026",
-    "nom": "Administrateur",
-    "role": "admin",
-    "remise": 0,
-    "email": "cspoto@moulindesmoines.com"
-  },
-  {
-    "login": "commercial",
-    "password": "mdm-ventes",
-    "nom": "Spoto Christophe",
-    "role": "user",
-    "remise": 0,
-    "email": "cspoto@moulindesmoines.com"
-  },
-  {
-    "login": "magasin1",
-    "password": "mag1-2026",
-    "nom": "Magasin Alsace",
-    "role": "client",
-    "remise": 5,
-    "email": "magasin1@exemple.fr"
-  },
-  {
-    "login": "magasin2",
-    "password": "mag2-2026",
-    "nom": "Magasin Lorraine",
-    "role": "client",
-    "remise": 10,
-    "email": "magasin2@exemple.fr"
-  },
-  {
-    "login": "cspoto",
-    "password": "cspoto26",
-    "nom": "SPOTO Christophe",
-    "role": "user",
-    "remise": 0,
-    "email": "spoto.christophe@gmail.com"
-  }
+  { login: "admin",      password: "mdm2026",      nom: "Administrateur",   role: "admin",   remise: 0,  email: "cspoto@moulindesmoines.com" },
+  { login: "commercial", password: "mdm-ventes",   nom: "Commercial MDM",   role: "user",    remise: 0,  email: "cspoto@moulindesmoines.com" },
+  { login: "magasin1",   password: "mag1-2026",    nom: "Magasin Alsace",   role: "client",  remise: 5,  email: "magasin1@exemple.fr"        },
+  { login: "magasin2",   password: "mag2-2026",    nom: "Magasin Lorraine", role: "client",  remise: 10, email: "magasin2@exemple.fr"        },
+  { login: "magasin3",   password: "mag3-2026",    nom: "Magasin Franche-C",role: "client",  remise: 15, email: "magasin3@exemple.fr"        }
 ];
 // ── Remplacer les emails par les vraies adresses de chaque compte ──
 // ── Pour modifier une remise : changer le chiffre dans remise: XX
