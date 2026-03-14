@@ -105,7 +105,7 @@ tbody td{padding:9px 10px;font-size:12px;vertical-align:middle}
         <div class="stat-card c-gold"><div class="stat-label">Commerciaux</div><div class="stat-value" id="stat-users">-</div></div>
         <div class="stat-card c-green"><div class="stat-label">Inscriptions en attente</div><div class="stat-value" id="stat-inscriptions">-</div></div>
       </div>
-      <div class="info-banner"><span style="font-size:18px">&#128231;</span><div>Les commandes arrivent par email &agrave; <strong>cspoto@moulindesmoines.com</strong> via FormSubmit, et sont sauvegard&eacute;es dans Firestore par compte client.</div></div>
+      <div class="info-banner"><span style="font-size:18px">&#128231;</span><div>Les commandes arrivent par email &agrave; <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36554546594259765b59435a5f585253455b595f5853451855595b">[email&#160;protected]</a></strong> via FormSubmit, et sont sauvegard&eacute;es dans Firestore par compte client.</div></div>
     </div>
 
     <!-- COMPTES -->
@@ -172,7 +172,7 @@ tbody td{padding:9px 10px;font-size:12px;vertical-align:middle}
 
 <div class="toast" id="toast"></div>
 
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module"></script><script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import{getAuth,onAuthStateChanged,signOut,createUserWithEmailAndPassword,updatePassword,sendPasswordResetEmail}
   from"https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
@@ -389,9 +389,4 @@ window.delInscription=async function(id){
 var toastTimer;
 function showToast(msg){
   const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
-  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),3000);
-}
-function escH(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-</script>
-</body>
-</html>
+  cle
