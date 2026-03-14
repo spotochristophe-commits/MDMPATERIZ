@@ -229,13 +229,62 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
   if(!valid) {
     window.location.href = "index.html";
   }
-  // Afficher le nom de l'utilisateur connecté
+  // Afficher le nom et appliquer la remise du compte
   window.addEventListener("DOMContentLoaded", function(){
     try {
       var data = JSON.parse(atob(sessionStorage.getItem("mdm_token")));
+      // Nom utilisateur
       var el = document.getElementById("user-info");
       if(el) el.textContent = data.nom || data.login;
-    } catch(e) {}
+      // Remise du compte : appliquer automatiquement
+      if(data.remise && data.remise > 0){
+        var r = parseFloat(data.remise);
+        // Cliquer sur le badge correspondant ou appliquer directement
+        var badges = document.querySelectorAll(".remise-badge");
+        var found = false;
+        for(var i=0;i<badges.length;i++){
+          var txt = badges[i].textContent.trim();
+          if(txt === "-"+r+" %" || txt === "−"+r+" %"){
+            badges[i].click();
+            found = true;
+            break;
+          }
+        }
+        if(!found){
+          // Remise personnalisée : remplir le champ + appliquer
+          var custom = document.getElementById("remise-custom");
+          if(custom){ custom.value = r; }
+          setRemise(r, null);
+          // Afficher visuellement dans un badge spécial
+          var section = document.querySelector(".remise-section");
+          if(section){
+            var badge = document.createElement("button");
+            badge.className = "remise-badge active";
+            badge.textContent = "−"+r+" % (groupement)";
+            badge.onclick = function(){ setRemise(r, badge); };
+            // Désactiver les autres badges
+            for(var i=0;i<badges.length;i++) badges[i].classList.remove("active");
+            section.insertBefore(badge, section.firstChild);
+          }
+        }
+        // Verrouiller les badges remise si role=client
+        if(data.role === "client"){
+          var allBadges = document.querySelectorAll(".remise-badge");
+          for(var i=0;i<allBadges.length;i++){
+            allBadges[i].style.pointerEvents = "none";
+            allBadges[i].style.opacity = "0.6";
+          }
+          var customInput = document.getElementById("remise-custom");
+          if(customInput){ customInput.disabled = true; customInput.style.opacity="0.6"; }
+          // Afficher une info
+          var info = document.createElement("span");
+          info.style.cssText = "font-size:10px;color:var(--green);font-weight:600;margin-left:6px";
+          info.textContent = "✔ Remise groupement appliquée automatiquement";
+          var remSection = document.querySelector(".remise-section");
+          if(remSection) remSection.appendChild(info);
+        }
+      }
+    } catch(e) { console.error(e); }
   });
 })();
 // ── FIN PROTECTION ────────────────────────────────

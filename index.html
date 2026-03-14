@@ -112,12 +112,14 @@ body{font-family:"Outfit",sans-serif;min-height:100vh;display:flex;align-items:c
 // Format : { login, password, nom, role }
 // ═══════════════════════════════════════════════════════════
 var COMPTES = [
-  { login: "admin",      password: "mdm2026",      nom: "Administrateur",   role: "admin"   },
-  { login: "commercial", password: "mdm-ventes",   nom: "Commercial MDM",   role: "user"    },
-  { login: "magasin1",   password: "mag1-2026",    nom: "Magasin Alsace",   role: "client"  },
-  { login: "magasin2",   password: "mag2-2026",    nom: "Magasin Lorraine", role: "client"  },
-  { login: "magasin3",   password: "mag3-2026",    nom: "Magasin Franche-C",role: "client"  }
+  { login: "admin",      password: "mdm2026",      nom: "Administrateur",   role: "admin",   remise: 0  },
+  { login: "commercial", password: "mdm-ventes",   nom: "Commercial MDM",   role: "user",    remise: 0  },
+  { login: "magasin1",   password: "mag1-2026",    nom: "Magasin Alsace",   role: "client",  remise: 5  },
+  { login: "magasin2",   password: "mag2-2026",    nom: "Magasin Lorraine", role: "client",  remise: 10 },
+  { login: "magasin3",   password: "mag3-2026",    nom: "Magasin Franche-C",role: "client",  remise: 15 }
 ];
+// ── Pour modifier une remise : changer le chiffre dans remise: XX
+// ── La remise s'applique automatiquement à la connexion (0 = pas de remise)
 // ═══════════════════════════════════════════════════════════
 
 // Rediriger si déjà connecté
@@ -163,10 +165,11 @@ function doLogin(){
     if(compte){
       // Créer token (8h)
       var tokenData = {
-        login: compte.login,
-        nom:   compte.nom,
-        role:  compte.role,
-        exp:   Date.now() + 8 * 60 * 60 * 1000
+        login:  compte.login,
+        nom:    compte.nom,
+        role:   compte.role,
+        remise: compte.remise || 0,
+        exp:    Date.now() + 8 * 60 * 60 * 1000
       };
       var token = btoa(JSON.stringify(tokenData));
       sessionStorage.setItem("mdm_token", token);
