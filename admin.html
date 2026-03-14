@@ -476,7 +476,7 @@ async function testGithub() {
   try {
     var res = await fetch(
       "https://api.github.com/repos/"+cfg.user+"/"+cfg.repo+"/contents/"+cfg.file+"?ref="+cfg.branch,
-      {headers:{"Authorization":"token "+cfg.token,"Accept":"application/vnd.github.v3+json"},mode:"cors"}
+      {headers:{"Authorization":"token "+cfg.token,"Accept":"application/vnd.github.v3+json"},mode:"cors",credentials:"omit"}
     );
     if (res.status===200) {
       var d = await res.json();
@@ -500,7 +500,7 @@ async function pushToGithub(silent) {
     // 1. Lire le fichier actuel sur GitHub (SHA + contenu)
     var gs = await fetch(
       "https://api.github.com/repos/"+cfg.user+"/"+cfg.repo+"/contents/"+cfg.file+"?ref="+cfg.branch+"&t="+Date.now(),
-      {headers:{"Authorization":"token "+cfg.token,"Accept":"application/vnd.github.v3+json","Cache-Control":"no-cache"},mode:"cors"}
+      {headers:{"Authorization":"token "+cfg.token,"Accept":"application/vnd.github.v3+json"},mode:"cors",credentials:"omit",cache:"no-store"}
     );
     if (gs.status===401) throw new Error("Token invalide (401)");
     if (gs.status===404) throw new Error("Fichier "+cfg.file+" introuvable sur "+cfg.user+"/"+cfg.repo);
@@ -532,13 +532,13 @@ async function pushToGithub(silent) {
       {
         method: "PUT",
         headers: {"Authorization":"token "+cfg.token,"Accept":"application/vnd.github.v3+json","Content-Type":"application/json"},
+        mode: "cors", credentials: "omit",
         body: JSON.stringify({
           message: "MAJ comptes MDM \u2014 "+today+" ["+comptes.length+" comptes]",
           content: newB64,
           sha: sha,
           branch: cfg.branch
-        })
-      }
+        })}
     );
 
     if (put.status===200 || put.status===201) {
