@@ -120,6 +120,7 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
     <button class="btn btn-outline no-print" id="btn-admin" onclick="window.location.href='admin.html'" style="display:none;border-color:rgba(210,180,105,.6);color:#ffd580">&#9881; Admin</button>
     <button class="btn btn-outline no-print" onclick="openHistoryModal()" style="border-color:rgba(210,180,105,.5);color:#ffd580">&#128203; Mes commandes</button>
     <button class="btn btn-outline no-print" onclick="doPrint()">&#128424; PDF / Imprimer</button>
+    <button class="btn btn-outline no-print" onclick="exportExcel()" style="border-color:rgba(80,200,120,.5);color:#a0f0b0">&#128202; Export Excel</button>
     <button class="btn btn-gold no-print" onclick="openModal()">&#128231; Envoyer la commande</button>
     <button class="btn btn-outline no-print" onclick="logout()" style="border-color:rgba(255,100,80,.6);color:#ffb0a0">&#x23FB; D&#233;connexion</button>
   </div>
@@ -195,6 +196,7 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
   <div class="total-item"><div class="total-label">Total HT net</div><div class="total-value" id="total-net">0,00 &#8364;</div></div>
   <div style="display:flex;gap:10px">
     <button class="btn btn-outline" onclick="doPrint()">&#128424; PDF</button>
+    <button class="btn btn-outline" onclick="exportExcel()" style="border-color:rgba(80,200,120,.5);color:#a0f0b0">&#128202; Excel</button>
     <button class="btn btn-gold"    onclick="openModal()">&#128231; Envoyer</button>
   </div>
 </div>
@@ -635,6 +637,205 @@ function reorderFromHistory(idx){
 }
 function openHistoryModal(){renderHistory();document.getElementById("modal-history").classList.add("open");}
 function closeHistoryModal(){document.getElementById("modal-history").classList.remove("open");}
+
+
+// ── EXPORT EXCEL ──────────────────────────────────────
+function exportExcel() {
+  // Collecter les articles commandés
+  var ordered = [];
+  var tBrut = 0, tNet = 0, nbColis = 0;
+
+  for (var i = 0; i < PRODUCTS.length; i++) {
+    var p = PRODUCTS[i];
+    var q = qtys[p.code] || 0;
+    if (!q) continue;
+    var pcb = parseFloat(p.pcb) || 1;
+    var puNet = p.pu_ht * (1 - remise / 100);
+    var totalHT = puNet * q * pcb;
+    tBrut += p.pu_ht * q * pcb;
+    tNet  += totalHT;
+    nbColis += q;
+    ordered.push({
+      code:    p.code,
+      libelle: p.libelle,
+      ean:     p.ean || '',
+      origine: p.origine || '',
+      certif:  p.certif || '',
+      pcb:     pcb,
+      poids:   p.poids || '',
+      tva:     p.tva || '',
+      puHT:    p.pu_ht,
+      puNet:   puNet,
+      qteColis: q,
+      totalHT: totalHT
+    });
+  }
+
+  if (!ordered.length) {
+    alert('Aucun article commandé à exporter.');
+    return;
+  }
+
+  // Infos client
+  var mag  = document.getElementById('magasin').value.trim() || 'Commande';
+  var nc   = document.getElementById('numclient').value.trim();
+  var ct   = document.getElementById('contact').value.trim();
+  var mail = document.getElementById('email').value.trim();
+  var tel  = document.getElementById('tel').value.trim();
+  var dl   = document.getElementById('datelivraison').value;
+  var today = new Date().toLocaleDateString('fr-FR');
+
+  // ── Construire le XML Excel (format SpreadsheetML)
+  var R = remise;
+  var dlStr = dl ? new Date(dl).toLocaleDateString('fr-FR') : '';
+
+  // Cellule helper
+  function cell(v, type, bold, bg, color, align, wrapText) {
+    var styleAttrs = '';
+    var styles = [];
+    if (bold)     styles.push('font-weight:bold');
+    if (bg)       styles.push('background:' + bg);
+    if (color)    styles.push('color:' + color);
+    if (align)    styles.push('text-align:' + align);
+    if (wrapText) styles.push('white-space:normal');
+    if (styles.length) styleAttrs = ' style="' + styles.join(';') + '"';
+    var t = type === 'n' ? 'Number' : 'String';
+    var vStr = String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return '<Cell' + styleAttrs + '><Data ss:Type="' + t + '">' + vStr + '</Data></Cell>';
+  }
+  function numCell(v, bold, bg, color) {
+    return cell(v, 'n', bold, bg, color, 'right');
+  }
+  function strCell(v, bold, bg, color, align) {
+    return cell(v, 's', bold, bg, color, align || 'left');
+  }
+  function emptyCell() { return '<Cell/>'; }
+
+  var brown  = '#78503C';
+  var terra  = '#C87864';
+  var gold   = '#D2B469';
+  var cream  = '#FDF5EE';
+  var green  = '#1A5C2E';
+  var white  = '#FFFFFF';
+  var orange = '#FFF3E0';
+
+  var rows = '';
+
+  // ── Ligne titre
+  rows += '<Row ss:Height="28">';
+  rows += '<Cell ss:MergeAcross="11" style="background:' + brown + ';color:' + white + ';font-weight:bold;font-size:14pt;text-align:center">';
+  rows += '<Data ss:Type="String">MOULIN DES MOINES \u2014 Bon de Commande 2026</Data></Cell>';
+  rows += '</Row>';
+
+  // ── Infos client (2 colonnes)
+  var infoRows = [
+    ['Magasin', mag],
+    nc ? ['N\u00b0 Client', nc] : null,
+    ct ? ['Contact', ct] : null,
+    mail ? ['Email', mail] : null,
+    tel ? ['T\u00e9l', tel] : null,
+    ['Date commande', today],
+    dlStr ? ['Livraison souhait\u00e9e', dlStr] : null,
+    R > 0 ? ['Remise groupement', R + ' %'] : null
+  ].filter(Boolean);
+
+  infoRows.forEach(function(row) {
+    rows += '<Row ss:Height="18">';
+    rows += strCell(row[0], true, cream, brown);
+    rows += strCell(row[1], false, cream, '#3a2a20');
+    rows += '<Cell ss:MergeAcross="10"/>';
+    rows += '</Row>';
+  });
+
+  // ── Ligne vide
+  rows += '<Row ss:Height="8"><Cell ss:MergeAcross="11"/></Row>';
+
+  // ── En-têtes colonnes
+  var headers = ['Code','D\u00e9signation','EAN / Gencod','Origine','Certif.','PCB','Poids (kg)','TVA %','PU HT 2026','PU HT Net','Qt\u00e9 (colis)','Total HT Net'];
+  rows += '<Row ss:Height="22">';
+  headers.forEach(function(h, i) {
+    var align = i >= 5 ? 'center' : 'left';
+    rows += cell(h, 's', true, brown, white, align);
+  });
+  rows += '</Row>';
+
+  // ── Lignes produits
+  ordered.forEach(function(p, idx) {
+    var bg = idx % 2 === 0 ? white : cream;
+    rows += '<Row ss:Height="18">';
+    rows += strCell(p.code,    true,  bg, brown);
+    rows += strCell(p.libelle, false, bg, '#3a2a20');
+    rows += strCell(p.ean,     false, bg, '#666');
+    rows += strCell(p.origine, false, bg, '#666');
+    rows += strCell(p.certif,  true,  bg, green);
+    rows += numCell(p.pcb,     false, bg);
+    rows += numCell(p.poids,   false, bg);
+    rows += numCell(p.tva,     false, bg);
+    rows += numCell(p.puHT.toFixed(2).replace(',','.') * 1, false, bg, green);
+    rows += numCell(p.puNet.toFixed(2).replace(',','.') * 1, false, bg, R > 0 ? terra : green);
+    rows += numCell(p.qteColis, true,  orange, terra);
+    rows += numCell(p.totalHT.toFixed(2).replace(',','.') * 1, true, orange, terra);
+    rows += '</Row>';
+  });
+
+  // ── Ligne vide
+  rows += '<Row ss:Height="8"><Cell ss:MergeAcross="11"/></Row>';
+
+  // ── Récapitulatif
+  var recapRows = [
+    ['Nombre de r\u00e9f\u00e9rences', ordered.length, false],
+    ['Nombre de colis', nbColis, false],
+    ['Total HT brut', parseFloat(tBrut.toFixed(2)), true]
+  ];
+  if (R > 0) {
+    recapRows.push(['Remise ' + R + '%', -parseFloat((tBrut - tNet).toFixed(2)), true]);
+  }
+  recapRows.push(['TOTAL HT NET', parseFloat(tNet.toFixed(2)), true]);
+
+  recapRows.forEach(function(r, i) {
+    var isTotal = r[0].indexOf('TOTAL') === 0;
+    var bg2 = isTotal ? brown : cream;
+    var col = isTotal ? white : '#3a2a20';
+    rows += '<Row ss:Height="' + (isTotal ? '22' : '18') + '">';
+    rows += '<Cell ss:MergeAcross="9"/>';
+    rows += strCell(r[0], r[2] || isTotal, bg2, col, 'right');
+    rows += numCell(r[1], r[2] || isTotal, isTotal ? gold : orange, isTotal ? brown : terra);
+    rows += '</Row>';
+  });
+
+  // ── Assembler le XML
+  var colWidths = [80, 280, 120, 90, 60, 40, 60, 40, 75, 75, 70, 90];
+  var colDefs = colWidths.map(function(w) {
+    return '<Column ss:Width="' + w + '"/>';
+  }).join('');
+
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    + '<?mso-application progid="Excel.Sheet"?>\n'
+    + '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" '
+    + 'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" '
+    + 'xmlns:x="urn:schemas-microsoft-com:office:excel">\n'
+    + '<Styles>\n'
+    + '<Style ss:ID="Default"><Font ss:FontName="Calibri" ss:Size="10"/></Style>\n'
+    + '</Styles>\n'
+    + '<Worksheet ss:Name="Commande MDM 2026">\n'
+    + '<Table>\n'
+    + colDefs
+    + rows
+    + '</Table>\n'
+    + '</Worksheet>\n'
+    + '</Workbook>';
+
+  // ── Télécharger
+  var blob = new Blob([xml], { type: 'application/vnd.ms-excel;charset=utf-8' });
+  var a = document.createElement('a');
+  var dateStr = today.replace(/\//g, '-');
+  a.download = 'BDC_MDM_2026_' + (mag || 'commande').replace(/[^a-zA-Z0-9]/g, '_') + '_' + dateStr + '.xls';
+  a.href = URL.createObjectURL(blob);
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function() { URL.revokeObjectURL(a.href); }, 1000);
+}
 
 // INIT
 buildTable();
