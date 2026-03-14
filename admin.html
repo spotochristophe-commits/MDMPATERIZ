@@ -107,6 +107,20 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
 .github-token-wrap{position:relative;display:flex;align-items:center}.github-token-wrap input{flex:1;padding-right:40px}
 .toggle-token{position:absolute;right:10px;background:none;border:none;cursor:pointer;font-size:14px;opacity:.5;padding:4px}.toggle-token:hover{opacity:.9}
 .gh-push-log{background:#1e1e1e;color:#a8ff78;border-radius:8px;padding:12px 14px;font-family:monospace;font-size:11px;line-height:1.8;margin-top:12px;display:none;max-height:160px;overflow-y:auto;white-space:pre-wrap}
+.info-banner{background:linear-gradient(135deg,#fff8f0,#fff3e8);border:1.5px solid rgba(200,120,100,.2);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;margin-bottom:18px;font-size:13px;color:#5a3a2a;line-height:1.6}
+.info-banner .icon{font-size:20px;margin-top:1px;flex-shrink:0}
+.empty-state{text-align:center;padding:40px 20px;color:#bbb}
+.empty-state .icon{font-size:40px;margin-bottom:10px}
+.empty-state p{font-size:13px;line-height:1.7}
+.nav-icon{margin-right:4px}
+.sidebar-section{margin-bottom:6px}
+.sidebar-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#b09080;padding:8px 12px 4px}
+.hist-card{background:#fff;border:1.5px solid #e8ddd5;border-radius:10px;margin-bottom:12px;overflow:hidden}
+.hist-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;background:linear-gradient(135deg,#fdfaf7,#fff8f3)}
+.hist-card-header:hover{background:#fdf5ee}
+.hist-card-body{display:none;padding:0 16px 14px;border-top:1px solid #f0e8e0}
+.hist-card-body.open{display:block}
+.hist-tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600}
 </style>
 </head>
 <body>
@@ -154,6 +168,9 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Param&#232;tres</div>
+      <div class="nav-item" onclick="showPage('historique',this)">
+        <span class="nav-icon">&#128230;</span> Historique
+      </div>
       <div class="nav-item" onclick="showPage('parametres',this)">
         <span class="nav-icon">&#9881;</span> Param&#232;tres
       </div>
@@ -275,6 +292,26 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
       </div>
     </div>
 
+    <!-- PAGE : INSCRIPTIONS -->
+    <div class="page" id="page-inscriptions">
+      <div class="page-title">Demandes d&#8217;inscription</div>
+      <div class="page-sub">Nouvelles demandes re&#231;ues via le formulaire inscription.html</div>
+      <div class="info-banner">
+        <span class="icon">&#128231;</span>
+        <div>Les demandes d&#8217;inscription sont envoy&#233;es par email &#224; <strong>cspoto@moulindesmoines.com</strong>.
+        Pour chaque nouvelle demande, cr&#233;ez manuellement le compte dans l&#8217;onglet <strong>Comptes</strong> puis communiquez les identifiants au commercial.</div>
+      </div>
+      <div class="section-card">
+        <div class="section-card-title"><span>&#128203; Proc&#233;dure de traitement</span></div>
+        <div style="display:flex;flex-direction:column;gap:12px;padding:4px 0">
+          <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:26px;height:26px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div><div><strong>Recevoir l&#8217;email</strong> de demande &#224; cspoto@moulindesmoines.com</div></div>
+          <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:26px;height:26px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div><div><strong>Cr&#233;er le compte</strong> dans l&#8217;onglet Comptes avec le r&#244;le et la remise appropri&#233;s</div></div>
+          <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:26px;height:26px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">3</div><div><strong>Exporter index.html</strong> depuis les Param&#232;tres et le mettre en ligne</div></div>
+          <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">4</div><div><strong>Envoyer les identifiants</strong> au commercial par email</div></div>
+        </div>
+      </div>
+    </div>
+
     <!-- PAGE : HISTORIQUE -->
     <div class="page" id="page-historique">
       <div class="page-title">Historique des commandes</div>
@@ -288,7 +325,10 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
         </div>
       </div>
       <div class="section-card">
-        <div class="section-card-title"><span>&#128230; Commandes enregistr&#233;es localement</span></div>
+        <div class="section-card-title">
+          <span>&#128230; Commandes enregistr&#233;es localement</span>
+          <button class="btn-add" onclick="exportHistorique()" style="background:var(--green)" id="btn-export-hist">&#128202; Export Excel</button>
+        </div>
         <div id="historique-list">
           <div class="empty-state">
             <div class="icon">&#128230;</div>
@@ -332,15 +372,6 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
       <div class="section-card">
         <div class="section-card-title"><span>&#128260; R&#233;initialiser</span></div>
         <button class="btn-sm" style="background:#fdecea;color:var(--red);border:none;padding:8px 16px;border-radius:7px;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif" onclick="resetComptes()">&#9888; R&#233;initialiser les comptes</button>
-      </div>
-      <div class="section-card">
-        <div class="section-card-title"><span>&#8505; Informations</span></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px">
-          <div><span style="color:#a08070">Repository :</span> <strong>LOAC1118/MDM-BDC26</strong></div>
-          <div><span style="color:#a08070">Branche :</span> <strong>main</strong></div>
-          <div><span style="color:#a08070">Produits :</span> <strong>1 390 MDM 2026</strong></div>
-          <div><span style="color:#a08070">FormSubmit :</span> <strong>cspoto@moulindesmoines.com</strong></div>
-        </div>
       </div>
     </div>
 
@@ -644,8 +675,7 @@ function renderComptes(){
       rows += "<td><code style='font-size:11px;font-weight:700;color:var(--brown)'>"+escH(c.login)+"</code></td>";
       rows += "<td>"+escH(c.nom)+"</td>";
       rows += "<td>"+roleBadge(c.role)+"</td>";
-      rows += "<td>"+(c.remise>0?"<span class='remise-pill'>-"+c.remise+"%</span>":"<span style='color:#ccc'>-</span>")+"</td>";
-      rows += "<td style='font-size:11px;color:#555'>"+escH(c.email||'—')+"</td>";
+      rows += "<td>"+(c.remise>0?"<span class='remise-pill'>-"+c.remise+"%</span>":"<span style='color:#ccc'>—</span>")+"</td>";
       rows += "<td><span style='font-family:monospace;font-size:11px;color:#888'>"+escH(c.password)+"</span></td>";
       if(!limit){
         rows += "<td style='white-space:nowrap;display:flex;gap:5px'>";
@@ -738,7 +768,7 @@ function saveCompte(){
   }
 
   if(editIndex < 0){
-    // V\u00e9rifier login unique
+    // Vérifier login unique
     var exists = comptes.some(function(c){ return c.login === login; });
     if(exists){
       alertEl.textContent = "Ce login existe d\u00e9j\u00e0.";
@@ -749,7 +779,6 @@ function saveCompte(){
     var femail = document.getElementById("f-email").value.trim();
     comptes.push({ login:login, password:password, nom:nom, role:role, remise:remise, email:femail });
     showToast("\u2705 Compte cr\u00e9\u00e9 : "+login);
-    setTimeout(function(){autoSync();},500);
   } else {
     comptes[editIndex].password = password;
     comptes[editIndex].nom      = nom;
@@ -757,7 +786,6 @@ function saveCompte(){
     comptes[editIndex].remise   = remise;
     comptes[editIndex].email    = document.getElementById("f-email").value.trim();
     showToast("\u2705 Compte modifi\u00e9 : "+comptes[editIndex].login);
-    setTimeout(function(){autoSync();},500);
   }
 
   saveComptes();
@@ -769,7 +797,7 @@ function saveCompte(){
 // EXPORT index.html
 // ============================================
 function exportIndex(){
-  // Lire le index.html original via fetch (fonctionne en h\u00e9berg\u00e9)
+  // Lire le index.html original via fetch (fonctionne en hébergé)
   fetch("index.html")
     .then(function(r){ return r.text(); })
     .then(function(html){
@@ -784,7 +812,7 @@ function exportIndex(){
       showToast("\u2705 index.html t\u00e9l\u00e9charg\u00e9 avec "+comptes.length+" comptes");
     })
     .catch(function(){
-      // Fallback : g\u00e9n\u00e9rer depuis le template
+      // Fallback : générer depuis le template
       alert("Impossible de lire index.html. Assurez-vous d'\u00eatre en ligne (fichier h\u00e9berg\u00e9).");
     });
 }
@@ -826,16 +854,123 @@ renderComptes();
 loadGhConfig();
 
 // ============================================
-// EXPORT EXCEL DES COMPTES
+// PAGES NAVIGATION
+// ============================================
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+  var pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  if (el) el.classList.add('active');
+  if (id === 'dashboard') renderComptes();
+  if (id === 'historique') renderHistorique();
+}
+
+// ============================================
+// HISTORIQUE DES COMMANDES (localStorage)
+// ============================================
+function renderHistorique() {
+  var container = document.getElementById('historique-list');
+  if (!container) return;
+
+  // Collecter toutes les commandes de tous les comptes
+  var allOrders = [];
+  comptes.forEach(function(c) {
+    var key = 'mdm_history_' + c.login.replace(/[^a-zA-Z0-9]/g,'_');
+    try {
+      var saved = localStorage.getItem(key);
+      if (saved) {
+        var orders = JSON.parse(saved);
+        orders.forEach(function(o) {
+          o._login = c.login;
+          o._nom   = c.nom || c.login;
+          allOrders.push(o);
+        });
+      }
+    } catch(e) {}
+  });
+
+  // Trier du plus récent au plus ancien
+  allOrders.sort(function(a,b){
+    return new Date(b.date||0) - new Date(a.date||0);
+  });
+
+  var btn = document.getElementById('btn-export-hist');
+  if (btn) btn.style.display = allOrders.length ? 'inline-flex' : 'none';
+
+  if (!allOrders.length) {
+    container.innerHTML = '<div class="empty-state"><div class="icon">&#128230;</div><p>Aucune commande enregistr\u00e9e localement.<br>Les commandes arrivent directement par email.</p></div>';
+    return;
+  }
+
+  var html = '';
+  allOrders.forEach(function(o, idx) {
+    var dateStr = o.date ? (o.date.includes && o.date.includes('T') ? new Date(o.date).toLocaleDateString('fr-FR') : o.date) : 'Date inconnue';
+    var mag     = o.magasin || o._nom || '—';
+    var nbRef   = o.nbRefs  || (o.articles ? o.articles.length : '?');
+    var nbCol   = o.nbColis || '?';
+    var totNet  = typeof o.totalNet  === 'number' ? o.totalNet.toFixed(2).replace('.',',') + '\u00a0\u20ac' : '—';
+    var totBrut = typeof o.totalBrut === 'number' ? o.totalBrut.toFixed(2).replace('.',',') + '\u00a0\u20ac' : '—';
+    var remStr  = o.remise > 0 ? ' <span class="hist-tag" style="background:#fff3e0;color:#c87864">-' + o.remise + '%</span>' : '';
+
+    html += '<div class="hist-card">';
+    html += '<div class="hist-card-header" onclick="toggleHist(' + idx + ')">';
+    html += '<div style="display:flex;align-items:center;gap:10px">';
+    html += '<span style="font-weight:700;color:var(--brown)">' + escH(mag) + '</span>';
+    html += remStr;
+    html += '<span style="font-size:11px;color:#aaa">' + escH(o._login) + '</span>';
+    html += '</div>';
+    html += '<div style="display:flex;align-items:center;gap:14px;font-size:12px">';
+    html += '<span style="color:#888">' + dateStr + '</span>';
+    html += '<span style="color:var(--green);font-weight:700">' + totNet + '</span>';
+    html += '<span style="color:#aaa;font-size:11px">' + nbRef + '\u00a0r\u00e9f. / ' + nbCol + '\u00a0colis</span>';
+    html += '<span style="color:#ccc;font-size:16px;transform:rotate(0deg)" id="arrow-' + idx + '">\u25bc</span>';
+    html += '</div></div>';
+
+    if (o.articles && o.articles.length) {
+      html += '<div class="hist-card-body" id="hist-body-' + idx + '">';
+      html += '<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:10px">';
+      html += '<thead><tr style="background:#fdf5ee"><th style="padding:6px 8px;text-align:left;color:var(--brown)">Code</th><th style="padding:6px 8px;text-align:left;color:var(--brown)">D\u00e9signation</th><th style="padding:6px 8px;text-align:center;color:var(--brown)">Qt\u00e9</th><th style="padding:6px 8px;text-align:center;color:var(--brown)">PCB</th><th style="padding:6px 8px;text-align:right;color:var(--brown)">PU HT</th><th style="padding:6px 8px;text-align:right;color:var(--brown)">Total HT</th></tr></thead><tbody>';
+      o.articles.forEach(function(a, ai) {
+        var bg = ai % 2 === 0 ? '#fff' : '#fdfaf7';
+        html += '<tr style="background:' + bg + '">';
+        html += '<td style="padding:5px 8px;font-weight:600;color:var(--brown)">' + escH(a.code||'') + '</td>';
+        html += '<td style="padding:5px 8px">' + escH(a.libelle||'') + '</td>';
+        html += '<td style="padding:5px 8px;text-align:center">' + (a.qty||'') + '</td>';
+        html += '<td style="padding:5px 8px;text-align:center;color:#888">' + (a.pcb||'') + '</td>';
+        html += '<td style="padding:5px 8px;text-align:right;color:var(--green)">' + (typeof a.puHT==='number'?a.puHT.toFixed(2).replace('.',','):a.puHT||'') + '\u00a0\u20ac</td>';
+        html += '<td style="padding:5px 8px;text-align:right;font-weight:600;color:var(--terra)">' + (typeof a.totalHT==='number'?a.totalHT.toFixed(2).replace('.',','):a.totalHT||'') + '\u00a0\u20ac</td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      html += '<div style="text-align:right;padding-top:8px;font-size:12px;color:#888">Total HT brut\u00a0: <strong style="color:var(--brown)">' + totBrut + '</strong> &bull; Total HT net\u00a0: <strong style="color:var(--green)">' + totNet + '</strong></div>';
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  container.innerHTML = html;
+  window._allOrders = allOrders;
+}
+
+function toggleHist(idx) {
+  var body  = document.getElementById('hist-body-' + idx);
+  var arrow = document.getElementById('arrow-' + idx);
+  if (!body) return;
+  var open = body.classList.toggle('open');
+  if (arrow) arrow.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+
+// ============================================
+// EXPORT EXCEL — COMPTES
 // ============================================
 function exportComptes() {
   if (!comptes || !comptes.length) { showToast('\u26a0 Aucun compte \u00e0 exporter.'); return; }
   var roleLabel = { admin: 'Administrateur', user: 'Commercial', client: 'Client' };
   var brown='#78503C',terra='#C87864',gold='#D2B469',cream='#FDF5EE',
       green='#1A5C2E',white='#FFFFFF',orange='#FFF3E0';
-  function roleColor(r){return r==='admin'?terra:r==='user'?green:'#1565c0';}
-  function roleBg(r){return r==='admin'?'#FCE4D6':r==='user'?'#E8F5E9':'#E3F2FD';}
-  function xCell(v,type,bold,bg,color,align){
+  function roleColor(r){ return r==='admin'?terra:r==='user'?green:'#1565c0'; }
+  function roleBg(r)   { return r==='admin'?'#FCE4D6':r==='user'?'#E8F5E9':'#E3F2FD'; }
+  function xc(v,type,bold,bg,color,align){
     var st=[];
     if(bold)  st.push('font-weight:bold');
     if(bg)    st.push('background:'+bg);
@@ -846,26 +981,25 @@ function exportComptes() {
     var v2=String(v===null||v===undefined?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     return '<Cell'+sa+'><Data ss:Type="'+t+'">'+v2+'</Data></Cell>';
   }
-  function xs(v,b,bg,c,a){return xCell(v,'s',b,bg,c,a||'left');}
-  function xn(v,b,bg,c)  {return xCell(v,'n',b,bg,c,'center');}
+  function xs(v,b,bg,c,a){ return xc(v,'s',b,bg,c,a||'left'); }
+  function xn(v,b,bg,c)  { return xc(v,'n',b,bg,c,'center'); }
   var today=new Date().toLocaleDateString('fr-FR');
   var rows='';
   rows+='<Row ss:Height="26"><Cell ss:MergeAcross="5" style="background:'+brown+';color:'+white+';font-weight:bold;font-size:13pt;text-align:center"><Data ss:Type="String">MOULIN DES MOINES \u2014 Comptes utilisateurs</Data></Cell></Row>';
   rows+='<Row ss:Height="16"><Cell ss:MergeAcross="5" style="background:'+cream+';color:#888;font-size:9pt;text-align:center"><Data ss:Type="String">Export\u00e9 le '+today+' \u2014 '+comptes.length+' compte(s)</Data></Cell></Row>';
   rows+='<Row ss:Height="6"><Cell ss:MergeAcross="5"/></Row>';
-  var headers=['Login','Nom','R\u00f4le','Remise (%)','Email','Mot de passe'];
   rows+='<Row ss:Height="20">';
-  headers.forEach(function(h,i){rows+=xs(h,true,brown,white,i>=3?'center':'left');});
+  ['Login','Nom','R\u00f4le','Remise (%)','Email','Mot de passe'].forEach(function(h,i){rows+=xs(h,true,brown,white,i>=3?'center':'left');});
   rows+='</Row>';
   comptes.forEach(function(c,i){
     var bg=i%2===0?white:cream;
     rows+='<Row ss:Height="18">';
-    rows+=xs(c.login||'',   true, bg,          brown);
-    rows+=xs(c.nom||'',     false,bg,           '#3a2a20');
+    rows+=xs(c.login||'',    true, bg,          brown);
+    rows+=xs(c.nom||'',      false,bg,           '#3a2a20');
     rows+=xs(roleLabel[c.role]||c.role, true, roleBg(c.role), roleColor(c.role), 'center');
     rows+=(c.remise>0)?xn(c.remise,true,orange,terra):xs('-',false,bg,'#ccc','center');
-    rows+=xs(c.email||'-',  false,bg,           '#555');
-    rows+=xs(c.password||'',false,bg,           '#888');
+    rows+=xs(c.email||'-',   false,bg,           '#555');
+    rows+=xs(c.password||'', false,bg,           '#888');
     rows+='</Row>';
   });
   rows+='<Row ss:Height="6"><Cell ss:MergeAcross="5"/></Row>';
@@ -881,13 +1015,112 @@ function exportComptes() {
     +'<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n'
     +'<Styles><Style ss:ID="Default"><Font ss:FontName="Calibri" ss:Size="10"/></Style></Styles>\n'
     +'<Worksheet ss:Name="Comptes MDM">\n<Table>\n'+cols+rows+'</Table>\n</Worksheet>\n</Workbook>';
-  var blob=new Blob([xml],{type:'application/vnd.ms-excel;charset=utf-8'});
-  var a=document.createElement('a');
-  a.download='Comptes_MDM_'+today.replace(/\//g,'-')+'.xls';
-  a.href=URL.createObjectURL(blob);
-  document.body.appendChild(a);a.click();document.body.removeChild(a);
-  setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
-  showToast('\u2705 Export Excel t\u00e9l\u00e9charg\u00e9 ('+comptes.length+' comptes)');
+  dlXls(xml, 'Comptes_MDM_'+today.replace(/\//g,'-')+'.xls');
+  showToast('\u2705 Export comptes t\u00e9l\u00e9charg\u00e9 ('+comptes.length+' comptes)');
+}
+
+// ============================================
+// EXPORT EXCEL — HISTORIQUE DES COMMANDES
+// ============================================
+function exportHistorique() {
+  var allOrders = window._allOrders || [];
+  if (!allOrders.length) { showToast('\u26a0 Aucune commande \u00e0 exporter.'); return; }
+  var brown='#78503C',terra='#C87864',gold='#D2B469',cream='#FDF5EE',
+      green='#1A5C2E',white='#FFFFFF',orange='#FFF3E0';
+  function xc(v,type,bold,bg,color,align){
+    var st=[];
+    if(bold)  st.push('font-weight:bold');
+    if(bg)    st.push('background:'+bg);
+    if(color) st.push('color:'+color);
+    if(align) st.push('text-align:'+align);
+    var sa=st.length?' style="'+st.join(';')+'"':'';
+    var t=type==='n'?'Number':'String';
+    var v2=String(v===null||v===undefined?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return '<Cell'+sa+'><Data ss:Type="'+t+'">'+v2+'</Data></Cell>';
+  }
+  function xs(v,b,bg,c,a){ return xc(v,'s',b,bg,c,a||'left'); }
+  function xn(v,b,bg,c)  { return xc(v,'n',b,bg,c,'right'); }
+  var today = new Date().toLocaleDateString('fr-FR');
+
+  // ── Feuille 1 : Résumé des commandes ──────────────────────
+  var rows1='';
+  rows1+='<Row ss:Height="26"><Cell ss:MergeAcross="7" style="background:'+brown+';color:'+white+';font-weight:bold;font-size:13pt;text-align:center"><Data ss:Type="String">MOULIN DES MOINES \u2014 Historique des commandes</Data></Cell></Row>';
+  rows1+='<Row ss:Height="16"><Cell ss:MergeAcross="7" style="background:'+cream+';color:#888;font-size:9pt;text-align:center"><Data ss:Type="String">Export\u00e9 le '+today+' \u2014 '+allOrders.length+' commande(s)</Data></Cell></Row>';
+  rows1+='<Row ss:Height="6"><Cell ss:MergeAcross="7"/></Row>';
+  rows1+='<Row ss:Height="20">';
+  ['Date','Magasin','Login','Email','Remise (%)','Nb r\u00e9f.','Nb colis','Total HT net'].forEach(function(h,i){
+    rows1+=xs(h,true,brown,white,i>=4?'center':'left');
+  });
+  rows1+='</Row>';
+  var tGlobal=0;
+  allOrders.forEach(function(o,i){
+    var bg=i%2===0?white:cream;
+    var dateStr = o.date ? (o.date.includes && o.date.includes('T') ? new Date(o.date).toLocaleDateString('fr-FR') : o.date) : '';
+    var totNet  = typeof o.totalNet==='number' ? o.totalNet : 0;
+    tGlobal += totNet;
+    rows1+='<Row ss:Height="18">';
+    rows1+=xs(dateStr,         false,bg,'#555');
+    rows1+=xs(o.magasin||'',   true, bg,brown);
+    rows1+=xs(o._login||'',    false,bg,'#888');
+    rows1+=xs(o.mail||'',      false,bg,'#555');
+    rows1+=(o.remise>0)?xn(o.remise,false,orange,terra):xs('-',false,bg,'#ccc','center');
+    rows1+=xn(o.nbRefs||(o.articles?o.articles.length:0),false,bg,'#555');
+    rows1+=xn(o.nbColis||0,    false,bg,'#555');
+    rows1+=xn(parseFloat(totNet.toFixed(2)),true,orange,terra);
+    rows1+='</Row>';
+  });
+  rows1+='<Row ss:Height="6"><Cell ss:MergeAcross="7"/></Row>';
+  rows1+='<Row ss:Height="20"><Cell ss:MergeAcross="6"/>'+xn(parseFloat(tGlobal.toFixed(2)),true,gold,brown)+'</Row>';
+
+  // ── Feuille 2 : Détail des articles ───────────────────────
+  var rows2='';
+  rows2+='<Row ss:Height="26"><Cell ss:MergeAcross="8" style="background:'+brown+';color:'+white+';font-weight:bold;font-size:13pt;text-align:center"><Data ss:Type="String">MOULIN DES MOINES \u2014 D\u00e9tail des articles command\u00e9s</Data></Cell></Row>';
+  rows2+='<Row ss:Height="6"><Cell ss:MergeAcross="8"/></Row>';
+  rows2+='<Row ss:Height="20">';
+  ['Date','Magasin','Login','Code','D\u00e9signation','Qt\u00e9 colis','PCB','PU HT net','Total HT'].forEach(function(h,i){
+    rows2+=xs(h,true,brown,white,i>=5?'center':'left');
+  });
+  rows2+='</Row>';
+  allOrders.forEach(function(o){
+    var dateStr = o.date ? (o.date.includes && o.date.includes('T') ? new Date(o.date).toLocaleDateString('fr-FR') : o.date) : '';
+    if (o.articles && o.articles.length) {
+      o.articles.forEach(function(a,ai){
+        var bg=ai%2===0?white:cream;
+        rows2+='<Row ss:Height="17">';
+        rows2+=xs(ai===0?dateStr:'',   false,bg,'#888');
+        rows2+=xs(ai===0?(o.magasin||''):'', ai===0, bg, ai===0?brown:'#888');
+        rows2+=xs(ai===0?(o._login||''):'',  false,bg,'#aaa');
+        rows2+=xs(a.code||'',         true, bg,brown);
+        rows2+=xs(a.libelle||'',      false,bg,'#3a2a20');
+        rows2+=xn(a.qty||0,           true, orange,terra);
+        rows2+=xn(a.pcb||1,           false,bg,'#888');
+        rows2+=xn(typeof a.puHT==='number'?parseFloat(a.puHT.toFixed(2)):0, false,bg,green);
+        rows2+=xn(typeof a.totalHT==='number'?parseFloat(a.totalHT.toFixed(2)):0, true,orange,terra);
+        rows2+='</Row>';
+      });
+    }
+  });
+
+  var cols1=[80,160,80,70,100,65,65,90].map(function(w){return '<Column ss:Width="'+w+'"/>';}).join('');
+  var cols2=[80,160,80,80,260,60,50,75,90].map(function(w){return '<Column ss:Width="'+w+'"/>';}).join('');
+  var xml='<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Excel.Sheet"?>\n'
+    +'<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n'
+    +'<Styles><Style ss:ID="Default"><Font ss:FontName="Calibri" ss:Size="10"/></Style></Styles>\n'
+    +'<Worksheet ss:Name="R\u00e9sum\u00e9 commandes">\n<Table>\n'+cols1+rows1+'</Table>\n</Worksheet>\n'
+    +'<Worksheet ss:Name="D\u00e9tail articles">\n<Table>\n'+cols2+rows2+'</Table>\n</Worksheet>\n'
+    +'</Workbook>';
+  dlXls(xml, 'Historique_MDM_'+today.replace(/\//g,'-')+'.xls');
+  showToast('\u2705 Export historique t\u00e9l\u00e9charg\u00e9 ('+allOrders.length+' commandes)');
+}
+
+// Helper téléchargement XLS
+function dlXls(xml, filename) {
+  var blob = new Blob([xml], {type:'application/vnd.ms-excel;charset=utf-8'});
+  var a = document.createElement('a');
+  a.download = filename;
+  a.href = URL.createObjectURL(blob);
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
 }
 
 loadComptes();
