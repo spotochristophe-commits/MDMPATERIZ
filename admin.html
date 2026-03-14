@@ -75,7 +75,6 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
 /* ── MODAL ── */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(60,30,10,.45);z-index:200;align-items:center;justify-content:center}
 .modal-bg.open{display:flex}
-.modal{background:var(--white);border-radius:14px;padding:28px;max-width:460px;width:90%;box-shadow:0 10px 40px rgba(0,0,0,.2)}
 .modal h3{font-family:"Cormorant Garamond",serif;font-size:20px;color:var(--brown);margin-bottom:18px}
 .fg{margin-bottom:14px}
 .fg label{display:block;font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
@@ -103,24 +102,31 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
 .btn-export{background:var(--gold);color:var(--brown);padding:8px 16px;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:"Outfit",sans-serif;display:flex;align-items:center;gap:6px;transition:all .15s}
 .btn-export:hover{background:#c0a055}
 .github-status{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;margin-top:10px}
-.github-status.ok{background:#e8f5e9;color:#2e7d32}.github-status.err{background:#fdecea;color:#c62828}.github-status.loading{background:#e3f2fd;color:#1565c0}
+.github-status.ok{background:#e8f5e9;color:#2e7d32}.github-status.err{background:#fdecea;color:#c62828}
 .github-token-wrap{position:relative;display:flex;align-items:center}.github-token-wrap input{flex:1;padding-right:40px}
-.toggle-token{position:absolute;right:10px;background:none;border:none;cursor:pointer;font-size:14px;opacity:.5;padding:4px}.toggle-token:hover{opacity:.9}
+.toggle-token{position:absolute;right:10px;background:none;border:none;cursor:pointer;font-size:14px;opacity:.5;padding:4px}
 .gh-push-log{background:#1e1e1e;color:#a8ff78;border-radius:8px;padding:12px 14px;font-family:monospace;font-size:11px;line-height:1.8;margin-top:12px;display:none;max-height:160px;overflow-y:auto;white-space:pre-wrap}
 .info-banner{background:linear-gradient(135deg,#fff8f0,#fff3e8);border:1.5px solid rgba(200,120,100,.2);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;margin-bottom:18px;font-size:13px;color:#5a3a2a;line-height:1.6}
 .info-banner .icon{font-size:20px;margin-top:1px;flex-shrink:0}
-.empty-state{text-align:center;padding:40px 20px;color:#bbb}
-.empty-state .icon{font-size:40px;margin-bottom:10px}
-.empty-state p{font-size:13px;line-height:1.7}
-.nav-icon{margin-right:4px}
-.sidebar-section{margin-bottom:6px}
-.sidebar-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#b09080;padding:8px 12px 4px}
+.empty-state{text-align:center;padding:40px 20px;color:#bbb}.empty-state .icon{font-size:40px;margin-bottom:10px}.empty-state p{font-size:13px;line-height:1.7}
+.nav-icon{margin-right:4px}.sidebar-section{margin-bottom:6px}.sidebar-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#b09080;padding:8px 12px 4px}
 .hist-card{background:#fff;border:1.5px solid #e8ddd5;border-radius:10px;margin-bottom:12px;overflow:hidden}
-.hist-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;background:linear-gradient(135deg,#fdfaf7,#fff8f3)}
-.hist-card-header:hover{background:#fdf5ee}
-.hist-card-body{display:none;padding:0 16px 14px;border-top:1px solid #f0e8e0}
-.hist-card-body.open{display:block}
+.hist-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;background:linear-gradient(135deg,#fdfaf7,#fff8f3)}.hist-card-header:hover{background:#fdf5ee}
+.hist-card-body{display:none;padding:0 16px 14px;border-top:1px solid #f0e8e0}.hist-card-body.open{display:block}
 .hist-tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600}
+.modal{background:var(--white);border-radius:14px;padding:30px 32px;max-width:580px;width:95%;box-shadow:0 10px 40px rgba(0,0,0,.2);max-height:90vh;overflow-y:auto}
+.modal-section{margin-top:16px;margin-bottom:4px}
+.modal-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#b09080;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.modal-section-title::after{content:"";flex:1;height:1px;background:#e8ddd5}
+.fg textarea{width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:"Outfit",sans-serif;font-size:13px;background:var(--cream);color:#3a2a20;outline:none;resize:vertical;min-height:60px;transition:border .15s}
+.fg textarea:focus{border-color:var(--terra)}
+.fg .hint{font-size:10px;color:#b09080;margin-top:3px}
+.remise-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.remise-chip{padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600;border:1.5px solid #e0d0c4;background:var(--cream);color:var(--brown);cursor:pointer;transition:all .15s}
+.remise-chip:hover{border-color:var(--terra);color:var(--terra)}.remise-chip.active{background:var(--terra);color:#fff;border-color:var(--terra)}
+.pwd-wrap{position:relative;display:flex;align-items:center}.pwd-wrap input{flex:1;padding-right:72px}
+.pwd-generate{position:absolute;right:6px;background:var(--cream);border:1px solid #e0d0c4;border-radius:5px;padding:3px 8px;font-size:10px;font-weight:600;color:var(--brown);cursor:pointer}
+.pwd-generate:hover{background:#e8ddd5}
 </style>
 </head>
 <body>
@@ -295,20 +301,9 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
     <!-- PAGE : INSCRIPTIONS -->
     <div class="page" id="page-inscriptions">
       <div class="page-title">Demandes d&#8217;inscription</div>
-      <div class="page-sub">Nouvelles demandes re&#231;ues via le formulaire inscription.html</div>
-      <div class="info-banner">
-        <span class="icon">&#128231;</span>
-        <div>Les demandes d&#8217;inscription sont envoy&#233;es par email &#224; <strong>cspoto@moulindesmoines.com</strong>. Pour chaque nouvelle demande, cr&#233;ez manuellement le compte dans l&#8217;onglet <strong>Comptes</strong> puis communiquez les identifiants au commercial.</div>
-      </div>
-      <div class="section-card">
-        <div class="section-card-title"><span>&#128203; Proc&#233;dure de traitement</span></div>
-        <div style="display:flex;flex-direction:column;gap:12px;padding:4px 0">
-          <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:26px;height:26px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div><div><strong>Recevoir l&#8217;email</strong> de demande &#224; cspoto@moulindesmoines.com</div></div>
-          <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:26px;height:26px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div><div><strong>Cr&#233;er le compte</strong> dans l&#8217;onglet Comptes avec le r&#244;le et la remise appropri&#233;s</div></div>
-          <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:26px;height:26px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">3</div><div><strong>Exporter index.html</strong> depuis les Param&#232;tres et le mettre en ligne</div></div>
-          <div style="display:flex;align-items:flex-start;gap:12px"><div style="width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">4</div><div><strong>Envoyer les identifiants</strong> au commercial par email</div></div>
-        </div>
-      </div>
+      <div class="page-sub">Nouvelles demandes re&#231;ues via inscription-client.html</div>
+      <div class="info-banner"><span class="icon">&#128231;</span><div>Envoy&#233;es &#224; <strong>cspoto@moulindesmoines.com</strong>. Cr&#233;er le compte dans l&#8217;onglet Comptes puis envoyer les identifiants.</div></div>
+      <div class="section-card"><div class="section-card-title"><span>&#128203; Proc&#233;dure</span></div><div style="display:flex;flex-direction:column;gap:10px;padding:4px 0"><div style="display:flex;gap:12px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">1</div><div>Recevoir l'email de demande</div></div><div style="display:flex;gap:12px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">2</div><div>Cr&#233;er le compte dans l'onglet Comptes</div></div><div style="display:flex;gap:12px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">3</div><div>Exporter index.html depuis Param&#232;tres</div></div><div style="display:flex;gap:12px;align-items:flex-start"><div style="width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">4</div><div>Envoyer les identifiants au magasin</div></div></div></div>
     </div>
 
     <!-- PAGE : HISTORIQUE -->
@@ -324,10 +319,7 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
         </div>
       </div>
       <div class="section-card">
-        <div class="section-card-title">
-          <span>&#128230; Commandes enregistr&#233;es localement</span>
-          <button class="btn-add" onclick="exportHistorique()" style="background:var(--green)" id="btn-export-hist">&#128202; Export Excel</button>
-        </div>
+        <div class="section-card-title"><span>&#128230; Commandes enregistr&#233;es localement</span><button class="btn-add" onclick="exportHistorique()" style="background:var(--green)" id="btn-export-hist">&#128202; Export Excel</button></div>
         <div id="historique-list">
           <div class="empty-state">
             <div class="icon">&#128230;</div>
@@ -342,36 +334,9 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
       <div class="page-title">Param&#232;tres</div>
       <div class="page-sub">Configuration et export des fichiers</div>
 
-      <div class="section-card">
-        <div class="section-card-title"><span>&#128029; Publication GitHub Pages</span></div>
-        <p style="font-size:12px;color:#888;margin-bottom:16px;line-height:1.7">Configurez une seule fois. <code>index.html</code> sera publi&#233; <strong>automatiquement</strong> sur GitHub apr&#232;s chaque modification.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Utilisateur GitHub</label><input type="text" id="gh-user" value="LOAC1118" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div>
-          <div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Repository</label><input type="text" id="gh-repo" value="MDM-BDC26" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div>
-          <div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Branche</label><input type="text" id="gh-branch" value="main" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div>
-          <div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Fichier cible</label><input type="text" id="gh-file" value="index.html" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div>
-        </div>
-        <div class="fg" style="margin-bottom:14px">
-          <label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Token GitHub <span style="color:var(--terra)">*</span></label>
-          <div class="github-token-wrap"><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%;padding:9px 40px 9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:monospace;font-size:12px;background:var(--cream);outline:none"><button class="toggle-token" onclick="toggleToken()">&#128065;</button></div>
-          <div style="font-size:10px;color:#a08070;margin-top:5px">&#128279; <a href="https://github.com/settings/tokens/new?scopes=repo&description=MDM-Admin" target="_blank" style="color:var(--terra)">Cr&#233;er un token</a> &#8594; cocher <strong>repo</strong> &#8594; coller ici.</div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-          <button class="btn-export" onclick="testGithub()">&#9654; Tester</button>
-          <button class="btn-add" onclick="pushToGithub(false)">&#128229; Pousser index.html</button>
-          <span id="gh-status"></span>
-        </div>
-        <div class="gh-push-log" id="gh-log"></div>
-      </div>
-      <div class="section-card">
-        <div class="section-card-title"><span>&#128229; Export manuel</span></div>
-        <p style="font-size:12px;color:#888;margin-bottom:14px">T&#233;l&#233;charge <code>index.html</code> si GitHub n&#8217;est pas configur&#233;.</p>
-        <button class="btn-export" onclick="exportIndex(false)">&#128229; T&#233;l&#233;charger index.html</button>
-      </div>
-      <div class="section-card">
-        <div class="section-card-title"><span>&#128260; R&#233;initialiser</span></div>
-        <button class="btn-sm" style="background:#fdecea;color:var(--red);border:none;padding:8px 16px;border-radius:7px;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif" onclick="resetComptes()">&#9888; R&#233;initialiser les comptes</button>
-      </div>
+      <div class="section-card"><div class="section-card-title"><span>&#128029; Publication GitHub Pages</span></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px"><div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Utilisateur</label><input type="text" id="gh-user" value="LOAC1118" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div><div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Repository</label><input type="text" id="gh-repo" value="MDM-BDC26" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div><div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Branche</label><input type="text" id="gh-branch" value="main" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div><div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Fichier</label><input type="text" id="gh-file" value="index.html" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div></div><div class="fg" style="margin-bottom:14px"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Token GitHub *</label><div class="github-token-wrap"><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%;padding:9px 40px 9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:monospace;font-size:12px;background:var(--cream);outline:none"><button class="toggle-token" onclick="toggleToken()">&#128065;</button></div></div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn-export" onclick="testGithub()">&#9654; Tester</button><button class="btn-add" onclick="pushToGithub(false)">&#128229; Pousser index.html</button><span id="gh-status"></span></div><div class="gh-push-log" id="gh-log"></div></div>
+      <div class="section-card"><div class="section-card-title"><span>&#128229; Export manuel</span></div><button class="btn-export" onclick="exportIndex(false)">&#128229; T&#233;l&#233;charger index.html</button></div>
+      <div class="section-card"><div class="section-card-title"><span>&#128260; R&#233;initialiser</span></div><button class="btn-sm" style="background:#fdecea;color:var(--red);border:none;padding:8px 16px;border-radius:7px;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif" onclick="resetComptes()">&#9888; R&#233;initialiser les comptes</button></div>
     </div>
 
   </main>
@@ -383,23 +348,49 @@ tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
 <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <h3 id="modal-title">Nouveau compte</h3>
-    <div class="fg-row">
-      <div class="fg"><label>Login *</label><input type="text" id="f-login" placeholder="ex: magasin4"></div>
-      <div class="fg"><label>Mot de passe *</label><input type="text" id="f-password" placeholder="ex: mag4-2026"></div>
-    </div>
-    <div class="fg"><label>Nom affich&#233; *</label><input type="text" id="f-nom" placeholder="ex: Magasin Bordeaux"></div>
-    <div class="fg"><label>Email r&#233;ception commandes</label><input type="email" id="f-email" placeholder="magasin@email.fr"></div>
-    <div class="fg-row">
-      <div class="fg">
-        <label>R&#244;le *</label>
-        <select id="f-role">
-          <option value="client">Client</option>
-          <option value="user">Commercial (user)</option>
-          <option value="admin">Administrateur</option>
-        </select>
+
+    <div class="modal-section">
+      <div class="modal-section-title">&#128274; Identifiants de connexion</div>
+      <div class="fg-row">
+        <div class="fg"><label>Login <span style="color:var(--terra)">*</span></label><input type="text" id="f-login" placeholder="ex: magasin_bordeaux" autocomplete="off"><div class="hint">Minuscules, sans espace</div></div>
+        <div class="fg"><label>Mot de passe <span style="color:var(--terra)">*</span></label><div class="pwd-wrap"><input type="text" id="f-password" placeholder="ex: Bdx-2026!" autocomplete="off"><button class="pwd-generate" onclick="genPassword()" type="button">&#9881; G&#233;n&#233;rer</button></div><div class="hint">Min. 6 caract&#232;res</div></div>
       </div>
-      <div class="fg"><label>Remise % (0 = aucune)</label><input type="number" id="f-remise" placeholder="0" min="0" max="99" step="0.5" value="0"></div>
     </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">&#128101; Informations du compte</div>
+      <div class="fg-row">
+        <div class="fg"><label>Nom affich&#233; <span style="color:var(--terra)">*</span></label><input type="text" id="f-nom" placeholder="ex: Magasin Bordeaux"></div>
+        <div class="fg"><label>R&#244;le <span style="color:var(--terra)">*</span></label><select id="f-role" onchange="onRoleChange()"><option value="client">&#127978; Client / Magasin</option><option value="user">&#128188; Commercial</option><option value="admin">&#128737; Administrateur</option></select></div>
+      </div>
+      <div class="fg-row">
+        <div class="fg"><label>Email r&#233;ception commandes</label><input type="email" id="f-email" placeholder="commandes@magasin.fr"><div class="hint">Copie de chaque commande</div></div>
+        <div class="fg"><label>T&#233;l&#233;phone</label><input type="tel" id="f-tel" placeholder="06 xx xx xx xx"></div>
+      </div>
+    </div>
+
+    <div class="modal-section" id="section-localisation">
+      <div class="modal-section-title">&#128205; Localisation</div>
+      <div class="fg-row">
+        <div class="fg"><label>Ville</label><input type="text" id="f-ville" placeholder="ex: Bordeaux"></div>
+        <div class="fg"><label>Code postal</label><input type="text" id="f-cp" placeholder="33000" maxlength="5"></div>
+      </div>
+      <div class="fg"><label>R&#233;gion</label><select id="f-region"><option value="">-- Non pr&#233;cis&#233;e --</option><option value="Alsace">Alsace</option><option value="Auvergne-Rh&#244;ne-Alpes">Auvergne-Rh&#244;ne-Alpes</option><option value="Bourgogne-Franche-Comt&#233;">Bourgogne-Franche-Comt&#233;</option><option value="Bretagne">Bretagne</option><option value="Centre-Val de Loire">Centre-Val de Loire</option><option value="Grand Est">Grand Est</option><option value="Hauts-de-France">Hauts-de-France</option><option value="&#206;le-de-France">&#206;le-de-France</option><option value="Lorraine">Lorraine</option><option value="Normandie">Normandie</option><option value="Nouvelle-Aquitaine">Nouvelle-Aquitaine</option><option value="Occitanie">Occitanie</option><option value="Pays de la Loire">Pays de la Loire</option><option value="Provence-Alpes-C&#244;te d'Azur">Provence-Alpes-C&#244;te d&#8217;Azur</option></select></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">&#128181; Conditions commerciales</div>
+      <div class="fg-row">
+        <div class="fg"><label>Remise groupement (%)</label><input type="number" id="f-remise" placeholder="0" min="0" max="99" step="0.5" value="0" oninput="updateRemiseChips(this.value)"><div class="remise-chips"><span class="remise-chip" onclick="setRemiseChip(0)">0%</span><span class="remise-chip" onclick="setRemiseChip(5)">5%</span><span class="remise-chip" onclick="setRemiseChip(10)">10%</span><span class="remise-chip" onclick="setRemiseChip(15)">15%</span><span class="remise-chip" onclick="setRemiseChip(20)">20%</span></div><div style="display:flex;align-items:center;gap:8px;margin-top:8px"><span style="font-size:10px;color:#b09080;white-space:nowrap">Remise libre :</span><input type="number" id="f-remise-libre" placeholder="ex: 7.5" min="0" max="99" step="0.1" style="width:90px;padding:5px 8px;border:1.5px solid #e0d0c4;border-radius:6px;font-family:Outfit,sans-serif;font-size:12px;background:var(--cream);outline:none" oninput="setRemiseChip(parseFloat(this.value)||0)"><span style="font-size:11px;color:#b09080">%</span></div></div>
+        <div class="fg"><label>N&#176; client MDM</label><input type="text" id="f-numclient" placeholder="ex: MDM-0123"><div class="hint">R&#233;f&#233;rence interne MDM</div></div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">&#128203; Notes internes</div>
+      <div class="fg"><textarea id="f-notes" placeholder="Informations compl&#233;mentaires, conditions particuli&#232;res&#8230;"></textarea></div>
+    </div>
+
     <div class="modal-alert" id="modal-alert"></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Annuler</button>
@@ -716,17 +707,37 @@ function openModal(idx){
     document.getElementById("f-login").value    = c.login;
     document.getElementById("f-password").value = c.password;
     document.getElementById("f-nom").value      = c.nom;
-    document.getElementById("f-role").value     = c.role;
-    document.getElementById("f-remise").value   = c.remise || 0;
-    document.getElementById("f-email").value    = c.email  || "";
+    document.getElementById("f-role").value      = c.role;
+    document.getElementById("f-remise").value    = c.remise    || 0;
+    document.getElementById("f-email").value     = c.email     || "";
+    document.getElementById("f-tel").value       = c.tel       || "";
+    document.getElementById("f-ville").value     = c.ville     || "";
+    document.getElementById("f-cp").value        = c.cp        || "";
+    document.getElementById("f-region").value    = c.region    || "";
+    document.getElementById("f-numclient").value = c.numclient || "";
+    document.getElementById("f-notes").value     = c.notes     || "";
+    document.getElementById("f-login").disabled  = true;
+    updateRemiseChips(c.remise || 0);
+    var libre=document.getElementById('f-remise-libre');if(libre)libre.value=c.remise||'';
+    onRoleChange();
     document.getElementById("f-login").disabled = true; // login non modifiable
   } else {
     document.getElementById("f-login").value    = "";
     document.getElementById("f-password").value = "";
     document.getElementById("f-nom").value      = "";
-    document.getElementById("f-role").value     = "client";
-    document.getElementById("f-remise").value   = "0";
-    document.getElementById("f-email").value    = "";
+    document.getElementById("f-role").value      = "client";
+    document.getElementById("f-remise").value    = "0";
+    document.getElementById("f-email").value     = "";
+    document.getElementById("f-tel").value       = "";
+    document.getElementById("f-ville").value     = "";
+    document.getElementById("f-cp").value        = "";
+    document.getElementById("f-region").value    = "";
+    document.getElementById("f-numclient").value = "";
+    document.getElementById("f-notes").value     = "";
+    document.getElementById("f-login").disabled  = false;
+    updateRemiseChips(0);
+    var libre=document.getElementById('f-remise-libre');if(libre)libre.value='';
+    onRoleChange();
     document.getElementById("f-login").disabled = false;
   }
   document.getElementById("modal").classList.add("open");
@@ -775,15 +786,21 @@ function saveCompte(){
       alertEl.style.display = "block";
       return;
     }
-    var femail = document.getElementById("f-email").value.trim();
-    comptes.push({ login:login, password:password, nom:nom, role:role, remise:remise, email:femail });
+    var fe=document.getElementById("f-email").value.trim(),ft=document.getElementById("f-tel").value.trim(),fv=document.getElementById("f-ville").value.trim(),fc=document.getElementById("f-cp").value.trim(),fr=document.getElementById("f-region").value,fn=document.getElementById("f-numclient").value.trim(),fno=document.getElementById("f-notes").value.trim();
+    comptes.push({login:login,password:password,nom:nom,role:role,remise:remise,email:fe,tel:ft,ville:fv,cp:fc,region:fr,numclient:fn,notes:fno});
     showToast("\u2705 Compte cr\u00e9\u00e9 : "+login);
   } else {
-    comptes[editIndex].password = password;
-    comptes[editIndex].nom      = nom;
-    comptes[editIndex].role     = role;
-    comptes[editIndex].remise   = remise;
-    comptes[editIndex].email    = document.getElementById("f-email").value.trim();
+    comptes[editIndex].password  = password;
+    comptes[editIndex].nom       = nom;
+    comptes[editIndex].role      = role;
+    comptes[editIndex].remise    = remise;
+    comptes[editIndex].email     = document.getElementById("f-email").value.trim();
+    comptes[editIndex].tel       = document.getElementById("f-tel").value.trim();
+    comptes[editIndex].ville     = document.getElementById("f-ville").value.trim();
+    comptes[editIndex].cp        = document.getElementById("f-cp").value.trim();
+    comptes[editIndex].region    = document.getElementById("f-region").value;
+    comptes[editIndex].numclient = document.getElementById("f-numclient").value.trim();
+    comptes[editIndex].notes     = document.getElementById("f-notes").value.trim();
     showToast("\u2705 Compte modifi\u00e9 : "+comptes[editIndex].login);
   }
 
@@ -852,180 +869,16 @@ loadComptes();
 renderComptes();
 loadGhConfig();
 
-// ============================================
-// PAGES NAVIGATION
-// ============================================
-function showPage(id, el) {
-  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
-  var pg = document.getElementById('page-' + id);
-  if (pg) pg.classList.add('active');
-  if (el) el.classList.add('active');
-  if (id === 'dashboard') renderComptes();
-  if (id === 'historique') renderHistorique();
-}
-
-// ============================================
-// HISTORIQUE DES COMMANDES (localStorage)
-// ============================================
-function renderHistorique() {
-  var container = document.getElementById('historique-list');
-  if (!container) return;
-  var allOrders = [];
-  comptes.forEach(function(c) {
-    var key = 'mdm_history_' + c.login.replace(/[^a-zA-Z0-9]/g,'_');
-    try {
-      var saved = localStorage.getItem(key);
-      if (saved) {
-        var orders = JSON.parse(saved);
-        orders.forEach(function(o) { o._login = c.login; o._nom = c.nom || c.login; allOrders.push(o); });
-      }
-    } catch(e) {}
-  });
-  allOrders.sort(function(a,b){ return new Date(b.date||0) - new Date(a.date||0); });
-  var btn = document.getElementById('btn-export-hist');
-  if (btn) btn.style.display = allOrders.length ? 'inline-flex' : 'none';
-  if (!allOrders.length) {
-    container.innerHTML = '<div class="empty-state"><div class="icon">&#128230;</div><p>Aucune commande enregistr\u00e9e localement.<br>Les commandes arrivent directement par email.</p></div>';
-    return;
-  }
-  var html = '';
-  allOrders.forEach(function(o, idx) {
-    var dateStr = o.date ? (typeof o.date === 'string' && o.date.indexOf('T') >= 0 ? new Date(o.date).toLocaleDateString('fr-FR') : o.date) : 'Date inconnue';
-    var mag    = o.magasin || o._nom || '\u2014';
-    var nbRef  = o.nbRefs  || (o.articles ? o.articles.length : '?');
-    var nbCol  = o.nbColis || '?';
-    var totNet = typeof o.totalNet  === 'number' ? o.totalNet.toFixed(2).replace('.',',')  + '\u00a0\u20ac' : '\u2014';
-    var totBrut= typeof o.totalBrut === 'number' ? o.totalBrut.toFixed(2).replace('.',',') + '\u00a0\u20ac' : '\u2014';
-    var remStr = o.remise > 0 ? ' <span class="hist-tag" style="background:#fff3e0;color:#c87864">-' + o.remise + '%</span>' : '';
-    html += '<div class="hist-card">';
-    html += '<div class="hist-card-header" onclick="toggleHist(' + idx + ')">';
-    html += '<div style="display:flex;align-items:center;gap:10px"><span style="font-weight:700;color:var(--brown)">' + escH(mag) + '</span>' + remStr + '<span style="font-size:11px;color:#aaa">' + escH(o._login) + '</span></div>';
-    html += '<div style="display:flex;align-items:center;gap:14px;font-size:12px"><span style="color:#888">' + dateStr + '</span><span style="color:var(--green);font-weight:700">' + totNet + '</span><span style="color:#aaa;font-size:11px">' + nbRef + '\u00a0r\u00e9f. / ' + nbCol + '\u00a0colis</span><span style="color:#ccc;font-size:16px" id="arrow-' + idx + '">\u25bc</span></div>';
-    html += '</div>';
-    if (o.articles && o.articles.length) {
-      html += '<div class="hist-card-body" id="hist-body-' + idx + '">';
-      html += '<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:10px"><thead><tr style="background:#fdf5ee"><th style="padding:6px 8px;text-align:left;color:var(--brown)">Code</th><th style="padding:6px 8px;text-align:left;color:var(--brown)">D\u00e9signation</th><th style="padding:6px 8px;text-align:center;color:var(--brown)">Qt\u00e9</th><th style="padding:6px 8px;text-align:center;color:var(--brown)">PCB</th><th style="padding:6px 8px;text-align:right;color:var(--brown)">PU HT</th><th style="padding:6px 8px;text-align:right;color:var(--brown)">Total HT</th></tr></thead><tbody>';
-      o.articles.forEach(function(a, ai) {
-        var bg = ai % 2 === 0 ? '#fff' : '#fdfaf7';
-        html += '<tr style="background:' + bg + '"><td style="padding:5px 8px;font-weight:600;color:var(--brown)">' + escH(a.code||'') + '</td><td style="padding:5px 8px">' + escH(a.libelle||'') + '</td><td style="padding:5px 8px;text-align:center">' + (a.qty||'') + '</td><td style="padding:5px 8px;text-align:center;color:#888">' + (a.pcb||'') + '</td><td style="padding:5px 8px;text-align:right;color:var(--green)">' + (typeof a.puHT==='number'?a.puHT.toFixed(2).replace('.',','):a.puHT||'') + '\u00a0\u20ac</td><td style="padding:5px 8px;text-align:right;font-weight:600;color:var(--terra)">' + (typeof a.totalHT==='number'?a.totalHT.toFixed(2).replace('.',','):a.totalHT||'') + '\u00a0\u20ac</td></tr>';
-      });
-      html += '</tbody></table><div style="text-align:right;padding-top:8px;font-size:12px;color:#888">Total HT brut\u00a0: <strong style="color:var(--brown)">' + totBrut + '</strong> &bull; Total HT net\u00a0: <strong style="color:var(--green)">' + totNet + '</strong></div>';
-      html += '</div>';
-    }
-    html += '</div>';
-  });
-  container.innerHTML = html;
-  window._allOrders = allOrders;
-}
-
-function toggleHist(idx) {
-  var body = document.getElementById('hist-body-' + idx);
-  var arrow = document.getElementById('arrow-' + idx);
-  if (!body) return;
-  var open = body.classList.toggle('open');
-  if (arrow) arrow.style.transform = open ? 'rotate(180deg)' : '';
-}
-
-// ============================================
-// EXPORT EXCEL — COMPTES
-// ============================================
-function exportComptes() {
-  if (!comptes || !comptes.length) { showToast('\u26a0 Aucun compte \u00e0 exporter.'); return; }
-  var roleLabel = { admin:'Administrateur', user:'Commercial', client:'Client' };
-  var brown='#78503C',terra='#C87864',gold='#D2B469',cream='#FDF5EE',green='#1A5C2E',white='#FFFFFF',orange='#FFF3E0';
-  function rc(r){ return r==='admin'?terra:r==='user'?green:'#1565c0'; }
-  function rb(r){ return r==='admin'?'#FCE4D6':r==='user'?'#E8F5E9':'#E3F2FD'; }
-  function xc(v,t,bd,bg,co,al){
-    var st=[];if(bd)st.push('font-weight:bold');if(bg)st.push('background:'+bg);if(co)st.push('color:'+co);if(al)st.push('text-align:'+al);
-    var sa=st.length?' style="'+st.join(';')+'"':'';
-    var tp=t==='n'?'Number':'String';
-    var v2=String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    return '<Cell'+sa+'><Data ss:Type="'+tp+'">'+v2+'</Data></Cell>';
-  }
-  function xs(v,b,bg,c,a){return xc(v,'s',b,bg,c,a||'left');}
-  function xn(v,b,bg,c){return xc(v,'n',b,bg,c,'center');}
-  var today=new Date().toLocaleDateString('fr-FR'), rows='';
-  rows+='<Row ss:Height="26"><Cell ss:MergeAcross="5" style="background:'+brown+';color:'+white+';font-weight:bold;font-size:13pt;text-align:center"><Data ss:Type="String">MOULIN DES MOINES \u2014 Comptes utilisateurs</Data></Cell></Row>';
-  rows+='<Row ss:Height="16"><Cell ss:MergeAcross="5" style="background:'+cream+';color:#888;font-size:9pt;text-align:center"><Data ss:Type="String">Export\u00e9 le '+today+' \u2014 '+comptes.length+' compte(s)</Data></Cell></Row>';
-  rows+='<Row ss:Height="6"><Cell ss:MergeAcross="5"/></Row>';
-  rows+='<Row ss:Height="20">';
-  ['Login','Nom','R\u00f4le','Remise (%)','Email','Mot de passe'].forEach(function(h,i){rows+=xs(h,true,brown,white,i>=3?'center':'left');});
-  rows+='</Row>';
-  comptes.forEach(function(c,i){
-    var bg=i%2===0?white:cream;
-    rows+='<Row ss:Height="18">'+xs(c.login||'',true,bg,brown)+xs(c.nom||'',false,bg,'#3a2a20')+xs(roleLabel[c.role]||c.role,true,rb(c.role),rc(c.role),'center')+((c.remise>0)?xn(c.remise,true,orange,terra):xs('-',false,bg,'#ccc','center'))+xs(c.email||'-',false,bg,'#555')+xs(c.password||'',false,bg,'#888')+'</Row>';
-  });
-  rows+='<Row ss:Height="6"><Cell ss:MergeAcross="5"/></Row>';
-  var nbC=comptes.filter(function(c){return c.role==='client';}).length,nbU=comptes.filter(function(c){return c.role==='user';}).length,nbA=comptes.filter(function(c){return c.role==='admin';}).length,nbR=comptes.filter(function(c){return c.remise>0;}).length;
-  [['Total comptes',comptes.length],['Administrateurs',nbA],['Commerciaux',nbU],['Clients',nbC],['Avec remise',nbR]].forEach(function(st){rows+='<Row ss:Height="18"><Cell ss:MergeAcross="3"/>'+xs(st[0],true,cream,brown,'right')+xn(st[1],true,gold,brown)+'</Row>';});
-  var cols=[100,160,110,75,180,120].map(function(w){return '<Column ss:Width="'+w+'"/>';}).join('');
-  _dlXls('<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Excel.Sheet"?>\n<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n<Styles><Style ss:ID="Default"><Font ss:FontName="Calibri" ss:Size="10"/></Style></Styles>\n<Worksheet ss:Name="Comptes MDM">\n<Table>\n'+cols+rows+'</Table>\n</Worksheet>\n</Workbook>','Comptes_MDM_'+today.replace(/\//g,'-')+'.xls');
-  showToast('\u2705 Export comptes t\u00e9l\u00e9charg\u00e9 ('+comptes.length+' comptes)');
-}
-
-// ============================================
-// EXPORT EXCEL — HISTORIQUE DES COMMANDES
-// ============================================
-function exportHistorique() {
-  var allOrders = window._allOrders || [];
-  if (!allOrders.length) { showToast('\u26a0 Aucune commande \u00e0 exporter.'); return; }
-  var brown='#78503C',terra='#C87864',gold='#D2B469',cream='#FDF5EE',green='#1A5C2E',white='#FFFFFF',orange='#FFF3E0';
-  function xc(v,t,bd,bg,co,al){
-    var st=[];if(bd)st.push('font-weight:bold');if(bg)st.push('background:'+bg);if(co)st.push('color:'+co);if(al)st.push('text-align:'+al);
-    var sa=st.length?' style="'+st.join(';')+'"':'';
-    var tp=t==='n'?'Number':'String';
-    var v2=String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    return '<Cell'+sa+'><Data ss:Type="'+tp+'">'+v2+'</Data></Cell>';
-  }
-  function xs(v,b,bg,c,a){return xc(v,'s',b,bg,c,a||'left');}
-  function xn(v,b,bg,c){return xc(v,'n',b,bg,c,'right');}
-  var today=new Date().toLocaleDateString('fr-FR');
-  // Feuille 1 : Résumé
-  var r1='';
-  r1+='<Row ss:Height="26"><Cell ss:MergeAcross="7" style="background:'+brown+';color:'+white+';font-weight:bold;font-size:13pt;text-align:center"><Data ss:Type="String">MOULIN DES MOINES \u2014 Historique des commandes</Data></Cell></Row>';
-  r1+='<Row ss:Height="16"><Cell ss:MergeAcross="7" style="background:'+cream+';color:#888;font-size:9pt;text-align:center"><Data ss:Type="String">Export\u00e9 le '+today+' \u2014 '+allOrders.length+' commande(s)</Data></Cell></Row>';
-  r1+='<Row ss:Height="6"><Cell ss:MergeAcross="7"/></Row>';
-  r1+='<Row ss:Height="20">';
-  ['Date','Magasin','Login','Email','Remise (%)','Nb r\u00e9f.','Nb colis','Total HT net'].forEach(function(h,i){r1+=xs(h,true,brown,white,i>=4?'center':'left');});
-  r1+='</Row>';
-  var tG=0;
-  allOrders.forEach(function(o,i){
-    var bg=i%2===0?white:cream;
-    var ds=o.date?(typeof o.date==='string'&&o.date.indexOf('T')>=0?new Date(o.date).toLocaleDateString('fr-FR'):o.date):'';
-    var tn=typeof o.totalNet==='number'?o.totalNet:0; tG+=tn;
-    r1+='<Row ss:Height="18">'+xs(ds,false,bg,'#555')+xs(o.magasin||'',true,bg,brown)+xs(o._login||'',false,bg,'#888')+xs(o.mail||'',false,bg,'#555')+((o.remise>0)?xn(o.remise,false,orange,terra):xs('-',false,bg,'#ccc','center'))+xn(o.nbRefs||(o.articles?o.articles.length:0),false,bg,'#555')+xn(o.nbColis||0,false,bg,'#555')+xn(parseFloat(tn.toFixed(2)),true,orange,terra)+'</Row>';
-  });
-  r1+='<Row ss:Height="6"><Cell ss:MergeAcross="7"/></Row>';
-  r1+='<Row ss:Height="20"><Cell ss:MergeAcross="6"/>'+xn(parseFloat(tG.toFixed(2)),true,gold,brown)+'</Row>';
-  // Feuille 2 : Détail
-  var r2='';
-  r2+='<Row ss:Height="26"><Cell ss:MergeAcross="8" style="background:'+brown+';color:'+white+';font-weight:bold;font-size:13pt;text-align:center"><Data ss:Type="String">MOULIN DES MOINES \u2014 D\u00e9tail des articles command\u00e9s</Data></Cell></Row>';
-  r2+='<Row ss:Height="6"><Cell ss:MergeAcross="8"/></Row>';
-  r2+='<Row ss:Height="20">';
-  ['Date','Magasin','Login','Code','D\u00e9signation','Qt\u00e9 colis','PCB','PU HT net','Total HT'].forEach(function(h,i){r2+=xs(h,true,brown,white,i>=5?'center':'left');});
-  r2+='</Row>';
-  allOrders.forEach(function(o){
-    var ds=o.date?(typeof o.date==='string'&&o.date.indexOf('T')>=0?new Date(o.date).toLocaleDateString('fr-FR'):o.date):'';
-    if(o.articles&&o.articles.length){
-      o.articles.forEach(function(a,ai){
-        var bg=ai%2===0?white:cream;
-        r2+='<Row ss:Height="17">'+xs(ai===0?ds:'',false,bg,'#888')+xs(ai===0?(o.magasin||''):'',ai===0,bg,ai===0?brown:'#888')+xs(ai===0?(o._login||''):'',false,bg,'#aaa')+xs(a.code||'',true,bg,brown)+xs(a.libelle||'',false,bg,'#3a2a20')+xn(a.qty||0,true,orange,terra)+xn(a.pcb||1,false,bg,'#888')+xn(typeof a.puHT==='number'?parseFloat(a.puHT.toFixed(2)):0,false,bg,green)+xn(typeof a.totalHT==='number'?parseFloat(a.totalHT.toFixed(2)):0,true,orange,terra)+'</Row>';
-      });
-    }
-  });
-  var c1=[80,160,80,70,100,65,65,90].map(function(w){return '<Column ss:Width="'+w+'"/>';}).join('');
-  var c2=[80,160,80,80,260,60,50,75,90].map(function(w){return '<Column ss:Width="'+w+'"/>';}).join('');
-  _dlXls('<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Excel.Sheet"?>\n<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n<Styles><Style ss:ID="Default"><Font ss:FontName="Calibri" ss:Size="10"/></Style></Styles>\n<Worksheet ss:Name="R\u00e9sum\u00e9 commandes">\n<Table>\n'+c1+r1+'</Table>\n</Worksheet>\n<Worksheet ss:Name="D\u00e9tail articles">\n<Table>\n'+c2+r2+'</Table>\n</Worksheet>\n</Workbook>','Historique_MDM_'+today.replace(/\//g,'-')+'.xls');
-  showToast('\u2705 Export historique t\u00e9l\u00e9charg\u00e9 ('+allOrders.length+' commandes)');
-}
-
-function _dlXls(xml, filename) {
-  var blob=new Blob([xml],{type:'application/vnd.ms-excel;charset=utf-8'});
-  var a=document.createElement('a'); a.download=filename; a.href=URL.createObjectURL(blob);
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
-}
+function showPage(id,el){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});var pg=document.getElementById('page-'+id);if(pg)pg.classList.add('active');if(el)el.classList.add('active');if(id==='dashboard')renderComptes();if(id==='historique')renderHistorique();}
+function onRoleChange(){var role=document.getElementById('f-role').value;var sec=document.getElementById('section-localisation');if(sec)sec.style.display=role==='client'?'block':'none';}
+function setRemiseChip(val){document.getElementById('f-remise').value=val;var libre=document.getElementById('f-remise-libre');if(libre)libre.value=val||'';updateRemiseChips(val);}
+function updateRemiseChips(val){document.querySelectorAll('.remise-chip').forEach(function(c){c.classList.toggle('active',parseFloat(c.textContent)===parseFloat(val));});}
+function genPassword(){var chars='ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#';var pwd='';for(var i=0;i<10;i++)pwd+=chars.charAt(Math.floor(Math.random()*chars.length));document.getElementById('f-password').value=pwd;}
+function renderHistorique(){var container=document.getElementById('historique-list');if(!container)return;var allOrders=[];comptes.forEach(function(c){var key='mdm_history_'+c.login.replace(/[^a-zA-Z0-9]/g,'_');try{var saved=localStorage.getItem(key);if(saved){var orders=JSON.parse(saved);orders.forEach(function(o){o._login=c.login;o._nom=c.nom||c.login;allOrders.push(o);});}}catch(e){}});allOrders.sort(function(a,b){return new Date(b.date||0)-new Date(a.date||0);});var btn=document.getElementById('btn-export-hist');if(btn)btn.style.display=allOrders.length?'inline-flex':'none';if(!allOrders.length){container.innerHTML='<div class="empty-state"><div class="icon">&#128230;</div><p>Aucune commande enregistr\u00e9e localement.</p></div>';return;}var html='';allOrders.forEach(function(o,idx){var ds=o.date?(typeof o.date==='string'&&o.date.indexOf('T')>=0?new Date(o.date).toLocaleDateString('fr-FR'):o.date):'?';var tn=typeof o.totalNet==='number'?o.totalNet.toFixed(2).replace('.',',')+'\u00a0\u20ac':'\u2014';var rem=o.remise>0?' <span class="hist-tag" style="background:#fff3e0;color:#c87864">-'+o.remise+'%</span>':'';html+='<div class="hist-card"><div class="hist-card-header" onclick="toggleHist('+idx+')"><div style="display:flex;align-items:center;gap:10px"><span style="font-weight:700;color:var(--brown)">'+escH(o.magasin||o._nom||'\u2014')+'</span>'+rem+'<span style="font-size:11px;color:#aaa">'+escH(o._login)+'</span></div><div style="display:flex;align-items:center;gap:14px;font-size:12px"><span style="color:#888">'+ds+'</span><span style="color:var(--green);font-weight:700">'+tn+'</span><span style="color:#ccc;font-size:16px" id="arrow-'+idx+'">\u25bc</span></div></div>';if(o.articles&&o.articles.length){html+='<div class="hist-card-body" id="hist-body-'+idx+'"><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:10px"><thead><tr style="background:#fdf5ee"><th style="padding:6px 8px;color:var(--brown)">Code</th><th style="padding:6px 8px;color:var(--brown)">D\u00e9signation</th><th style="padding:6px 8px;text-align:center;color:var(--brown)">Qt\u00e9</th><th style="padding:6px 8px;text-align:right;color:var(--brown)">Total HT</th></tr></thead><tbody>';o.articles.forEach(function(a,ai){var bg=ai%2===0?'#fff':'#fdfaf7';html+='<tr style="background:'+bg+'"><td style="padding:5px 8px;font-weight:600;color:var(--brown)">'+escH(a.code||'')+'</td><td style="padding:5px 8px">'+escH(a.libelle||'')+'</td><td style="padding:5px 8px;text-align:center">'+(a.qty||'')+'</td><td style="padding:5px 8px;text-align:right;font-weight:600;color:var(--terra)">'+(typeof a.totalHT==='number'?a.totalHT.toFixed(2).replace('.',',')+'\u00a0\u20ac':a.totalHT||'')+'</td></tr>';});html+='</tbody></table></div>';}html+='</div>';});container.innerHTML=html;window._allOrders=allOrders;}
+function toggleHist(idx){var b=document.getElementById('hist-body-'+idx);var a=document.getElementById('arrow-'+idx);if(!b)return;var o=b.classList.toggle('open');if(a)a.style.transform=o?'rotate(180deg)':'';}
+function exportComptes(){if(!comptes||!comptes.length){showToast('\u26a0 Aucun compte.');return;}var rl={admin:'Administrateur',user:'Commercial',client:'Client'};var br='#78503C',te='#C87864',go='#D2B469',cr='#FDF5EE',gr='#1A5C2E',wh='#FFFFFF',or='#FFF3E0';function rc(r){return r==='admin'?te:r==='user'?gr:'#1565c0';}function rb(r){return r==='admin'?'#FCE4D6':r==='user'?'#E8F5E9':'#E3F2FD';}function xc(v,t,bd,bg,co,al){var st=[];if(bd)st.push('font-weight:bold');if(bg)st.push('background:'+bg);if(co)st.push('color:'+co);if(al)st.push('text-align:'+al);var sa=st.length?' style="'+st.join(';')+'"':'';var tp=t==='n'?'Number':'String';var v2=String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');return '<Cell'+sa+'><Data ss:Type="'+tp+'">'+v2+'</Data></Cell>';}function xs(v,b,bg,c,a){return xc(v,'s',b,bg,c,a||'left');}function xn(v,b,bg,c){return xc(v,'n',b,bg,c,'center');}var today=new Date().toLocaleDateString('fr-FR'),rows='';rows+='<Row ss:Height="26"><Cell ss:MergeAcross="5" style="background:'+br+';color:'+wh+';font-weight:bold;font-size:13pt;text-align:center"><Data ss:Type="String">MOULIN DES MOINES \u2014 Comptes</Data></Cell></Row>';rows+='<Row ss:Height="16"><Cell ss:MergeAcross="5" style="background:'+cr+';color:#888;font-size:9pt;text-align:center"><Data ss:Type="String">'+today+' \u2014 '+comptes.length+' compte(s)</Data></Cell></Row>';rows+='<Row ss:Height="6"><Cell ss:MergeAcross="5"/></Row>';rows+='<Row ss:Height="20">';['Login','Nom','R\u00f4le','Remise (%)','Email','Mot de passe'].forEach(function(h,i){rows+=xs(h,true,br,wh,i>=3?'center':'left');});rows+='</Row>';comptes.forEach(function(c,i){var bg=i%2===0?wh:cr;rows+='<Row ss:Height="18">'+xs(c.login||'',true,bg,br)+xs(c.nom||'',false,bg,'#3a2a20')+xs(rl[c.role]||c.role,true,rb(c.role),rc(c.role),'center')+((c.remise>0)?xn(c.remise,true,or,te):xs('-',false,bg,'#ccc','center'))+xs(c.email||'-',false,bg,'#555')+xs(c.password||'',false,bg,'#888')+'</Row>';});rows+='<Row ss:Height="6"><Cell ss:MergeAcross="5"/></Row>';var nbc=comptes.filter(function(c){return c.role==='client';}).length,nbu=comptes.filter(function(c){return c.role==='user';}).length,nba=comptes.filter(function(c){return c.role==='admin';}).length,nbr=comptes.filter(function(c){return c.remise>0;}).length;[['Total',comptes.length],['Admins',nba],['Commerciaux',nbu],['Clients',nbc],['Avec remise',nbr]].forEach(function(s){rows+='<Row ss:Height="18"><Cell ss:MergeAcross="3"/>'+xs(s[0],true,cr,br,'right')+xn(s[1],true,go,br)+'</Row>';});var cols=[100,160,110,75,180,120].map(function(w){return '<Column ss:Width="'+w+'"/>';}).join('');_dlXls('<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Excel.Sheet"?>\n<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Styles><Style ss:ID="Default"><Font ss:FontName="Calibri" ss:Size="10"/></Style></Styles><Worksheet ss:Name="Comptes MDM"><Table>\n'+cols+rows+'</Table></Worksheet></Workbook>','Comptes_MDM_'+today.replace(/\//g,'-')+'.xls');showToast('\u2705 Export t\u00e9l\u00e9charg\u00e9 ('+comptes.length+' comptes)');}
+function exportHistorique(){var all=window._allOrders||[];if(!all.length){showToast('\u26a0 Aucune commande.');return;}var br='#78503C',te='#C87864',go='#D2B469',cr='#FDF5EE',wh='#FFFFFF',or='#FFF3E0';function xc(v,t,bd,bg,co,al){var st=[];if(bd)st.push('font-weight:bold');if(bg)st.push('background:'+bg);if(co)st.push('color:'+co);if(al)st.push('text-align:'+al);var sa=st.length?' style="'+st.join(';')+'"':'';var tp=t==='n'?'Number':'String';var v2=String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');return '<Cell'+sa+'><Data ss:Type="'+tp+'">'+v2+'</Data></Cell>';}function xs(v,b,bg,c,a){return xc(v,'s',b,bg,c,a||'left');}function xn(v,b,bg,c){return xc(v,'n',b,bg,c,'right');}var today=new Date().toLocaleDateString('fr-FR'),r1='';r1+='<Row ss:Height="26"><Cell ss:MergeAcross="7" style="background:'+br+';color:'+wh+';font-weight:bold;font-size:13pt;text-align:center"><Data ss:Type="String">MOULIN DES MOINES \u2014 Historique commandes</Data></Cell></Row>';r1+='<Row ss:Height="6"><Cell ss:MergeAcross="7"/></Row>';r1+='<Row ss:Height="20">';['Date','Magasin','Login','Email','Remise','Nb r\u00e9f.','Nb colis','Total HT net'].forEach(function(h,i){r1+=xs(h,true,br,wh,i>=4?'center':'left');});r1+='</Row>';var tG=0;all.forEach(function(o,i){var bg=i%2===0?wh:cr;var ds=o.date?(typeof o.date==='string'&&o.date.indexOf('T')>=0?new Date(o.date).toLocaleDateString('fr-FR'):o.date):'';var tn=typeof o.totalNet==='number'?o.totalNet:0;tG+=tn;r1+='<Row ss:Height="18">'+xs(ds,false,bg,'#555')+xs(o.magasin||'',true,bg,br)+xs(o._login||'',false,bg,'#888')+xs(o.mail||'',false,bg,'#555')+((o.remise>0)?xn(o.remise,false,or,te):xs('-',false,bg,'#ccc','center'))+xn(o.nbRefs||(o.articles?o.articles.length:0),false,bg,'#555')+xn(o.nbColis||0,false,bg,'#555')+xn(parseFloat(tn.toFixed(2)),true,or,te)+'</Row>';});r1+='<Row ss:Height="6"><Cell ss:MergeAcross="7"/></Row><Row ss:Height="20"><Cell ss:MergeAcross="6"/>'+xn(parseFloat(tG.toFixed(2)),true,go,br)+'</Row>';var c1=[80,160,80,120,60,60,60,90].map(function(w){return '<Column ss:Width="'+w+'"/>';}).join('');_dlXls('<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Excel.Sheet"?>\n<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Styles><Style ss:ID="Default"><Font ss:FontName="Calibri" ss:Size="10"/></Style></Styles><Worksheet ss:Name="Historique"><Table>\n'+c1+r1+'</Table></Worksheet></Workbook>','Historique_MDM_'+today.replace(/\//g,'-')+'.xls');showToast('\u2705 Export historique ('+all.length+' commandes)');}
+function _dlXls(xml,fn){var b=new Blob([xml],{type:'application/vnd.ms-excel;charset=utf-8'});var a=document.createElement('a');a.download=fn;a.href=URL.createObjectURL(b);document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(a.href);},1000);}
 
 loadComptes();
 renderComptes();
