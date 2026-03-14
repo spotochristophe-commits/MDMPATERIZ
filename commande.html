@@ -115,6 +115,7 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
   </div>
   <div class="header-actions">
     <span style="font-size:11px;opacity:.7;margin-right:4px">&#128100; <span id="user-info"></span></span>
+    <button class="btn btn-outline no-print" id="btn-admin" onclick="window.location.href='admin.html'" style="display:none;border-color:rgba(210,180,105,.6);color:#ffd580">&#9881; Admin</button>
     <button class="btn btn-outline no-print" onclick="doPrint()">&#128424; PDF / Imprimer</button>
     <button class="btn btn-gold no-print" onclick="openModal()">&#128231; Envoyer la commande</button>
     <button class="btn btn-outline no-print" onclick="logout()" style="border-color:rgba(255,100,80,.6);color:#ffb0a0">&#x23FB; D&#233;connexion</button>
@@ -236,6 +237,11 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
       // Nom utilisateur
       var el = document.getElementById("user-info");
       if(el) el.textContent = data.nom || data.login;
+      // Bouton admin visible uniquement pour role=admin
+      if(data.role === "admin"){
+        var adminBtn = document.getElementById("btn-admin");
+        if(adminBtn) adminBtn.style.display = "inline-flex";
+      }
       // Remise du compte : appliquer automatiquement
       if(data.remise && data.remise > 0){
         var r = parseFloat(data.remise);
