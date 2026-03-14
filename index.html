@@ -115,88 +115,11 @@ body{font-family:"Outfit",sans-serif;min-height:100vh;display:flex;align-items:c
 // Format : { login, password, nom, role }
 // ═══════════════════════════════════════════════════════════
 var COMPTES = [
-  {
-    "login": "admin",
-    "password": "mdm2026",
-    "nom": "Administrateur",
-    "role": "admin",
-    "remise": 0,
-    "email": "cspoto@moulindesmoines.com"
-  },
-  {
-    "login": "commercial",
-    "password": "mdm-ventes",
-    "nom": "Spoto Christophe",
-    "role": "user",
-    "remise": 0,
-    "email": "cspoto@moulindesmoines.com"
-  },
-  {
-    "login": "magasin1",
-    "password": "mag1-2026",
-    "nom": "Magasin Alsace",
-    "role": "client",
-    "remise": 5,
-    "email": "magasin1@exemple.fr"
-  },
-  {
-    "login": "magasin2",
-    "password": "mag2-2026",
-    "nom": "Magasin Lorraine",
-    "role": "client",
-    "remise": 10,
-    "email": "magasin2@exemple.fr"
-  },
-  {
-    "login": "cspoto",
-    "password": "cspoto26",
-    "nom": "SPOTO Christophe",
-    "role": "user",
-    "remise": 0,
-    "email": "spoto.christophe@gmail.com"
-  },
-  {
-    "login": "Bernard",
-    "password": "bernard26",
-    "nom": "Bernard Campam",
-    "role": "user",
-    "remise": 0,
-    "email": "spoto.christophe@gmail.com",
-    "tel": "",
-    "ville": "",
-    "cp": "",
-    "region": "",
-    "numclient": "",
-    "notes": ""
-  },
-  {
-    "login": "mag38",
-    "password": "magasin38",
-    "nom": "BIO HABITUDE 38",
-    "role": "client",
-    "remise": 13,
-    "email": "spoto.christophe@gmail.com",
-    "tel": "",
-    "ville": "Grenoble",
-    "cp": "38000",
-    "region": "Auvergne-Rhône-Alpes",
-    "numclient": "",
-    "notes": ""
-  },
-  {
-    "login": "biocoop38",
-    "password": "biocoop",
-    "nom": "BIOCOOP FONTAINE",
-    "role": "client",
-    "remise": 0,
-    "email": "spoto.christophe@gmail.com",
-    "tel": "",
-    "ville": "Fontaine",
-    "cp": "38600",
-    "region": "Auvergne-Rhône-Alpes",
-    "numclient": "",
-    "notes": ""
-  }
+  { login: "admin",      password: "mdm2026",      nom: "Administrateur",   role: "admin",   remise: 0,  email: "cspoto@moulindesmoines.com" },
+  { login: "commercial", password: "mdm-ventes",   nom: "Commercial MDM",   role: "user",    remise: 0,  email: "cspoto@moulindesmoines.com" },
+  { login: "magasin1",   password: "mag1-2026",    nom: "Magasin Alsace",   role: "client",  remise: 5,  email: "magasin1@exemple.fr"        },
+  { login: "magasin2",   password: "mag2-2026",    nom: "Magasin Lorraine", role: "client",  remise: 10, email: "magasin2@exemple.fr"        },
+  { login: "magasin3",   password: "mag3-2026",    nom: "Magasin Franche-C",role: "client",  remise: 15, email: "magasin3@exemple.fr"        }
 ];
 // ── Remplacer les emails par les vraies adresses de chaque compte ──
 // ── Pour modifier une remise : changer le chiffre dans remise: XX
@@ -260,12 +183,17 @@ function doLogin(){
     if(compte){
       // Créer token (8h)
       var tokenData = {
-        login:  compte.login,
-        nom:    compte.nom,
-        role:   compte.role,
-        remise: compte.remise || 0,
-        email:  compte.email || "cspoto@moulindesmoines.com",
-        exp:    Date.now() + 8 * 60 * 60 * 1000
+        login:      compte.login,
+        nom:        compte.nom,
+        role:       compte.role,
+        remise:     compte.remise    || 0,
+        email:      compte.email     || "cspoto@moulindesmoines.com",
+        tel:        compte.tel       || "",
+        numclient:  compte.numclient || "",
+        groupement: compte.groupement|| "",
+        ville:      compte.ville     || "",
+        cp:         compte.cp        || "",
+        exp:        Date.now() + 8 * 60 * 60 * 1000
       };
       var token = btoa(JSON.stringify(tokenData));
       sessionStorage.setItem("mdm_token", token);
