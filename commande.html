@@ -246,8 +246,8 @@ var remise = 0;
 var searchMode = "all";
 var qtys = {};
 
-function fmt4(n){ return n.toFixed(4).replace(".",",") + " €"; }
-function fmt2(n){ return n.toFixed(2).replace(".",",") + " €"; }
+function fmt4(n){ return n.toFixed(2).replace(".",",") + "€"; }
+function fmt2(n){ return n.toFixed(2).replace(".",",") + "€"; }
 
 function escHtml(s){
   return String(s||"")
@@ -262,8 +262,9 @@ function buildTable(){
   for(var i=0;i<PRODUCTS.length;i++){
     var p = PRODUCTS[i];
     var qty = qtys[p.code] || 0;
+    var pcb = parseFloat(p.pcb) || 1;
     var prixNet = p.pu_ht * (1 - remise/100);
-    var total = qty ? prixNet * qty : 0;
+    var total = qty ? prixNet * qty * pcb : 0;
     var hasQty = qty > 0 ? " has-qty" : "";
     var dCode    = escHtml(p.code);
     var dLibelle = escHtml((p.libelle||"").toLowerCase());
@@ -297,7 +298,8 @@ function onQty(input){
   for(var i=0;i<PRODUCTS.length;i++){ if(PRODUCTS[i].code===code){p=PRODUCTS[i];break;} }
   if(!p) return;
   var cell = document.getElementById("t-"+code);
-  if(cell) cell.textContent = val ? fmt2(p.pu_ht*(1-remise/100)*val) : "";
+  var pcb = parseFloat(p.pcb) || 1;
+  if(cell) cell.textContent = val ? fmt2(p.pu_ht*(1-remise/100)*val*pcb) : "";
   updateTotals();
 }
 
@@ -306,7 +308,7 @@ function updateTotals(){
   for(var i=0;i<PRODUCTS.length;i++){
     var p=PRODUCTS[i];
     var q=qtys[p.code]||0;
-    if(q>0){nbRefs++;nbColis+=q;tBrut+=p.pu_ht*q;tNet+=p.pu_ht*(1-remise/100)*q;}
+    if(q>0){var pcb=parseFloat(p.pcb)||1;nbRefs++;nbColis+=q;tBrut+=p.pu_ht*q*pcb;tNet+=p.pu_ht*(1-remise/100)*q*pcb;}
   }
   document.getElementById("nb-refs").textContent=nbRefs;
   document.getElementById("nb-colis").textContent=nbColis;
@@ -324,7 +326,7 @@ function setRemise(val,btn){
     var p=PRODUCTS[i];
     var q=qtys[p.code]||0;
     var cell=document.getElementById("t-"+p.code);
-    if(cell&&q>0) cell.textContent=fmt2(p.pu_ht*(1-remise/100)*q);
+    if(cell&&q>0){var pcb=parseFloat(p.pcb)||1;cell.textContent=fmt2(p.pu_ht*(1-remise/100)*q*pcb);}
   }
   updateTotals();
 }
@@ -375,7 +377,8 @@ function doPrint(){
   html+='<strong style="color:#78503C;font-size:14px">Récapitulatif commande</strong><br><br>';
   for(var i=0;i<ordered.length;i++){
     var o=ordered[i];
-    var net=o.p.pu_ht*(1-remise/100)*o.q;
+    var pcb=parseFloat(o.p.pcb)||1;
+    var net=o.p.pu_ht*(1-remise/100)*o.q*pcb;
     html+='<div style="font-size:11px;padding:3px 0;border-bottom:1px solid #eee">'+
       o.p.code+" — "+o.p.libelle+" — "+o.q+" colis — "+fmt2(net)+"</div>";
   }
@@ -419,8 +422,9 @@ function buildOrderText(){
   for(var i=0;i<PRODUCTS.length;i++){
     var p=PRODUCTS[i],q=qtys[p.code]||0;
     if(!q) continue;
-    tBrut+=p.pu_ht*q;tNet+=p.pu_ht*(1-remise/100)*q;nbC+=q;
-    lines.push(p.code+" | "+p.libelle+" | Qté: "+q+" colis | PU HT: "+fmt4(p.pu_ht)+" | Total HT: "+fmt2(p.pu_ht*(1-remise/100)*q));
+    var pcb=parseFloat(p.pcb)||1;
+    tBrut+=p.pu_ht*q*pcb;tNet+=p.pu_ht*(1-remise/100)*q*pcb;nbC+=q;
+    lines.push(p.code+" | "+p.libelle+" | Qté: "+q+" colis | PCB: "+pcb+" | PU HT: "+fmt4(p.pu_ht)+" | Total HT: "+fmt2(p.pu_ht*(1-remise/100)*q*pcb));
   }
   lines.push("","RÉCAPITULATIF","Nb références : "+Object.keys(qtys).length,
     "Total colis   : "+nbC,"Total HT brut : "+fmt2(tBrut));
