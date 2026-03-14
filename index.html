@@ -131,7 +131,7 @@ var COMPTES = [
     var token = sessionStorage.getItem("mdm_token");
     if(token) {
       var data = JSON.parse(atob(token));
-      if(data.exp && Date.now() < data.exp) window.location.href = "commande.html";
+      if(data.exp && Date.now() < data.exp) window.location.href = data.role==="admin" ? "admin.html" : "commande.html";
     }
   } catch(e) {}
 })();
@@ -178,7 +178,7 @@ function doLogin(){
       sessionStorage.setItem("mdm_token", token);
       // Redirection
       label.textContent = "Connexion...";
-      window.location.href = "commande.html";
+      window.location.href = compte.role === "admin" ? "admin.html" : "commande.html";
     } else {
       btn.disabled = false;
       spinner.style.display = "none";
