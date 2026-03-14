@@ -115,11 +115,48 @@ body{font-family:"Outfit",sans-serif;min-height:100vh;display:flex;align-items:c
 // Format : { login, password, nom, role }
 // ═══════════════════════════════════════════════════════════
 var COMPTES = [
-  { login: "admin",      password: "mdm2026",      nom: "Administrateur",   role: "admin",   remise: 0  },
-  { login: "commercial", password: "mdm-ventes",   nom: "Commercial MDM",   role: "user",    remise: 0  },
-  { login: "magasin1",   password: "mag1-2026",    nom: "Magasin Alsace",   role: "client",  remise: 5  },
-  { login: "magasin2",   password: "mag2-2026",    nom: "Magasin Lorraine", role: "client",  remise: 10 },
-  { login: "magasin3",   password: "mag3-2026",    nom: "Magasin Franche-C",role: "client",  remise: 15 }
+  {
+    "login": "admin",
+    "password": "mdm2026",
+    "nom": "Administrateur",
+    "role": "admin",
+    "remise": 0
+  },
+  {
+    "login": "commercial",
+    "password": "mdm-ventes",
+    "nom": "Commercial MDM",
+    "role": "user",
+    "remise": 0
+  },
+  {
+    "login": "magasin1",
+    "password": "mag1-2026",
+    "nom": "Magasin Alsace",
+    "role": "client",
+    "remise": 5
+  },
+  {
+    "login": "magasin2",
+    "password": "mag2-2026",
+    "nom": "Magasin Lorraine",
+    "role": "client",
+    "remise": 10
+  },
+  {
+    "login": "magasin3",
+    "password": "mag3-2026",
+    "nom": "Magasin Franche-C",
+    "role": "client",
+    "remise": 11
+  },
+  {
+    "login": "ppolito",
+    "password": "ppolito26",
+    "nom": "Polito Patricia",
+    "role": "user",
+    "remise": 0
+  }
 ];
 // ── Pour modifier une remise : changer le chiffre dans remise: XX
 // ── La remise s'applique automatiquement à la connexion (0 = pas de remise)
@@ -131,7 +168,7 @@ var COMPTES = [
     var token = sessionStorage.getItem("mdm_token");
     if(token) {
       var data = JSON.parse(atob(token));
-      if(data.exp && Date.now() < data.exp) window.location.href = data.role==="admin" ? "admin.html" : "commande.html";
+      if(data.exp && Date.now() < data.exp) window.location.href = "commande.html";
     }
   } catch(e) {}
 })();
@@ -178,7 +215,7 @@ function doLogin(){
       sessionStorage.setItem("mdm_token", token);
       // Redirection
       label.textContent = "Connexion...";
-      window.location.href = compte.role === "admin" ? "admin.html" : "commande.html";
+      window.location.href = "commande.html";
     } else {
       btn.disabled = false;
       spinner.style.display = "none";
