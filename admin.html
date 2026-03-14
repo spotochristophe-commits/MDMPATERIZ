@@ -3,827 +3,395 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Administration — Moulin des Moines</title>
+<title>Administration &mdash; Moulin des Moines</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--terra:#C87864;--brown:#78503C;--cream:#FDF5EE;--gold:#D2B469;--green:#1A5C2E;--red:#c62828;--white:#fff;--shadow:rgba(120,80,60,0.12)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Outfit",sans-serif;background:#f4ede6;color:#3a2a20;font-size:13px;min-height:100vh}
-
-/* ── HEADER ── */
-.header{background:var(--brown);color:var(--white);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px var(--shadow)}
+.header{background:var(--brown);color:var(--white);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:54px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px var(--shadow)}
 .header-logo{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700}
 .header-logo span{color:var(--gold)}
-.header-logo small{font-family:"Outfit",sans-serif;font-size:10px;opacity:.6;margin-left:8px;font-weight:400;vertical-align:middle}
-.header-right{display:flex;align-items:center;gap:12px}
-.user-chip{font-size:11px;opacity:.75;display:flex;align-items:center;gap:5px}
-.badge-admin{background:var(--gold);color:var(--brown);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px}
-.btn-sm{padding:7px 14px;border:none;border-radius:6px;font-family:"Outfit",sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
+.header-logo small{font-family:"Outfit",sans-serif;font-size:10px;opacity:.6;margin-left:8px;font-weight:400}
+.header-right{display:flex;align-items:center;gap:10px}
+.user-chip{font-size:11px;opacity:.75}
+.badge-admin{background:var(--gold);color:var(--brown);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;text-transform:uppercase}
+.btn-sm{padding:7px 13px;border:none;border-radius:6px;font-family:"Outfit",sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
 .btn-outline-w{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.35)}.btn-outline-w:hover{background:rgba(255,255,255,.1)}
-
-/* ── LAYOUT ── */
-.layout{display:flex;min-height:calc(100vh - 56px)}
-
-/* ── SIDEBAR ── */
-.sidebar{width:220px;background:var(--white);border-right:1px solid #ede0d8;padding:20px 0;flex-shrink:0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
-.sidebar-section{padding:0 14px;margin-bottom:6px}
-.sidebar-label{font-size:9px;font-weight:700;color:#b0988a;text-transform:uppercase;letter-spacing:.8px;padding:10px 8px 4px}
-.nav-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:500;color:#5a3a2a;transition:all .13s;margin-bottom:2px}
+.layout{display:flex;min-height:calc(100vh - 54px)}
+.sidebar{width:210px;background:var(--white);border-right:1px solid #ede0d8;padding:18px 0;flex-shrink:0;position:sticky;top:54px;height:calc(100vh - 54px);overflow-y:auto}
+.sidebar-label{font-size:9px;font-weight:700;color:#b0988a;text-transform:uppercase;letter-spacing:.8px;padding:10px 14px 4px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:500;color:#5a3a2a;transition:all .13s;margin:0 8px 2px}
 .nav-item:hover{background:#f5ede5;color:var(--brown)}
 .nav-item.active{background:var(--brown);color:var(--white)}
-.nav-item .nav-icon{font-size:15px;width:20px;text-align:center}
-.nav-badge{margin-left:auto;background:var(--terra);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center}
-
-/* ── MAIN ── */
-.main{flex:1;padding:24px;overflow-y:auto}
+.nav-badge{margin-left:auto;background:var(--terra);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px}
+.main{flex:1;padding:22px;overflow-y:auto}
 .page{display:none}.page.active{display:block}
-.page-title{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:700;color:var(--brown);margin-bottom:4px}
-.page-sub{font-size:12px;color:#a08070;margin-bottom:22px}
-
-/* ── CARDS STATS ── */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:24px}
-.stat-card{background:var(--white);border-radius:12px;padding:18px 20px;box-shadow:0 2px 8px var(--shadow);border-left:4px solid transparent}
+.page-title{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:3px}
+.page-sub{font-size:12px;color:#a08070;margin-bottom:20px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:var(--white);border-radius:10px;padding:16px 18px;box-shadow:0 2px 8px var(--shadow);border-left:4px solid transparent}
 .stat-card.c-brown{border-color:var(--brown)}.stat-card.c-terra{border-color:var(--terra)}.stat-card.c-gold{border-color:var(--gold)}.stat-card.c-green{border-color:var(--green)}
-.stat-label{font-size:10px;font-weight:600;color:#a08070;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.stat-value{font-size:28px;font-weight:700;color:var(--brown);line-height:1}
-.stat-sub{font-size:11px;color:#b0988a;margin-top:5px}
-
-/* ── SECTION CARD ── */
-.section-card{background:var(--white);border-radius:12px;padding:20px 22px;box-shadow:0 2px 8px var(--shadow);margin-bottom:18px}
-.section-card-title{font-size:13px;font-weight:700;color:var(--brown);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.section-card-title span{display:flex;align-items:center;gap:7px}
-
-/* ── TABLEAU COMPTES ── */
+.stat-label{font-size:10px;font-weight:600;color:#a08070;text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px}
+.stat-value{font-size:26px;font-weight:700;color:var(--brown);line-height:1}
+.stat-sub{font-size:11px;color:#b0988a;margin-top:4px}
+.section-card{background:var(--white);border-radius:10px;padding:18px 20px;box-shadow:0 2px 8px var(--shadow);margin-bottom:16px}
+.section-card-title{font-size:13px;font-weight:700;color:var(--brown);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
-thead th{padding:9px 10px;font-size:10px;font-weight:700;color:var(--white);background:var(--brown);text-align:left;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
-thead th:first-child{border-radius:8px 0 0 0}thead th:last-child{border-radius:0 8px 0 0}
+thead th{padding:8px 10px;font-size:10px;font-weight:700;color:var(--white);background:var(--brown);text-align:left;text-transform:uppercase;letter-spacing:.4px}
 tbody tr{border-bottom:1px solid #f0e8e0;transition:background .1s}
 tbody tr:hover{background:#faf5f0}
-tbody td{padding:10px 10px;font-size:12px;vertical-align:middle}
-.role-badge{display:inline-block;padding:3px 9px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
-.role-admin{background:#fce4d6;color:var(--terra)}
-.role-user{background:#e8f5e9;color:var(--green)}
-.role-client{background:#e3f2fd;color:#1565c0}
-.remise-pill{display:inline-block;padding:3px 9px;border-radius:10px;font-size:11px;font-weight:600;background:#fff8e1;color:#f57f17}
-.btn-action{padding:5px 10px;border:none;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;transition:all .13s;font-family:"Outfit",sans-serif}
+tbody td{padding:9px 10px;font-size:12px;vertical-align:middle}
+.role-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase}
+.role-admin{background:#fce4d6;color:var(--terra)}.role-user{background:#e8f5e9;color:var(--green)}.role-client{background:#e3f2fd;color:#1565c0}
+.remise-pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#fff8e1;color:#f57f17}
+.btn-action{padding:4px 9px;border:none;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;font-family:"Outfit",sans-serif;transition:all .13s}
 .btn-edit{background:#e8f0fe;color:#1a56db}.btn-edit:hover{background:#1a56db;color:#fff}
 .btn-del{background:#fdecea;color:var(--red)}.btn-del:hover{background:var(--red);color:#fff}
-.btn-add{background:var(--green);color:#fff;padding:8px 16px;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:"Outfit",sans-serif;display:flex;align-items:center;gap:6px;transition:all .15s}
+.btn-add{background:var(--green);color:#fff;padding:7px 14px;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:"Outfit",sans-serif;display:flex;align-items:center;gap:5px;transition:all .15s}
 .btn-add:hover{background:#154d26}
-
-/* ── MODAL ── */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(60,30,10,.45);z-index:200;align-items:center;justify-content:center}
 .modal-bg.open{display:flex}
-.modal{background:var(--white);border-radius:14px;padding:28px;max-width:460px;width:90%;box-shadow:0 10px 40px rgba(0,0,0,.2)}
-.modal h3{font-family:"Cormorant Garamond",serif;font-size:20px;color:var(--brown);margin-bottom:18px}
-.fg{margin-bottom:14px}
-.fg label{display:block;font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-.fg input,.fg select{width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:"Outfit",sans-serif;font-size:13px;background:var(--cream);color:#3a2a20;outline:none;transition:border .15s}
+.modal{background:var(--white);border-radius:13px;padding:26px;max-width:480px;width:92%;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+.modal h3{font-family:"Cormorant Garamond",serif;font-size:19px;color:var(--brown);margin-bottom:16px}
+.fg{margin-bottom:13px}
+.fg label{display:block;font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.fg input,.fg select{width:100%;padding:8px 11px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:"Outfit",sans-serif;font-size:13px;background:var(--cream);color:#3a2a20;outline:none;transition:border .15s}
 .fg input:focus,.fg select:focus{border-color:var(--terra)}
 .fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
-.btn-cancel{background:#f0e4da;color:var(--brown);border:none;padding:9px 18px;border-radius:7px;font-weight:600;cursor:pointer;font-family:"Outfit",sans-serif}.btn-cancel:hover{background:#e0d0c4}
-.btn-save{background:var(--green);color:#fff;border:none;padding:9px 20px;border-radius:7px;font-weight:600;cursor:pointer;font-family:"Outfit",sans-serif}.btn-save:hover{background:#154d26}
-.modal-alert{padding:10px 14px;border-radius:7px;font-size:12px;margin-top:12px;display:none}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.btn-cancel{background:#f0e4da;color:var(--brown);border:none;padding:8px 16px;border-radius:7px;font-weight:600;cursor:pointer;font-family:"Outfit",sans-serif}
+.btn-save{background:var(--green);color:#fff;border:none;padding:8px 18px;border-radius:7px;font-weight:600;cursor:pointer;font-family:"Outfit",sans-serif}
+.modal-alert{padding:9px 13px;border-radius:7px;font-size:12px;margin-top:10px;display:none}
 .modal-alert.error{background:#fdecea;color:var(--red);border:1px solid #ef9a9a}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:24px;right:24px;background:var(--brown);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,.2);transform:translateY(80px);opacity:0;transition:all .3s;z-index:300;display:flex;align-items:center;gap:8px}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--brown);color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;font-weight:500;box-shadow:0 4px 18px rgba(0,0,0,.2);transform:translateY(60px);opacity:0;transition:all .3s;z-index:300}
 .toast.show{transform:translateY(0);opacity:1}
-
-/* ── INFOS SECTIONS ── */
-.info-banner{background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:14px 18px;font-size:12px;color:#7d6000;margin-bottom:18px;display:flex;gap:10px;align-items:flex-start}
-.info-banner .icon{font-size:18px;flex-shrink:0;margin-top:1px}
-.empty-state{text-align:center;padding:40px 20px;color:#b0988a}
-.empty-state .icon{font-size:40px;margin-bottom:10px}
-.empty-state p{font-size:13px}
-
-/* ── EXPORT BTN ── */
-.btn-export{background:var(--gold);color:var(--brown);padding:8px 16px;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:"Outfit",sans-serif;display:flex;align-items:center;gap:6px;transition:all .15s}
-.btn-export:hover{background:#c0a055}
-.github-status{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;margin-top:10px}
-.github-status.ok{background:#e8f5e9;color:#2e7d32}.github-status.err{background:#fdecea;color:#c62828}.github-status.loading{background:#e3f2fd;color:#1565c0}
-.github-token-wrap{position:relative;display:flex;align-items:center}.github-token-wrap input{flex:1;padding-right:40px}
-.toggle-token{position:absolute;right:10px;background:none;border:none;cursor:pointer;font-size:14px;opacity:.5;padding:4px}.toggle-token:hover{opacity:.9}
-.gh-push-log{background:#1e1e1e;color:#a8ff78;border-radius:8px;padding:12px 14px;font-family:monospace;font-size:11px;line-height:1.8;margin-top:12px;display:none;max-height:160px;overflow-y:auto;white-space:pre-wrap}
+.status-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.status-attente{background:#fff8e1;color:#f57f17}
+.status-valide{background:#e8f5e9;color:var(--green)}
+.info-banner{background:#fff8e1;border:1px solid #ffe082;border-radius:9px;padding:12px 16px;font-size:12px;color:#7d6000;margin-bottom:16px;display:flex;gap:10px}
 </style>
 </head>
 <body>
 
-<!-- ══ HEADER ══ -->
 <header class="header">
-  <div class="header-logo">
-    Moulin <span>des</span> Moines
-    <small>Administration</small>
-  </div>
+  <div class="header-logo">Moulin <span>des</span> Moines <small>Administration</small></div>
   <div class="header-right">
-    <div class="user-chip">&#128100; <span id="admin-name"></span> <span class="badge-admin">Admin</span></div>
-    <button class="btn-sm btn-outline-w" onclick="goCommande()">&#128203; Commandes</button>
-    <button class="btn-sm btn-outline-w" onclick="logout()">&#x23FB; D&#233;connexion</button>
+    <span class="user-chip">&#128100; <span id="admin-name"></span> <span class="badge-admin">Admin</span></span>
+    <button class="btn-sm btn-outline-w" onclick="window.location.href='commande.html'">&#128203; Commandes</button>
+    <button class="btn-sm btn-outline-w" onclick="doLogout()" style="border-color:rgba(255,100,80,.5);color:#ffb0a0">&#x23FB; D&#233;connexion</button>
   </div>
 </header>
 
-<!-- ══ LAYOUT ══ -->
 <div class="layout">
-
-  <!-- ── SIDEBAR ── -->
   <nav class="sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-label">Tableau de bord</div>
-      <div class="nav-item active" onclick="showPage('dashboard',this)">
-        <span class="nav-icon">&#128200;</span> Vue g&#233;n&#233;rale
-      </div>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Utilisateurs</div>
-      <div class="nav-item" onclick="showPage('comptes',this)">
-        <span class="nav-icon">&#128101;</span> Comptes
-        <span class="nav-badge" id="badge-comptes">5</span>
-      </div>
-      <div class="nav-item" onclick="showPage('inscriptions',this)">
-        <span class="nav-icon">&#128203;</span> Inscriptions
-        <span class="nav-badge" id="badge-inscriptions" style="background:var(--gold);color:var(--brown)">?</span>
-      </div>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Commandes</div>
-      <div class="nav-item" onclick="showPage('historique',this)">
-        <span class="nav-icon">&#128230;</span> Historique
-      </div>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Param&#232;tres</div>
-      <div class="nav-item" onclick="showPage('parametres',this)">
-        <span class="nav-icon">&#9881;</span> Param&#232;tres
-      </div>
-    </div>
+    <div class="sidebar-label">Tableau de bord</div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)">&#128200; Vue g&#233;n&#233;rale</div>
+    <div class="sidebar-label">Utilisateurs</div>
+    <div class="nav-item" onclick="showPage('comptes',this)">&#128101; Comptes <span class="nav-badge" id="badge-comptes">-</span></div>
+    <div class="nav-item" onclick="showPage('inscriptions',this)">&#128203; Inscriptions <span class="nav-badge" id="badge-inscriptions" style="background:var(--gold);color:var(--brown)">-</span></div>
   </nav>
 
-  <!-- ── MAIN ── -->
   <main class="main">
 
-    <!-- PAGE : DASHBOARD -->
+    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="page-title">Tableau de bord</div>
-      <div class="page-sub">Vue g&#233;n&#233;rale de l&#8217;espace Moulin des Moines 2026</div>
-
+      <div class="page-sub">Vue g&#233;n&#233;rale &mdash; Moulin des Moines 2026</div>
       <div class="stats-grid">
-        <div class="stat-card c-brown">
-          <div class="stat-label">Comptes actifs</div>
-          <div class="stat-value" id="stat-comptes">—</div>
-          <div class="stat-sub">utilisateurs enregistr&#233;s</div>
-        </div>
-        <div class="stat-card c-terra">
-          <div class="stat-label">Dont clients</div>
-          <div class="stat-value" id="stat-clients">—</div>
-          <div class="stat-sub">comptes type client</div>
-        </div>
-        <div class="stat-card c-gold">
-          <div class="stat-label">Commerciaux</div>
-          <div class="stat-value" id="stat-commerciaux">—</div>
-          <div class="stat-sub">comptes type user</div>
-        </div>
-        <div class="stat-card c-green">
-          <div class="stat-label">Produits catalogue</div>
-          <div class="stat-value">1 390</div>
-          <div class="stat-sub">r&#233;f&#233;rences MDM 2026</div>
-        </div>
+        <div class="stat-card c-brown"><div class="stat-label">Comptes actifs</div><div class="stat-value" id="stat-comptes">-</div><div class="stat-sub">utilisateurs</div></div>
+        <div class="stat-card c-terra"><div class="stat-label">Clients</div><div class="stat-value" id="stat-clients">-</div></div>
+        <div class="stat-card c-gold"><div class="stat-label">Commerciaux</div><div class="stat-value" id="stat-users">-</div></div>
+        <div class="stat-card c-green"><div class="stat-label">Inscriptions en attente</div><div class="stat-value" id="stat-inscriptions">-</div></div>
       </div>
-
-      <div class="section-card">
-        <div class="section-card-title">
-          <span>&#128101; Comptes utilisateurs</span>
-          <button class="btn-add" onclick="showPage('comptes', document.querySelector('[onclick*=comptes]'))">Voir tous les comptes</button>
-        </div>
-        <div class="table-wrap" id="dash-comptes-table"></div>
-      </div>
-
-      <div class="section-card">
-        <div class="section-card-title"><span>&#128161; Informations</span></div>
-        <div class="info-banner">
-          <span class="icon">&#8505;</span>
-          <div>
-            <strong>Gestion des comptes :</strong> Les comptes sont g&#233;r&#233;s directement dans cette interface et sauvegard&#233;s dans le navigateur (localStorage). Pour une synchronisation multi-poste, exportez le fichier <code>index.html</code> mis &#224; jour via les Param&#232;tres.
-          </div>
-        </div>
-        <div class="info-banner">
-          <span class="icon">&#128231;</span>
-          <div>
-            <strong>Commandes &amp; inscriptions :</strong> Elles arrivent par email &#224; <strong>cspoto@moulindesmoines.com</strong> via FormSubmit. Consultez votre bo&#238;te mail pour les traiter.
-          </div>
-        </div>
-      </div>
+      <div class="info-banner"><span style="font-size:18px">&#128231;</span><div>Les commandes arrivent par email &agrave; <strong>cspoto@moulindesmoines.com</strong> via FormSubmit, et sont sauvegard&eacute;es dans Firestore par compte client.</div></div>
     </div>
 
-    <!-- PAGE : COMPTES -->
+    <!-- COMPTES -->
     <div class="page" id="page-comptes">
       <div class="page-title">Gestion des comptes</div>
-      <div class="page-sub">Ajoutez, modifiez ou supprimez les acc&#232;s utilisateurs</div>
+      <div class="page-sub">Les comptes sont g&#233;r&#233;s via Firebase Authentication + Firestore</div>
       <div class="section-card">
         <div class="section-card-title">
-          <span>&#128101; Tous les comptes (<span id="nb-comptes">0</span>)</span>
+          <span>&#128101; Comptes (<span id="nb-comptes">0</span>)</span>
           <button class="btn-add" onclick="openModal()">&#43; Nouveau compte</button>
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr>
-              <th>Login</th><th>Nom</th><th>R&#244;le</th><th>Remise</th><th>Email</th><th>Mot de passe</th><th>Actions</th>
-            </tr></thead>
+            <thead><tr><th>Email</th><th>Nom</th><th>R&#244;le</th><th>Remise</th><th>Actions</th></tr></thead>
             <tbody id="comptes-tbody"></tbody>
           </table>
         </div>
       </div>
-      <div class="info-banner" style="margin-top:0">
-        <span class="icon">&#128161;</span>
-        <div>Apr&#232;s modification des comptes, cliquez sur <strong>Exporter index.html</strong> dans les Param&#232;tres pour mettre &#224; jour le fichier de connexion sur votre serveur.</div>
-      </div>
     </div>
 
-    <!-- PAGE : INSCRIPTIONS -->
+    <!-- INSCRIPTIONS -->
     <div class="page" id="page-inscriptions">
       <div class="page-title">Demandes d&#8217;inscription</div>
-      <div class="page-sub">Nouvelles demandes re&#231;ues via le formulaire inscription.html</div>
-      <div class="info-banner">
-        <span class="icon">&#128231;</span>
-        <div>
-          Les demandes d&#8217;inscription sont envoy&#233;es par email &#224; <strong>cspoto@moulindesmoines.com</strong>.
-          Pour chaque nouvelle demande, cr&#233;ez manuellement le compte dans l&#8217;onglet <strong>Comptes</strong> puis communiquez les identifiants au commercial.
-        </div>
-      </div>
+      <div class="page-sub">Nouvelles demandes re&#231;ues via inscription.html</div>
       <div class="section-card">
-        <div class="section-card-title"><span>&#128203; Proc&#233;dure de traitement</span></div>
-        <div style="display:flex;flex-direction:column;gap:12px;padding:4px 0">
-          <div style="display:flex;align-items:flex-start;gap:12px">
-            <div style="width:26px;height:26px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">1</div>
-            <div><strong>Recevoir l&#8217;email</strong> de demande &#224; cspoto@moulindesmoines.com</div>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:12px">
-            <div style="width:26px;height:26px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">2</div>
-            <div><strong>Cr&#233;er le compte</strong> dans l&#8217;onglet Comptes avec le r&#244;le et la remise appropri&#233;s</div>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:12px">
-            <div style="width:26px;height:26px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">3</div>
-            <div><strong>Exporter index.html</strong> depuis les Param&#232;tres et le mettre en ligne</div>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:12px">
-            <div style="width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">4</div>
-            <div><strong>Envoyer les identifiants</strong> au commercial par email en r&#233;pondant &#224; sa demande</div>
-          </div>
+        <div class="section-card-title"><span>&#128203; Demandes en attente</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Pr&#233;nom Nom</th><th>Email</th><th>T&#233;l</th><th>Zone</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody id="inscriptions-tbody"><tr><td colspan="7" style="text-align:center;padding:20px;color:#888">Chargement...</td></tr></tbody>
+          </table>
         </div>
       </div>
     </div>
 
-    <!-- PAGE : HISTORIQUE -->
-    <div class="page" id="page-historique">
-      <div class="page-title">Historique des commandes</div>
-      <div class="page-sub">Commandes re&#231;ues via le bon de commande en ligne</div>
-      <div class="info-banner">
-        <span class="icon">&#128231;</span>
-        <div>
-          Les commandes sont envoy&#233;es par email &#224; <strong>cspoto@moulindesmoines.com</strong> via FormSubmit.
-          Chaque email a pour objet : <em>&#171; Bon de commande MDM 2026 — [Magasin] — [Date] &#187;</em>.
-          Consultez votre bo&#238;te mail pour acc&#233;der au d&#233;tail de chaque commande.
-        </div>
-      </div>
-      <div class="section-card">
-        <div class="section-card-title"><span>&#128230; Commandes enregistr&#233;es localement</span></div>
-        <div id="historique-list">
-          <div class="empty-state">
-            <div class="icon">&#128230;</div>
-            <p>Aucune commande enregistr&#233;e localement.<br>Les commandes arrivent directement par email.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PAGE : PARAMETRES -->
-    <div class="page" id="page-parametres">
-      <div class="page-title">Param&#232;tres</div>
-      <div class="page-sub">Configuration et export des fichiers</div>
-
-      <div class="section-card">
-        <div class="section-card-title"><span>&#128029; Publication GitHub Pages</span></div>
-        <p style="font-size:12px;color:#888;margin-bottom:16px;line-height:1.7">Configurez une seule fois. <code>index.html</code> sera publi&#233; <strong>automatiquement</strong> sur GitHub apr&#232;s chaque modification.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-          <div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Utilisateur GitHub</label><input type="text" id="gh-user" value="LOAC1118" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div>
-          <div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Repository</label><input type="text" id="gh-repo" value="MDM-BDC26" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div>
-          <div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Branche</label><input type="text" id="gh-branch" value="main" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div>
-          <div class="fg"><label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Fichier cible</label><input type="text" id="gh-file" value="index.html" style="width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream);outline:none"></div>
-        </div>
-        <div class="fg" style="margin-bottom:14px">
-          <label style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Token GitHub <span style="color:var(--terra)">*</span></label>
-          <div class="github-token-wrap"><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%;padding:9px 40px 9px 12px;border:1.5px solid #e0d0c4;border-radius:7px;font-family:monospace;font-size:12px;background:var(--cream);outline:none"><button class="toggle-token" onclick="toggleToken()">&#128065;</button></div>
-          <div style="font-size:10px;color:#a08070;margin-top:5px">&#128279; <a href="https://github.com/settings/tokens/new?scopes=repo&description=MDM-Admin" target="_blank" style="color:var(--terra)">Cr&#233;er un token</a> &#8594; cocher <strong>repo</strong> &#8594; coller ici.</div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-          <button class="btn-export" onclick="testGithub()">&#9654; Tester</button>
-          <button class="btn-add" onclick="pushToGithub(false)">&#128229; Pousser index.html</button>
-          <span id="gh-status"></span>
-        </div>
-        <div class="gh-push-log" id="gh-log"></div>
-      </div>
-      <div class="section-card">
-        <div class="section-card-title"><span>&#128229; Export manuel</span></div>
-        <p style="font-size:12px;color:#888;margin-bottom:14px">T&#233;l&#233;charge <code>index.html</code> si GitHub n&#8217;est pas configur&#233;.</p>
-        <button class="btn-export" onclick="exportIndex(false)">&#128229; T&#233;l&#233;charger index.html</button>
-      </div>
-      <div class="section-card">
-        <div class="section-card-title"><span>&#128260; R&#233;initialiser</span></div>
-        <button class="btn-sm" style="background:#fdecea;color:var(--red);border:none;padding:8px 16px;border-radius:7px;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif" onclick="resetComptes()">&#9888; R&#233;initialiser les comptes</button>
-      </div>
-      <div class="section-card">
-        <div class="section-card-title"><span>&#8505; Informations</span></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px">
-          <div><span style="color:#a08070">Repository :</span> <strong>LOAC1118/MDM-BDC26</strong></div>
-          <div><span style="color:#a08070">Branche :</span> <strong>main</strong></div>
-          <div><span style="color:#a08070">Produits :</span> <strong>1 390 MDM 2026</strong></div>
-          <div><span style="color:#a08070">FormSubmit :</span> <strong>cspoto@moulindesmoines.com</strong></div>
-        </div>
-      </div>
-    </div>
-
-  </main>
   </main>
 </div>
 
-
-<!-- ══ MODAL COMPTE ══ -->
+<!-- MODAL COMPTE -->
 <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <h3 id="modal-title">Nouveau compte</h3>
-    <div class="fg-row">
-      <div class="fg"><label>Login *</label><input type="text" id="f-login" placeholder="ex: magasin4"></div>
-      <div class="fg"><label>Mot de passe *</label><input type="text" id="f-password" placeholder="ex: mag4-2026"></div>
-    </div>
+    <div class="fg"><label>Email *</label><input type="email" id="f-email" placeholder="magasin@email.fr"></div>
+    <div class="fg" id="fg-password"><label>Mot de passe *</label><input type="password" id="f-password" placeholder="Min. 6 caract&#232;res"></div>
     <div class="fg"><label>Nom affich&#233; *</label><input type="text" id="f-nom" placeholder="ex: Magasin Bordeaux"></div>
-    <div class="fg"><label>Email r&#233;ception commandes</label><input type="email" id="f-email" placeholder="magasin@email.fr"></div>
     <div class="fg-row">
       <div class="fg">
         <label>R&#244;le *</label>
         <select id="f-role">
           <option value="client">Client</option>
-          <option value="user">Commercial (user)</option>
-          <option value="admin">Administrateur</option>
+          <option value="user">Commercial</option>
+          <option value="admin">Admin</option>
         </select>
       </div>
-      <div class="fg"><label>Remise % (0 = aucune)</label><input type="number" id="f-remise" placeholder="0" min="0" max="99" step="0.5" value="0"></div>
+      <div class="fg"><label>Remise %</label><input type="number" id="f-remise" min="0" max="99" step="0.5" value="0" placeholder="0"></div>
     </div>
     <div class="modal-alert" id="modal-alert"></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Annuler</button>
-      <button class="btn-save" onclick="saveCompte()">&#10003; Enregistrer</button>
+      <button class="btn-save" id="btn-save-compte" onclick="saveCompte()">&#10003; Enregistrer</button>
     </div>
   </div>
 </div>
 
-<!-- ══ TOAST ══ -->
 <div class="toast" id="toast"></div>
 
-<script>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import{getAuth,onAuthStateChanged,signOut,createUserWithEmailAndPassword,updatePassword,sendPasswordResetEmail}
+  from"https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import{getFirestore,doc,getDoc,setDoc,getDocs,deleteDoc,collection,query,orderBy,updateDoc,serverTimestamp,where}
+  from"https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
-// ==============================================
-// EXPORT INDEX.HTML + GITHUB API
-// ==============================================
+const cfg={apiKey:"AIzaSyB000QDa4c-vMjO1Xuimw58iiRvwgbF1zc",authDomain:"mdm-bdc26.firebaseapp.com",projectId:"mdm-bdc26",storageBucket:"mdm-bdc26.firebasestorage.app",messagingSenderId:"52658530893",appId:"1:52658530893:web:166626ae4d681465ddca04"};
+const app=initializeApp(cfg);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-// Template minimal index.html pour export local (sans base64)
-function exportIndex(silent) {
-  try {
-    // R\u00e9cup\u00e9rer index.html depuis GitHub si token dispo, sinon g\u00e9n\u00e9rer localement
-    var t = sessionStorage.getItem("mdm_gh_token") || ((document.getElementById("gh-token")||{value:""}).value.trim());
-    if (t) {
-      // Utiliser pushToGithub pour l'export (il lit depuis GitHub)
-      pushToGithub(false);
-      return;
-    }
-    // Fallback : t\u00e9l\u00e9charger avec fetch depuis le m\u00eame serveur
-    fetch("index.html")
-      .then(function(r){ return r.text(); })
-      .then(function(html){
-        var nc = "var COMPTES = " + JSON.stringify(comptes, null, 2) + ";";
-        var up = html.replace(/var COMPTES = \[[\s\S]*?\];/, nc);
-        var bl = new Blob([up], {type:"text/html;charset=utf-8"});
-        var a = document.createElement("a");
-        a.href = URL.createObjectURL(bl); a.download = "index.html";
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        setTimeout(function(){URL.revokeObjectURL(a.href);}, 1000);
-        if (!silent) showToast("\u2705 index.html t\u00e9l\u00e9charg\u00e9 (" + comptes.length + " comptes)");
-      })
-      .catch(function(e){ showToast("\u274c Export : " + e.message); });
-  } catch(e) { showToast("\u274c Export : " + e.message); }
-}
+var editUid=null;
+var allUsers=[];
 
-function autoSync() {
-  var t = sessionStorage.getItem("mdm_gh_token") || ((document.getElementById("gh-token")||{value:""}).value.trim());
-  if (t) { pushToGithub(true); } else { exportIndex(true); }
-}
+// Auth guard
+onAuthStateChanged(auth,async(user)=>{
+  if(!user){window.location.href="index.html";return;}
+  try{
+    const s=await getDoc(doc(db,"users",user.uid));
+    if(!s.exists()||s.data().role!=="admin"){window.location.href="commande.html";return;}
+    document.getElementById("admin-name").textContent=s.data().nom||user.email;
+    await loadAll();
+  }catch(e){console.error(e);}
+});
 
-function ghConfig() {
-  return {
-    user:   (document.getElementById("gh-user")  ||{value:"LOAC1118"}).value.trim(),
-    repo:   (document.getElementById("gh-repo")  ||{value:"MDM-BDC26"}).value.trim(),
-    branch: (document.getElementById("gh-branch")||{value:"main"}).value.trim(),
-    file:   (document.getElementById("gh-file")  ||{value:"index.html"}).value.trim(),
-    token:  ((document.getElementById("gh-token")||{value:""}).value.trim()) || sessionStorage.getItem("mdm_gh_token") || ""
-  };
-}
+window.doLogout=function(){signOut(auth).then(()=>window.location.href="index.html");};
 
-function saveGhConfig() {
-  var c = ghConfig();
-  localStorage.setItem("mdm_gh_user", c.user);
-  localStorage.setItem("mdm_gh_repo", c.repo);
-  localStorage.setItem("mdm_gh_branch", c.branch);
-  localStorage.setItem("mdm_gh_file", c.file);
-  if (c.token) sessionStorage.setItem("mdm_gh_token", c.token);
-}
-
-function loadGhConfig() {
-  var f = {
-    "gh-user":   localStorage.getItem("mdm_gh_user")    || "LOAC1118",
-    "gh-repo":   localStorage.getItem("mdm_gh_repo")    || "MDM-BDC26",
-    "gh-branch": localStorage.getItem("mdm_gh_branch")  || "main",
-    "gh-file":   localStorage.getItem("mdm_gh_file")    || "index.html",
-    "gh-token":  sessionStorage.getItem("mdm_gh_token") || ""
-  };
-  for (var id in f) { var el = document.getElementById(id); if (el && f[id]) el.value = f[id]; }
-}
-
-function toggleToken() {
-  var i = document.getElementById("gh-token");
-  if (i) i.type = (i.type === "password") ? "text" : "password";
-}
-
-function ghLog(msg, type) {
-  var log = document.getElementById("gh-log"); if (!log) return;
-  log.style.display = "block";
-  var ts = new Date().toLocaleTimeString("fr-FR");
-  var col = type==="ok" ? "#a8ff78" : (type==="err" ? "#ff6b6b" : "#7ecfff");
-  log.innerHTML += "<span style=\"color:"+col+"\">["+ts+"] "+msg+"</span>\n";
-  log.scrollTop = log.scrollHeight;
-}
-
-function ghStatus(msg, type) {
-  var el = document.getElementById("gh-status"); if (!el) return;
-  var icons = {ok:"&#9989;", err:"&#10060;", loading:"&#8987;"};
-  el.className = "github-status " + type;
-  el.innerHTML = (icons[type]||"") + " " + msg;
-}
-
-async function testGithub() {
-  saveGhConfig(); var cfg = ghConfig();
-  if (!cfg.token) { ghStatus("Token manquant","err"); return; }
-  ghStatus("Test...","loading"); ghLog("Connexion GitHub API...");
-  try {
-    var res = await fetch(
-      "https://api.github.com/repos/"+cfg.user+"/"+cfg.repo+"/contents/"+cfg.file+"?ref="+cfg.branch,
-      {headers:{"Authorization":"token "+cfg.token,"Accept":"application/vnd.github.v3+json"},mode:"cors",credentials:"omit"}
-    );
-    if (res.status===200) {
-      var d = await res.json();
-      ghStatus("Connect\u00e9 \u2014 "+cfg.user+"/"+cfg.repo,"ok");
-      ghLog("\u2705 OK \u2014 "+d.name+" ("+Math.round(d.size/1024)+" Ko)","ok");
-    } else if (res.status===401) {
-      ghStatus("Token invalide","err"); ghLog("\u274c 401 : token invalide","err");
-    } else if (res.status===404) {
-      ghStatus("Introuvable","err"); ghLog("\u274c 404 : "+cfg.user+"/"+cfg.repo+"/"+cfg.file,"err");
-    } else {
-      ghStatus("Erreur "+res.status,"err"); ghLog("\u274c HTTP "+res.status,"err");
-    }
-  } catch(e) { ghStatus("Erreur r\u00e9seau","err"); ghLog("\u274c "+e.message,"err"); }
-}
-
-async function pushToGithub(silent) {
-  saveGhConfig(); var cfg = ghConfig();
-  if (!cfg.token) { if (!silent) ghStatus("Token manquant","err"); return false; }
-  if (!silent) { ghStatus("Publication...","loading"); ghLog("Lecture de index.html sur GitHub..."); }
-  try {
-    // 1. Lire le fichier actuel sur GitHub (SHA + contenu)
-    var gs = await fetch(
-      "https://api.github.com/repos/"+cfg.user+"/"+cfg.repo+"/contents/"+cfg.file+"?ref="+cfg.branch+"&t="+Date.now(),
-      {headers:{"Authorization":"token "+cfg.token,"Accept":"application/vnd.github.v3+json"},mode:"cors",credentials:"omit",cache:"no-store"}
-    );
-    if (gs.status===401) throw new Error("Token invalide (401)");
-    if (gs.status===404) throw new Error("Fichier "+cfg.file+" introuvable sur "+cfg.user+"/"+cfg.repo);
-    if (gs.status!==200) throw new Error("Lecture GitHub HTTP "+gs.status);
-
-    var sd = await gs.json();
-    var sha = sd.sha;
-    if (!silent) ghLog("SHA actuel : "+sha.substring(0,8)+"...","ok");
-
-    // 2. D\u00e9coder le contenu actuel de index.html
-    var currentHtml = decodeURIComponent(escape(atob(sd.content.replace(/\n/g,""))));
-
-    // 3. Remplacer uniquement le bloc var COMPTES
-    var newComptes = "var COMPTES = " + JSON.stringify(comptes, null, 2) + ";";
-    var updatedHtml = currentHtml.replace(/var COMPTES = \[[\s\S]*?\];/, newComptes);
-
-    if (updatedHtml === currentHtml) {
-      if (!silent) ghLog("\u26a0 Pattern var COMPTES non trouv\u00e9 dans index.html","err");
-    }
-
-    // 4. R\u00e9-encoder en base64
-    var newB64 = btoa(unescape(encodeURIComponent(updatedHtml)));
-
-    // 5. Pusher avec le SHA frais
-    var today = new Date().toLocaleString("fr-FR");
-    if (!silent) ghLog("Push avec SHA frais...");
-    var put = await fetch(
-      "https://api.github.com/repos/"+cfg.user+"/"+cfg.repo+"/contents/"+cfg.file,
-      {
-        method: "PUT",
-        headers: {"Authorization":"token "+cfg.token,"Accept":"application/vnd.github.v3+json","Content-Type":"application/json"},
-        mode: "cors", credentials: "omit",
-        body: JSON.stringify({
-          message: "MAJ comptes MDM \u2014 "+today+" ["+comptes.length+" comptes]",
-          content: newB64,
-          sha: sha,
-          branch: cfg.branch
-        })}
-    );
-
-    if (put.status===200 || put.status===201) {
-      if (!silent) {
-        ghStatus("Publi\u00e9 \u2014 "+comptes.length+" comptes","ok");
-        ghLog("\u2705 index.html publi\u00e9 sur "+cfg.user+"/"+cfg.repo+" ("+cfg.branch+")","ok");
-        ghLog("\ud83c\udf10 GitHub Pages actif dans ~1 min","ok");
-      }
-      showToast("\u2705 GitHub mis \u00e0 jour ("+comptes.length+" comptes)");
-      return true;
-    } else {
-      var ed = await put.json();
-      throw new Error(ed.message || "PUT HTTP "+put.status);
-    }
-  } catch(e) {
-    if (!silent) { ghStatus("Erreur","err"); ghLog("\u274c "+e.message,"err"); }
-    showToast("\u274c GitHub : "+e.message);
-    return false;
-  }
-}
-
-
-// ============================================
-// PROTECTION ACCES ADMIN
-// ============================================
-(function(){
-  var token = sessionStorage.getItem("mdm_token");
-  var valid = false;
-  try {
-    if(token){
-      var data = JSON.parse(atob(token));
-      if(data.exp && Date.now() < data.exp && data.role === "admin") valid = true;
-    }
-  } catch(e){}
-  if(!valid){ window.location.href = "index.html"; return; }
-  document.getElementById("admin-name").textContent = JSON.parse(atob(token)).nom || "Admin";
-})();
-
-// ============================================
-// COMPTES PAR DEFAUT (depuis index.html)
-// ============================================
-var COMPTES_DEFAULT = [
-  { login: "admin",      password: "mdm2026",      nom: "Administrateur",    role: "admin",  remise: 0  },
-  { login: "commercial", password: "mdm-ventes",   nom: "Commercial MDM",    role: "user",   remise: 0  },
-  { login: "magasin1",   password: "mag1-2026",    nom: "Magasin Alsace",    role: "client", remise: 5  },
-  { login: "magasin2",   password: "mag2-2026",    nom: "Magasin Lorraine",  role: "client", remise: 10 },
-  { login: "magasin3",   password: "mag3-2026",    nom: "Magasin Franche-C", role: "client", remise: 15 }
-];
-
-// ============================================
-// ETAT
-// ============================================
-var comptes = [];
-var editIndex = -1;
-
-function loadComptes(){
-  var saved = localStorage.getItem("mdm_comptes");
-  if(saved){
-    try{ comptes = JSON.parse(saved); } catch(e){ comptes = COMPTES_DEFAULT.slice(); }
-  } else {
-    comptes = COMPTES_DEFAULT.slice();
-  }
-}
-
-function saveComptes(){
-  localStorage.setItem("mdm_comptes", JSON.stringify(comptes));
-}
-
-// ============================================
-// NAVIGATION
-// ============================================
-function showPage(id, el){
-  document.querySelectorAll(".page").forEach(function(p){ p.classList.remove("active"); });
-  document.querySelectorAll(".nav-item").forEach(function(n){ n.classList.remove("active"); });
+// Navigation
+window.showPage=function(id,el){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
   document.getElementById("page-"+id).classList.add("active");
-  if(el) el.classList.add("active");
-  if(id === "comptes" || id === "dashboard") renderComptes();
+  if(el)el.classList.add("active");
+  if(id==="inscriptions")loadInscriptions();
+};
+
+// Charger tout
+async function loadAll(){
+  await loadUsers();
+  await loadInscriptionCount();
 }
 
-// ============================================
-// RENDER
-// ============================================
-function roleBadge(role){
-  var labels = {admin:"Administrateur", user:"Commercial", client:"Client"};
-  return "<span class='role-badge role-"+role+"'>"+(labels[role]||role)+"</span>";
+async function loadUsers(){
+  try{
+    const snap=await getDocs(collection(db,"users"));
+    allUsers=[];
+    snap.forEach(d=>{allUsers.push({uid:d.id,...d.data()});});
+    renderUsers();
+  }catch(e){showToast("\u274c Erreur chargement : "+e.message);}
 }
 
-function renderComptes(){
-  // Stats dashboard
-  document.getElementById("stat-comptes").textContent = comptes.length;
-  document.getElementById("stat-clients").textContent = comptes.filter(function(c){return c.role==="client";}).length;
-  document.getElementById("stat-commerciaux").textContent = comptes.filter(function(c){return c.role==="user";}).length;
-  document.getElementById("nb-comptes").textContent = comptes.length;
-  document.getElementById("badge-comptes").textContent = comptes.length;
+function renderUsers(){
+  const nb=allUsers.length;
+  document.getElementById("stat-comptes").textContent=nb;
+  document.getElementById("stat-clients").textContent=allUsers.filter(u=>u.role==="client").length;
+  document.getElementById("stat-users").textContent=allUsers.filter(u=>u.role==="user").length;
+  document.getElementById("nb-comptes").textContent=nb;
+  document.getElementById("badge-comptes").textContent=nb;
 
-  function buildRows(limit){
-    var rows = "";
-    var list = limit ? comptes.slice(0,limit) : comptes;
-    list.forEach(function(c,i){
-      var realIdx = limit ? i : i;
-      rows += "<tr>";
-      rows += "<td><code style='font-size:11px;font-weight:700;color:var(--brown)'>"+escH(c.login)+"</code></td>";
-      rows += "<td>"+escH(c.nom)+"</td>";
-      rows += "<td>"+roleBadge(c.role)+"</td>";
-      rows += "<td>"+(c.remise>0?"<span class='remise-pill'>-"+c.remise+"%</span>":"<span style='color:#ccc'>-</span>")+"</td>";
-      rows += "<td style='font-size:11px;color:#555'>"+escH(c.email||'—')+"</td>";
-      rows += "<td><span style='font-family:monospace;font-size:11px;color:#888'>"+escH(c.password)+"</span></td>";
-      if(!limit){
-        rows += "<td style='white-space:nowrap;display:flex;gap:5px'>";
-        rows += "<button class='btn-action btn-edit' onclick='editCompte("+i+")'>&#9998; Modifier</button>";
-        if(c.role !== "admin" || comptes.filter(function(x){return x.role==="admin";}).length > 1){
-          rows += "<button class='btn-action btn-del' onclick='delCompte("+i+")'>&#128465; Suppr.</button>";
-        }
-        rows += "</td>";
-      }
-      rows += "</tr>";
+  const labels={admin:"Administrateur",user:"Commercial",client:"Client"};
+  let rows="";
+  allUsers.forEach(u=>{
+    rows+=`<tr>
+      <td style="font-size:11px;color:#555">${escH(u.email||"")}</td>
+      <td>${escH(u.nom||"")}</td>
+      <td><span class="role-badge role-${u.role}">${labels[u.role]||u.role}</span></td>
+      <td>${u.remise>0?`<span class="remise-pill">-${u.remise}%</span>`:'<span style="color:#ccc">-</span>'}</td>
+      <td style="display:flex;gap:5px;white-space:nowrap">
+        <button class="btn-action btn-edit" onclick="editUser('${u.uid}')">&#9998; Modifier</button>
+        <button class="btn-action" onclick="resetPw('${u.uid}','${escH(u.email||'')}'')" style="background:#e3f2fd;color:#1565c0">&#128274; Reset mdp</button>
+        ${u.role!=="admin"?`<button class="btn-action btn-del" onclick="delUser('${u.uid}','${escH(u.email||'')}')">&#128465; Suppr.</button>`:''}
+      </td>
+    </tr>`;
+  });
+  document.getElementById("comptes-tbody").innerHTML=rows||'<tr><td colspan="5" style="text-align:center;padding:20px;color:#888">Aucun compte</td></tr>';
+}
+
+async function loadInscriptionCount(){
+  try{
+    const snap=await getDocs(query(collection(db,"inscriptions"),where("statut","==","en_attente")));
+    const n=snap.size;
+    document.getElementById("stat-inscriptions").textContent=n;
+    document.getElementById("badge-inscriptions").textContent=n;
+  }catch(e){}
+}
+
+async function loadInscriptions(){
+  const tbody=document.getElementById("inscriptions-tbody");
+  tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#888">Chargement...</td></tr>';
+  try{
+    const snap=await getDocs(query(collection(db,"inscriptions"),orderBy("createdAt","desc")));
+    if(snap.empty){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#888">Aucune demande</td></tr>';return;}
+    let rows="";
+    snap.forEach(d=>{
+      const i=d.data();
+      const date=i.createdAt?new Date(i.createdAt.seconds*1000).toLocaleDateString("fr-FR"):"";
+      const statut=i.statut==="valide"?'<span class="status-badge status-valide">Valid\u00e9</span>':'<span class="status-badge status-attente">En attente</span>';
+      rows+=`<tr>
+        <td style="font-size:11px">${date}</td>
+        <td>${escH(i.prenom||"")} ${escH(i.nom||"")}</td>
+        <td style="font-size:11px">${escH(i.email||"")}</td>
+        <td style="font-size:11px">${escH(i.telephone||"")}</td>
+        <td style="font-size:11px">${escH(i.zone||"")}</td>
+        <td>${statut}</td>
+        <td style="display:flex;gap:5px;white-space:nowrap">
+          ${i.statut!=="valide"?`<button class="btn-action btn-edit" onclick="createFromInscription('${d.id}','${escH(i.email||'')}','${escH(i.prenom+' '+i.nom)}')">&#43; Cr\u00e9er compte</button>`:''}
+          <button class="btn-action btn-del" onclick="delInscription('${d.id}')">&#128465;</button>
+        </td>
+      </tr>`;
     });
-    return rows;
-  }
-
-  // Table page comptes
-  var tbody = document.getElementById("comptes-tbody");
-  if(tbody) tbody.innerHTML = buildRows(null);
-
-  // Mini table dashboard
-  var dashTable = document.getElementById("dash-comptes-table");
-  if(dashTable){
-    dashTable.innerHTML = "<table><thead><tr><th>Login</th><th>Nom</th><th>R\u00f4le</th><th>Remise</th></tr></thead><tbody>"+buildRows(5)+"</tbody></table>";
-  }
+    tbody.innerHTML=rows;
+  }catch(e){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:#c62828;padding:20px">Erreur : '+e.message+'</td></tr>';}
 }
 
-function escH(s){
-  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-}
-
-// ============================================
-// MODAL AJOUT / EDIT
-// ============================================
-function openModal(idx){
-  editIndex = (idx !== undefined) ? idx : -1;
-  document.getElementById("modal-title").textContent = editIndex >= 0 ? "Modifier le compte" : "Nouveau compte";
-  document.getElementById("modal-alert").style.display = "none";
-  if(editIndex >= 0){
-    var c = comptes[editIndex];
-    document.getElementById("f-login").value    = c.login;
-    document.getElementById("f-password").value = c.password;
-    document.getElementById("f-nom").value      = c.nom;
-    document.getElementById("f-role").value     = c.role;
-    document.getElementById("f-remise").value   = c.remise || 0;
-    document.getElementById("f-email").value    = c.email  || "";
-    document.getElementById("f-login").disabled = true; // login non modifiable
-  } else {
-    document.getElementById("f-login").value    = "";
-    document.getElementById("f-password").value = "";
-    document.getElementById("f-nom").value      = "";
-    document.getElementById("f-role").value     = "client";
-    document.getElementById("f-remise").value   = "0";
-    document.getElementById("f-email").value    = "";
-    document.getElementById("f-login").disabled = false;
-  }
+// Modal
+window.openModal=function(){
+  editUid=null;
+  document.getElementById("modal-title").textContent="Nouveau compte";
+  document.getElementById("f-email").value="";document.getElementById("f-email").disabled=false;
+  document.getElementById("f-password").value="";document.getElementById("fg-password").style.display="block";
+  document.getElementById("f-nom").value="";document.getElementById("f-role").value="client";
+  document.getElementById("f-remise").value="0";
+  document.getElementById("modal-alert").style.display="none";
   document.getElementById("modal").classList.add("open");
-}
+};
+window.closeModal=function(){document.getElementById("modal").classList.remove("open");editUid=null;};
 
-function closeModal(){
-  document.getElementById("modal").classList.remove("open");
-  document.getElementById("f-login").disabled = false;
-}
+window.editUser=function(uid){
+  const u=allUsers.find(x=>x.uid===uid);if(!u)return;
+  editUid=uid;
+  document.getElementById("modal-title").textContent="Modifier le compte";
+  document.getElementById("f-email").value=u.email||"";document.getElementById("f-email").disabled=true;
+  document.getElementById("fg-password").style.display="none";
+  document.getElementById("f-nom").value=u.nom||"";
+  document.getElementById("f-role").value=u.role||"client";
+  document.getElementById("f-remise").value=u.remise||0;
+  document.getElementById("modal-alert").style.display="none";
+  document.getElementById("modal").classList.add("open");
+};
 
-function editCompte(i){
-  showPage("comptes", document.querySelectorAll(".nav-item")[1]);
-  openModal(i);
-}
+window.saveCompte=async function(){
+  const email=document.getElementById("f-email").value.trim();
+  const pw=document.getElementById("f-password").value;
+  const nom=document.getElementById("f-nom").value.trim();
+  const role=document.getElementById("f-role").value;
+  const remise=parseFloat(document.getElementById("f-remise").value)||0;
+  const alertEl=document.getElementById("modal-alert");
+  const btn=document.getElementById("btn-save-compte");
+  alertEl.style.display="none";
 
-function delCompte(i){
-  if(!confirm("Supprimer le compte \""+comptes[i].login+"\" ?")) return;
-  comptes.splice(i,1);
-  saveComptes();
-  renderComptes();
-  showToast("&#128465; Compte supprim\u00e9");
-  setTimeout(function(){autoSync();},500);
-}
+  if(!email||!nom){alertEl.textContent="Email et nom obligatoires.";alertEl.className="modal-alert error";alertEl.style.display="block";return;}
+  if(!editUid&&pw.length<6){alertEl.textContent="Mot de passe minimum 6 caract\u00e8res.";alertEl.className="modal-alert error";alertEl.style.display="block";return;}
 
-function saveCompte(){
-  var login    = document.getElementById("f-login").value.trim();
-  var password = document.getElementById("f-password").value.trim();
-  var nom      = document.getElementById("f-nom").value.trim();
-  var role     = document.getElementById("f-role").value;
-  var remise   = parseFloat(document.getElementById("f-remise").value) || 0;
-  var alertEl  = document.getElementById("modal-alert");
-
-  if(!login || !password || !nom){
-    alertEl.textContent = "Veuillez remplir tous les champs obligatoires.";
-    alertEl.className = "modal-alert error";
-    alertEl.style.display = "block";
-    return;
-  }
-
-  if(editIndex < 0){
-    // V\u00e9rifier login unique
-    var exists = comptes.some(function(c){ return c.login === login; });
-    if(exists){
-      alertEl.textContent = "Ce login existe d\u00e9j\u00e0.";
-      alertEl.className = "modal-alert error";
-      alertEl.style.display = "block";
-      return;
+  btn.disabled=true;btn.textContent="Enregistrement...";
+  try{
+    if(!editUid){
+      // Créer dans Firebase Auth
+      const cred=await createUserWithEmailAndPassword(auth,email,pw);
+      // Enregistrer dans Firestore
+      await setDoc(doc(db,"users",cred.user.uid),{email,nom,role,remise,createdAt:serverTimestamp()});
+      showToast("\u2705 Compte cr\u00e9\u00e9 : "+email);
+    }else{
+      // Modifier dans Firestore uniquement
+      await updateDoc(doc(db,"users",editUid),{nom,role,remise});
+      const idx=allUsers.findIndex(x=>x.uid===editUid);
+      if(idx>=0)allUsers[idx]={...allUsers[idx],nom,role,remise};
+      showToast("\u2705 Compte modifi\u00e9");
     }
-    var femail = document.getElementById("f-email").value.trim();
-    comptes.push({ login:login, password:password, nom:nom, role:role, remise:remise, email:femail });
-    showToast("\u2705 Compte cr\u00e9\u00e9 : "+login);
-    setTimeout(function(){autoSync();},500);
-  } else {
-    comptes[editIndex].password = password;
-    comptes[editIndex].nom      = nom;
-    comptes[editIndex].role     = role;
-    comptes[editIndex].remise   = remise;
-    comptes[editIndex].email    = document.getElementById("f-email").value.trim();
-    showToast("\u2705 Compte modifi\u00e9 : "+comptes[editIndex].login);
-    setTimeout(function(){autoSync();},500);
-  }
+    await loadUsers();
+    closeModal();
+  }catch(e){
+    alertEl.textContent=e.code==="auth/email-already-in-use"?"Cet email est d\u00e9j\u00e0 utilis\u00e9.":e.message;
+    alertEl.className="modal-alert error";alertEl.style.display="block";
+  }finally{btn.disabled=false;btn.textContent="\u2713 Enregistrer";}
+};
 
-  saveComptes();
-  renderComptes();
+window.delUser=async function(uid,email){
+  if(!confirm("Supprimer le compte "+email+" ?"))return;
+  try{
+    await deleteDoc(doc(db,"users",uid));
+    showToast("\u2705 Compte supprim\u00e9");
+    await loadUsers();
+  }catch(e){showToast("\u274c Erreur : "+e.message);}
+};
+
+window.resetPw=function(uid,email){
+  if(!confirm("Envoyer un email de r\u00e9initialisation de mot de passe \u00e0 "+email+" ?"))return;
+  sendPasswordResetEmail(auth,email)
+    .then(()=>showToast("\u2705 Email de r\u00e9initialisation envoy\u00e9 \u00e0 "+email))
+    .catch(e=>showToast("\u274c "+e.message));
+};
+
+window.createFromInscription=function(inscId,email,nom){
   closeModal();
-}
+  document.getElementById("f-email").value=email;
+  document.getElementById("f-nom").value=nom;
+  document.getElementById("modal").classList.add("open");
+  document.getElementById("modal-title").textContent="Cr\u00e9er compte depuis inscription";
+  // Marquer l'inscription comme validée après création
+  window._pendingInscriptionId=inscId;
+};
 
-// ============================================
-// EXPORT index.html
-// ============================================
-function exportIndex(){
-  // Lire le index.html original via fetch (fonctionne en h\u00e9berg\u00e9)
-  fetch("index.html")
-    .then(function(r){ return r.text(); })
-    .then(function(html){
-      // Remplacer le bloc var COMPTES = [...];
-      var newComptes = "var COMPTES = " + JSON.stringify(comptes, null, 2) + ";";
-      var updated = html.replace(/var COMPTES = \[[\s\S]*?\];/, newComptes);
-      var blob = new Blob([updated], {type:"text/html;charset=utf-8"});
-      var a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "index.html";
-      a.click();
-      showToast("\u2705 index.html t\u00e9l\u00e9charg\u00e9 avec "+comptes.length+" comptes");
-    })
-    .catch(function(){
-      // Fallback : g\u00e9n\u00e9rer depuis le template
-      alert("Impossible de lire index.html. Assurez-vous d'\u00eatre en ligne (fichier h\u00e9berg\u00e9).");
-    });
-}
+window.delInscription=async function(id){
+  if(!confirm("Supprimer cette demande ?"))return;
+  try{
+    await deleteDoc(doc(db,"inscriptions",id));
+    showToast("\u2705 Demande supprim\u00e9e");
+    await loadInscriptions();
+    await loadInscriptionCount();
+  }catch(e){showToast("\u274c "+e.message);}
+};
 
-function resetComptes(){
-  if(!confirm("R\u00e9initialiser les comptes depuis les valeurs par d\u00e9faut ?")) return;
-  comptes = COMPTES_DEFAULT.slice();
-  saveComptes();
-  renderComptes();
-  showToast("&#128260; Comptes r\u00e9initialis\u00e9s");
-}
-
-// ============================================
-// TOAST
-// ============================================
+// Toast
 var toastTimer;
 function showToast(msg){
-  var t = document.getElementById("toast");
-  t.innerHTML = msg;
-  t.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 3000);
+  const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),3000);
 }
-
-// ============================================
-// NAVIGATION EXTERNE
-// ============================================
-function goCommande(){ window.location.href = "commande.html"; }
-function logout(){
-  sessionStorage.removeItem("mdm_token");
-  window.location.href = "index.html";
-}
-
-// ============================================
-// INIT
-// ============================================
-loadComptes();
-renderComptes();
-loadGhConfig();
-
+function escH(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 </script>
 </body>
 </html>

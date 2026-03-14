@@ -8,259 +8,115 @@
 <style>
 :root{--terra:#C87864;--brown:#78503C;--cream:#FDF5EE;--gold:#D2B469;--green:#1A5C2E;--white:#fff;--shadow:rgba(120,80,60,0.18)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Outfit",sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--cream);background-image:radial-gradient(ellipse at 20% 50%,rgba(200,120,100,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(210,180,105,.10) 0%,transparent 50%)}
-
-.login-wrap{width:100%;max-width:420px;padding:20px}
-
-/* Logo */
-.logo-block{text-align:center;margin-bottom:32px}
-.logo-icon{width:72px;height:72px;background:var(--brown);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:14px;box-shadow:0 4px 20px var(--shadow)}
-.logo-title{font-family:"Cormorant Garamond",serif;font-size:30px;font-weight:700;color:var(--brown);letter-spacing:.5px}
+body{font-family:"Outfit",sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--cream);padding:30px 16px}
+.wrap{width:100%;max-width:420px}
+.logo-block{text-align:center;margin-bottom:28px}
+.logo-icon{width:68px;height:68px;background:var(--brown);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px}
+.logo-title{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:700;color:var(--brown)}
 .logo-title span{color:var(--terra)}
-.logo-sub{font-size:12px;color:#a08070;margin-top:4px;letter-spacing:.3px}
-
-/* Card */
+.logo-sub{font-size:12px;color:#a08070;margin-top:3px}
 .card{background:var(--white);border-radius:16px;padding:36px 32px;box-shadow:0 8px 40px var(--shadow);position:relative;overflow:hidden}
 .card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--terra),var(--gold),var(--brown))}
-.card-title{font-size:14px;font-weight:600;color:var(--brown);margin-bottom:24px;text-align:center;opacity:.8}
-
-/* Form */
-.form-group{margin-bottom:18px}
-.form-group label{display:block;font-size:11px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px}
-.input-wrap{position:relative}
-.input-wrap .icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.5;pointer-events:none}
-.form-group input{width:100%;padding:12px 14px 12px 40px;border:1.5px solid #e0d0c4;border-radius:8px;font-family:"Outfit",sans-serif;font-size:14px;background:var(--cream);color:#3a2a20;outline:none;transition:all .18s}
-.form-group input:focus{border-color:var(--terra);background:#fff;box-shadow:0 0 0 3px rgba(200,120,100,.12)}
-.form-group input::placeholder{color:#c0a898;font-size:13px}
-
-/* Toggle password */
-.toggle-pw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;opacity:.4;padding:4px;transition:opacity .15s}
-.toggle-pw:hover{opacity:.8}
-
-/* Bouton */
-.btn-login{width:100%;padding:13px;background:var(--brown);color:var(--white);border:none;border-radius:8px;font-family:"Outfit",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.3px;margin-top:8px}
-.btn-login:hover{background:var(--terra);box-shadow:0 4px 16px rgba(200,120,100,.35)}
-.btn-login:active{transform:scale(.98)}
-.btn-login:disabled{opacity:.6;cursor:not-allowed}
-
-/* Spinner */
-.spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+.card-title{font-size:13px;font-weight:600;color:var(--brown);margin-bottom:22px;text-align:center;opacity:.8}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-size:11px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.iw{position:relative}
+.iw .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.45;pointer-events:none}
+.fg input{width:100%;padding:11px 13px 11px 40px;border:1.5px solid #e0d0c4;border-radius:8px;font-family:"Outfit",sans-serif;font-size:14px;background:var(--cream);color:#3a2a20;outline:none;transition:all .18s}
+.fg input:focus{border-color:var(--terra);background:#fff;box-shadow:0 0 0 3px rgba(200,120,100,.12)}
+.fg input::placeholder{color:#c0a898;font-size:13px}
+.tpw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;opacity:.4;padding:4px}
+.tpw:hover{opacity:.8}
+.btn{width:100%;padding:13px;background:var(--brown);color:var(--white);border:none;border-radius:8px;font-family:"Outfit",sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;transition:all .18s}
+.btn:hover{background:var(--terra)}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.sp{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* Erreur */
-.error-msg{background:#fdecea;color:#c62828;border:1px solid #ef9a9a;border-radius:8px;padding:11px 14px;font-size:13px;margin-top:16px;display:none;text-align:center;animation:shake .3s ease}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-
-/* Footer */
-.footer{text-align:center;margin-top:24px;font-size:11px;color:#b0988a}
-
-/* Comptes info (admin) */
-.accounts-hint{background:#f5ede5;border-radius:8px;padding:12px 14px;margin-top:20px;font-size:11px;color:#a07060;border:1px solid #e8d8cc}
-.accounts-hint strong{color:var(--brown);display:block;margin-bottom:6px}
-.accounts-hint ul{padding-left:16px;line-height:1.8}
+.err{background:#fdecea;color:#c62828;border:1px solid #ef9a9a;border-radius:8px;padding:11px 14px;font-size:13px;margin-top:14px;display:none;text-align:center}
+.foot{text-align:center;margin-top:16px;font-size:12px;color:#b0988a}
+.foot a{color:var(--terra);text-decoration:none;font-weight:600}
 </style>
 </head>
 <body>
-
-<div class="login-wrap">
-
-  <!-- Logo -->
+<div class="wrap">
   <div class="logo-block">
     <div class="logo-icon">&#127806;</div>
     <div class="logo-title">Moulin <span>des</span> Moines</div>
     <div class="logo-sub">Espace Commandes 2026</div>
   </div>
-
-  <!-- Card connexion -->
   <div class="card">
-    <div class="card-title">Veuillez vous identifier pour acc&#233;der au bon de commande</div>
-
-    <div class="form-group">
-      <label>Identifiant</label>
-      <div class="input-wrap">
-        <span class="icon">&#128100;</span>
-        <input type="text" id="login" placeholder="Votre identifiant" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="card-title">Identifiez-vous pour acc&#233;der au bon de commande</div>
+    <div class="fg">
+      <label>Email</label>
+      <div class="iw"><span class="ic">&#64;</span>
+        <input type="email" id="email" placeholder="votre@email.fr" autocomplete="email">
       </div>
     </div>
-
-    <div class="form-group">
+    <div class="fg">
       <label>Mot de passe</label>
-      <div class="input-wrap">
-        <span class="icon">&#128274;</span>
-        <input type="password" id="password" placeholder="Votre mot de passe" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
-        <button class="toggle-pw" onclick="togglePw()" tabindex="-1" title="Afficher / masquer">&#128065;</button>
+      <div class="iw"><span class="ic">&#128274;</span>
+        <input type="password" id="password" placeholder="Votre mot de passe" autocomplete="current-password">
+        <button class="tpw" id="tpw-btn" tabindex="-1">&#128065;</button>
       </div>
     </div>
-
-    <button class="btn-login" id="btn-login" onclick="doLogin()">
-      <span class="spinner" id="spinner"></span>
-      <span id="btn-label">Se connecter</span>
-      <span>&#8594;</span>
+    <button class="btn" id="btn-login">
+      <span class="sp" id="sp"></span>
+      <span id="btn-lbl">Se connecter</span>
     </button>
-
-    <div class="error-msg" id="error-msg">Identifiant ou mot de passe incorrect.</div>
+    <div class="err" id="err"></div>
   </div>
-
-  <div class="footer">Moulin des Moines &copy; 2026 &nbsp;&middot;&nbsp; Acc&#232;s r&#233;serv&#233; aux utilisateurs autoris&#233;s</div>
-  <div style="text-align:center;margin-top:14px;font-size:12px;color:#a08070">
-    Nouveau commercial ? <a href="inscription.html" style="color:var(--terra);text-decoration:none;font-weight:600">Faire une demande d&#8217;acc&#232;s &#8594;</a>
-  </div>
-
+  <div class="foot" style="margin-top:14px">Nouveau commercial ? <a href="inscription.html">Faire une demande d&#8217;acc&#232;s</a></div>
+  <div class="foot" style="margin-top:6px">Moulin des Moines &copy; 2026</div>
 </div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import{getAuth,signInWithEmailAndPassword,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import{getFirestore,doc,getDoc}from"https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
-<script>
-// ═══════════════════════════════════════════════════════════
-// COMPTES UTILISATEURS
-// Modifier ici pour ajouter / supprimer des comptes
-// Format : { login, password, nom, role }
-// ═══════════════════════════════════════════════════════════
-var COMPTES = [
-  {
-    "login": "admin",
-    "password": "mdm2026",
-    "nom": "Administrateur",
-    "role": "admin",
-    "remise": 0,
-    "email": "cspoto@moulindesmoines.com"
-  },
-  {
-    "login": "commercial",
-    "password": "mdm-ventes",
-    "nom": "Commercial MDM",
-    "role": "user",
-    "remise": 0,
-    "email": "cspoto@moulindesmoines.com"
-  },
-  {
-    "login": "magasin1",
-    "password": "mag1-2026",
-    "nom": "Magasin Alsace",
-    "role": "client",
-    "remise": 5,
-    "email": "magasin1@exemple.fr"
-  },
-  {
-    "login": "magasin2",
-    "password": "mag2-2026",
-    "nom": "Magasin Lorraine",
-    "role": "client",
-    "remise": 10,
-    "email": "magasin2@exemple.fr"
-  },
-  {
-    "login": "audrey",
-    "password": "spoto",
-    "nom": "audrey spoto",
-    "role": "user",
-    "remise": 0,
-    "email": "audreyspoto@gmail.com"
-  },
-  {
-    "login": "BioFontaine",
-    "password": "38600",
-    "nom": "BIO FONTAINE 38600",
-    "role": "client",
-    "remise": 12,
-    "email": "spoto.christophe@gmail.com"
+const cfg={apiKey:"AIzaSyB000QDa4c-vMjO1Xuimw58iiRvwgbF1zc",authDomain:"mdm-bdc26.firebaseapp.com",projectId:"mdm-bdc26",storageBucket:"mdm-bdc26.firebasestorage.app",messagingSenderId:"52658530893",appId:"1:52658530893:web:166626ae4d681465ddca04"};
+const app=initializeApp(cfg);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+// Rediriger si deja connecte
+onAuthStateChanged(auth,async(user)=>{
+  if(!user)return;
+  try{
+    const s=await getDoc(doc(db,"users",user.uid));
+    if(s.exists()){window.location.href=s.data().role==="admin"?"admin.html":"commande.html";}
+  }catch(e){}
+});
+
+document.getElementById("btn-login").addEventListener("click",login);
+document.getElementById("password").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+document.getElementById("email").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+document.getElementById("tpw-btn").addEventListener("click",()=>{
+  const i=document.getElementById("password");i.type=i.type==="password"?"text":"password";
+});
+
+async function login(){
+  const email=document.getElementById("email").value.trim();
+  const pw=document.getElementById("password").value;
+  const errEl=document.getElementById("err");
+  const btn=document.getElementById("btn-login");
+  const sp=document.getElementById("sp");
+  const lbl=document.getElementById("btn-lbl");
+  errEl.style.display="none";
+  if(!email||!pw){showErr("Veuillez remplir tous les champs.");return;}
+  btn.disabled=true;sp.style.display="inline-block";lbl.textContent="V\u00e9rification...";
+  try{
+    const cred=await signInWithEmailAndPassword(auth,email,pw);
+    const s=await getDoc(doc(db,"users",cred.user.uid));
+    if(!s.exists())throw new Error("Compte non configur\u00e9. Contactez l'administrateur.");
+    lbl.textContent="Connexion...";
+    window.location.href=s.data().role==="admin"?"admin.html":"commande.html";
+  }catch(e){
+    btn.disabled=false;sp.style.display="none";lbl.textContent="Se connecter";
+    const codes={"auth/invalid-credential":1,"auth/wrong-password":1,"auth/user-not-found":1};
+    showErr(codes[e.code]?"Email ou mot de passe incorrect.":e.code==="auth/too-many-requests"?"Trop de tentatives. R\u00e9essayez plus tard.":e.message||"Erreur de connexion.");
   }
-];
-// ── Remplacer les emails par les vraies adresses de chaque compte ──
-// ── Pour modifier une remise : changer le chiffre dans remise: XX
-// ── La remise s'applique automatiquement à la connexion (0 = pas de remise)
-// ═══════════════════════════════════════════════════════════
-
-// Rediriger si déjà connecté
-(function(){
-  try {
-    var token = sessionStorage.getItem("mdm_token");
-    if(token) {
-      var data = JSON.parse(atob(token));
-      if(data.exp && Date.now() < data.exp) window.location.href = data.role==="admin" ? "admin.html" : "commande.html";
-    }
-  } catch(e) {}
-})();
-
-// ── Fusionner COMPTES (fichier) + comptes ajoutés via admin (localStorage)
-(function(){
-  try {
-    var saved = localStorage.getItem("mdm_comptes");
-    if(saved){
-      var savedList = JSON.parse(saved);
-      // Remplacer/compléter COMPTES avec la liste admin
-      // La liste admin fait référence → elle écrase le fichier
-      COMPTES.length = 0;
-      for(var i=0;i<savedList.length;i++) COMPTES.push(savedList[i]);
-    }
-  } catch(e){}
-})();
-
-function doLogin(){
-  var login = document.getElementById("login").value.trim();
-  var password = document.getElementById("password").value;
-  var errorEl = document.getElementById("error-msg");
-  var btn = document.getElementById("btn-login");
-  var spinner = document.getElementById("spinner");
-  var label = document.getElementById("btn-label");
-
-  errorEl.style.display = "none";
-
-  if(!login || !password){
-    showError("Veuillez remplir tous les champs.");
-    return;
-  }
-
-  // Animation
-  btn.disabled = true;
-  spinner.style.display = "inline-block";
-  label.textContent = "Vérification...";
-
-  setTimeout(function(){
-    var compte = null;
-    for(var i=0;i<COMPTES.length;i++){
-      if(COMPTES[i].login === login && COMPTES[i].password === password){
-        compte = COMPTES[i];
-        break;
-      }
-    }
-
-    if(compte){
-      // Créer token (8h)
-      var tokenData = {
-        login:  compte.login,
-        nom:    compte.nom,
-        role:   compte.role,
-        remise: compte.remise || 0,
-        email:  compte.email || "cspoto@moulindesmoines.com",
-        exp:    Date.now() + 8 * 60 * 60 * 1000
-      };
-      var token = btoa(JSON.stringify(tokenData));
-      sessionStorage.setItem("mdm_token", token);
-      // Redirection
-      label.textContent = "Connexion...";
-      window.location.href = compte.role === "admin" ? "admin.html" : "commande.html";
-    } else {
-      btn.disabled = false;
-      spinner.style.display = "none";
-      label.textContent = "Se connecter";
-      showError("Identifiant ou mot de passe incorrect.");
-    }
-  }, 600);
 }
-
-function showError(msg){
-  var el = document.getElementById("error-msg");
-  el.textContent = msg;
-  el.style.display = "block";
-  // Relancer l'animation shake
-  el.style.animation = "none";
-  el.offsetHeight;
-  el.style.animation = "shake .3s ease";
-}
-
-function togglePw(){
-  var input = document.getElementById("password");
-  input.type = input.type === "password" ? "text" : "password";
-}
+function showErr(m){const e=document.getElementById("err");e.textContent=m;e.style.display="block";}
 </script>
 </body>
 </html>
