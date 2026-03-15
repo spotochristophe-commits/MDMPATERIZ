@@ -1337,14 +1337,13 @@ var ROLE_THEMES = {
 };
 
 function applyTheme(data){
-  // Priorité : couleur perso du compte > thème du rôle > défaut
   var base = ROLE_THEMES[data.role] || ROLE_THEMES.client;
   var theme = {
-    brown:  data.theme_brown  || base.brown,
-    terra:  data.theme_terra  || base.terra,
-    cream:  data.theme_cream  || base.cream,
-    gold:   data.theme_gold   || base.gold,
-    green:  data.theme_green  || base.green,
+    brown:  base.brown,
+    terra:  base.terra,
+    cream:  base.cream,
+    gold:   base.gold,
+    green:  base.green,
     shadow: base.shadow
   };
   var root = document.documentElement;

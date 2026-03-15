@@ -194,10 +194,8 @@ function doLogin(){
         ville:      compte.ville     || "",
         cp:         compte.cp        || "",
         commercial:  compte.commercial || "",
-        theme_brown: compte.theme_brown || "",
-        theme_terra: compte.theme_terra || "",
-        theme_cream: compte.theme_cream || "",
-        theme_gold:  compte.theme_gold  || "",
+
+        remises_produits: compte.remises_produits || [],
         exp:         Date.now() + 8 * 60 * 60 * 1000
       };
       var token = btoa(JSON.stringify(tokenData));

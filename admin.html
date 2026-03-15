@@ -954,7 +954,7 @@ function saveCompte(){
     comptes[editIndex].region=document.getElementById("f-region").value;comptes[editIndex].numclient=document.getElementById("f-numclient").value.trim();
     comptes[editIndex].notes=document.getElementById("f-notes").value.trim();comptes[editIndex].groupement=document.getElementById("f-groupement").value.trim();
     comptes[editIndex].commercial=document.getElementById("f-commercial")?document.getElementById("f-commercial").value:"";
-    var _th=getThemeFromForm();comptes[editIndex].theme_brown=_th.theme_brown;comptes[editIndex].theme_terra=_th.theme_terra;comptes[editIndex].theme_cream=_th.theme_cream;comptes[editIndex].theme_gold=_th.theme_gold;
+
     comptes[editIndex].remises_produits=JSON.parse(JSON.stringify(_rpData||[]));
     showToast("\u2705 Compte modifi\u00e9 : "+comptes[editIndex].login);
   }
@@ -1794,9 +1794,7 @@ var ROLE_THEMES_DEF = {
 };
 
 function getThemeFromForm(){
-  var role = document.getElementById('f-role') ? document.getElementById('f-role').value : 'client';
-  var t    = ROLE_THEMES_DEF[role] || ROLE_THEMES_DEF.client;
-  return { theme_brown: t.brown, theme_terra: t.terra, theme_cream: t.cream, theme_gold: t.gold };
+  return {};
 }
 
 // Stubs pour compatibilité (plus de UI palette)
