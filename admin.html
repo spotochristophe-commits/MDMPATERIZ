@@ -347,14 +347,6 @@ table{font-size:11px}
       <div id="actu-list"></div>
     </div>
 
-    <!-- PAGE : INSCRIPTIONS -->
-    <div class="page" id="page-inscriptions">
-      <div class="page-title">Demandes d'inscription</div>
-      <div class="page-sub">Nouvelles demandes re&#231;ues via inscription-client.html</div>
-      <div class="info-banner"><span class="icon">&#128231;</span><div>Envoy&#233;es &#224; <strong>cspoto@moulindesmoines.com</strong>. Cr&#233;er le compte dans Comptes puis envoyer les identifiants.</div></div>
-      <div class="section-card"><div class="section-card-title"><span>&#128203; Proc&#233;dure</span></div><div style="display:flex;flex-direction:column;gap:10px;padding:4px 0"><div style="display:flex;gap:12px;align-items:flex-start"><div style="min-width:24px;height:24px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">1</div><div>Recevoir l'email de demande</div></div><div style="display:flex;gap:12px;align-items:flex-start"><div style="min-width:24px;height:24px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">2</div><div>Cr&#233;er le compte dans l'onglet Comptes</div></div><div style="display:flex;gap:12px;align-items:flex-start"><div style="min-width:24px;height:24px;border-radius:50%;background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">3</div><div>Exporter index.html depuis Param&#232;tres</div></div><div style="display:flex;gap:12px;align-items:flex-start"><div style="min-width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">4</div><div>Envoyer les identifiants au magasin</div></div></div></div>
-    </div>
-
     <!-- PAGE : HISTORIQUE -->
     <div class="page" id="page-historique">
       <div class="page-title">Historique des commandes</div>
@@ -961,6 +953,7 @@ function saveCompte(){
     comptes[editIndex].notes=document.getElementById("f-notes").value.trim();comptes[editIndex].groupement=document.getElementById("f-groupement").value.trim();
     comptes[editIndex].commercial=document.getElementById("f-commercial")?document.getElementById("f-commercial").value:"";
     var _th=getThemeFromForm();comptes[editIndex].theme_brown=_th.theme_brown;comptes[editIndex].theme_terra=_th.theme_terra;comptes[editIndex].theme_cream=_th.theme_cream;comptes[editIndex].theme_gold=_th.theme_gold;
+    comptes[editIndex].remises_produits=JSON.parse(JSON.stringify(_rpData||[]));
     showToast("\u2705 Compte modifi\u00e9 : "+comptes[editIndex].login);
   }
 
