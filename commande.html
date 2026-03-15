@@ -637,7 +637,9 @@ async function sendOrder(){
       showAlert("✅ Commande envoyée avec succès ! Vous recevrez une confirmation par email.","success");
     }else{throw new Error("err");}
   }catch(e){
-    showAlert("❌ Erreur lors de l'envoi. Veuillez réessayer ou contacter MDM directement.","error");
+    var msg = e && e.message ? e.message : JSON.stringify(e);
+    showAlert("❌ Erreur d'envoi : "+msg+". Réessayez ou contactez MDM directement.","error");
+    console.error('sendOrder error:', e);
   }
   btn.disabled=false;spinner.style.display="none";label.textContent="Envoyer la commande";
 }
