@@ -115,11 +115,74 @@ body{font-family:"Outfit",sans-serif;min-height:100vh;display:flex;align-items:c
 // Format : { login, password, nom, role }
 // ═══════════════════════════════════════════════════════════
 var COMPTES = [
-  { login: "admin",      password: "mdm2026",      nom: "Administrateur",   role: "admin",   remise: 0,  email: "cspoto@moulindesmoines.com" },
-  { login: "commercial", password: "mdm-ventes",   nom: "Commercial MDM",   role: "user",    remise: 0,  email: "cspoto@moulindesmoines.com" },
-  { login: "magasin1",   password: "mag1-2026",    nom: "Magasin Alsace",   role: "client",  remise: 5,  email: "magasin1@exemple.fr"        },
-  { login: "magasin2",   password: "mag2-2026",    nom: "Magasin Lorraine", role: "client",  remise: 10, email: "magasin2@exemple.fr"        },
-  { login: "magasin3",   password: "mag3-2026",    nom: "Magasin Franche-C",role: "client",  remise: 15, email: "magasin3@exemple.fr"        }
+  {
+    "login": "admin",
+    "password": "mdm2026",
+    "nom": "Administrateur",
+    "role": "admin",
+    "remise": 0,
+    "email": "cspoto@moulindesmoines.com",
+    "_origIdx": 0
+  },
+  {
+    "login": "commercial",
+    "password": "mdm-ventes",
+    "nom": "Spoto Christophe",
+    "role": "user",
+    "remise": 0,
+    "email": "cspoto@moulindesmoines.com",
+    "_origIdx": 1,
+    "tel": "",
+    "ville": "",
+    "cp": "",
+    "region": "",
+    "numclient": "",
+    "notes": "",
+    "groupement": ""
+  },
+  {
+    "login": "spotoj",
+    "password": "spoto62",
+    "nom": "Spoto joseph",
+    "role": "client",
+    "remise": 12,
+    "email": "spoto-veranda@wanadoo.fr",
+    "tel": "0670200229",
+    "ville": "fontaine",
+    "cp": "38600",
+    "region": "Auvergne-Rhône-Alpes",
+    "numclient": "",
+    "notes": "",
+    "groupement": "",
+    "_origIdx": 2,
+    "commercial": "commercial",
+    "theme_brown": "#1A5C2E",
+    "theme_terra": "#2D8A57",
+    "theme_cream": "#F0FBF4",
+    "theme_gold": "#4CAF7D"
+  },
+  {
+    "login": "bio_mas",
+    "password": "n74bkwFHtN",
+    "nom": "BIO MAS",
+    "role": "client",
+    "remise": 10,
+    "email": "spoto.christophe@gmail.com",
+    "tel": "0677898987",
+    "ville": "Fontaine",
+    "cp": "38600",
+    "region": "Auvergne-Rhône-Alpes",
+    "numclient": "",
+    "notes": "",
+    "groupement": "",
+    "commercial": "commercial",
+    "theme_brown": "#1A5C2E",
+    "theme_terra": "#2D8A57",
+    "theme_cream": "#F0FBF4",
+    "theme_gold": "#4CAF7D",
+    "_origIdx": 3,
+    "remises_produits": []
+  }
 ];
 // ── Remplacer les emails par les vraies adresses de chaque compte ──
 // ── Pour modifier une remise : changer le chiffre dans remise: XX
