@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>galette — Moulin des Moines</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--terra:#C87864;--brown:#78503C;--cream:#FDF5EE;--gold:#D2B469;--green:#1A5C2E;--white:#FFFFFF;--light:#F5EAE0;--shadow:rgba(120,80,60,0.12)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:#3a2a20;font-size:13px}
+/* HEADER */
+.page-header{background:var(--brown);color:var(--white);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px var(--shadow)}
+.header-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;letter-spacing:.5px}
+.header-logo span{color:var(--gold)}
+.header-subtitle{font-size:11px;opacity:.75;margin-top:2px}
+.header-actions{display:flex;gap:10px;flex-shrink:0}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border:none;border-radius:6px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .18s;white-space:nowrap}
+.btn-gold{background:var(--gold);color:var(--brown)}.btn-gold:hover{background:#c0a055}
+.btn-terra{background:var(--terra);color:var(--white)}.btn-terra:hover{background:#b56a58}
+.btn-green{background:var(--green);color:var(--white)}.btn-green:hover{background:#154d26}
+.btn-outline{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.4)}.btn-outline:hover{background:rgba(255,255,255,.1)}
+/* CONTAINER */
+.container{max-width:1340px;margin:0 auto;padding:20px 16px}
+/* CARD */
+.card{background:var(--white);border-radius:10px;box-shadow:0 2px 10px var(--shadow);padding:18px 22px;margin-bottom:16px}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-title::before{content:'';display:inline-block;width:4px;height:16px;background:var(--terra);border-radius:2px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.form-group label{display:block;font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.form-group input,.form-group select{width:100%;padding:8px 11px;border:1.5px solid #e0d0c4;border-radius:6px;font-family:'Outfit',sans-serif;font-size:13px;background:var(--cream);color:#3a2a20;outline:none;transition:border .15s}
+.form-group input:focus{border-color:var(--terra)}
+.remise-section{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px}
+.remise-badge{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:all .15s;font-family:'Outfit',sans-serif}
+.remise-badge.active{background:var(--green);color:var(--white);border-color:var(--green)}
+.remise-badge:not(.active){background:transparent;color:var(--brown);border-color:#d0c0b0}
+.remise-badge:not(.active):hover{border-color:var(--terra);color:var(--terra)}
+/* RECHERCHE */
+.search-bar{display:flex;align-items:center;gap:10px;background:var(--white);border-radius:10px;box-shadow:0 2px 10px var(--shadow);padding:12px 16px;margin-bottom:10px;flex-wrap:wrap}
+.search-bar input{flex:1;min-width:200px;padding:9px 14px;border:2px solid var(--gold);border-radius:7px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;background:var(--cream);color:#3a2a20;outline:none;transition:border .15s}
+.search-bar input:focus{border-color:var(--terra)}
+.search-bar input::placeholder{color:#b0978a}
+.search-modes{display:flex;gap:6px}
+.mode-btn{padding:7px 13px;border:1.5px solid #d0c0b0;background:transparent;border-radius:6px;font-size:11px;font-weight:600;color:var(--brown);cursor:pointer;transition:all .13s;white-space:nowrap;font-family:'Outfit',sans-serif}
+.mode-btn.active{background:var(--brown);color:var(--white);border-color:var(--brown)}
+.mode-btn:hover:not(.active){border-color:var(--terra);color:var(--terra)}
+.search-count{font-size:11px;color:#888;white-space:nowrap}
+.btn-clear{padding:7px 12px;background:#f0e0d4;border:none;border-radius:6px;font-size:11px;color:var(--brown);cursor:pointer;font-weight:600;font-family:'Outfit',sans-serif}
+.btn-clear:hover{background:var(--terra);color:var(--white)}
+/* TABLEAU */
+.table-wrap{background:var(--white);border-radius:10px;box-shadow:0 2px 10px var(--shadow);overflow:hidden;margin-bottom:80px}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--brown)}
+thead th{padding:10px 8px;font-size:10px;font-weight:600;color:var(--white);text-align:center;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;border-bottom:3px solid var(--gold)}
+thead th.th-lib{text-align:left;padding-left:12px}
+tbody tr{border-bottom:1px solid #f0e8e0;transition:background .1s}
+tbody tr:nth-child(even){background:#faf5f0}
+tbody tr:hover{background:#f5ede5}
+tbody tr.hidden{display:none}
+tbody tr.has-qty{background:#fff8f0!important}
+td{padding:6px 8px;font-size:12px;text-align:center;vertical-align:middle}
+td.td-code{font-family:'Courier New',monospace;font-size:10px;font-weight:700;color:var(--brown);white-space:nowrap}
+td.td-lib{text-align:left;padding-left:12px;font-size:12px;max-width:340px}
+td.td-certif{font-weight:700;color:var(--green);font-size:10px}
+td.td-prix{font-weight:600;color:var(--green);white-space:nowrap}
+td.td-total{font-weight:700;color:var(--terra);white-space:nowrap}
+td.td-qty input{width:68px;padding:5px 8px;border:1.5px solid #ddd;border-radius:5px;text-align:center;font-size:13px;font-weight:600;font-family:'Outfit',sans-serif;background:var(--cream);outline:none;transition:all .15s}
+td.td-qty input:focus{border-color:var(--terra);background:#fff;box-shadow:0 0 0 3px rgba(200,120,100,.15)}
+tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
+/* TOTAUX STICKY */
+.totals-bar{position:fixed;bottom:0;left:0;right:0;z-index:90;background:var(--brown);color:var(--white);padding:10px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;box-shadow:0 -4px 16px var(--shadow)}
+.total-item{text-align:center}
+.total-label{font-size:9px;text-transform:uppercase;letter-spacing:.5px;opacity:.7}
+.total-value{font-size:16px;font-weight:700;color:var(--gold);margin-top:1px}
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(60,30,10,.5);z-index:200;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:14px;padding:30px;max-width:520px;width:90%;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.modal h2{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--brown);margin-bottom:6px}
+.modal p{font-size:12px;color:#888;margin-bottom:18px}
+.modal .fg{margin-bottom:12px}
+.modal .fg label{display:block;font-size:11px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.modal .fg input,.modal .fg textarea{width:100%;padding:9px 12px;border:1.5px solid #e0d0c4;border-radius:6px;font-family:'Outfit',sans-serif;font-size:13px;background:var(--cream);color:#3a2a20;outline:none}
+.modal .fg input:focus,.modal .fg textarea:focus{border-color:var(--terra)}
+.modal .fg textarea{resize:vertical;height:80px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.btn-cancel{background:#f0e4da;color:var(--brown);border:none;padding:10px 20px;border-radius:6px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif}
+.btn-cancel:hover{background:#e0d0c4}
+.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-top:12px;display:none}
+.alert.success{background:#e8f5e9;color:var(--green);border:1px solid #a5d6a7}
+.alert.error{background:#fdecea;color:#c62828;border:1px solid #ef9a9a}
+.spinner{display:none;width:16px;height:16px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* IMPRESSION */
+@media print{
+  .page-header .header-actions,.search-bar,.totals-bar,.modal-bg,.no-print{display:none!important}
+  body{background:#fff;font-size:11px}
+  .page-header{position:static;box-shadow:none;padding:10px 16px}
+  .container{padding:8px;max-width:100%}
+  .card,.table-wrap{box-shadow:none;border:1px solid #ddd;margin-bottom:8px}
+  tbody tr.hidden{display:none!important}
+  tbody tr:not(.has-qty){display:none!important}
+  .table-wrap{margin-bottom:0}
+  #recap-print{display:block!important}
+}
+#recap-print{display:none}
+.modal-history{background:var(--white);border-radius:14px;padding:24px 28px;max-width:760px;width:95%;max-height:88vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.modal-history h2{font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--brown);margin-bottom:12px}
+.td-stock{text-align:center;font-size:11px;font-weight:700;min-width:52px}
+.stock-ok  {color:#2e7d32;background:#e8f5e9;border-radius:4px;padding:2px 6px}
+.stock-low {color:#e65100;background:#fff3e0;border-radius:4px;padding:2px 6px}
+.stock-out {color:#c62828;background:#fdecea;border-radius:4px;padding:2px 6px}
+.stock-none{color:#bbb}
+.th-stock{min-width:52px;text-align:center}
+/* ── Bandeau actualités ── */
+#actus-bandeau{display:none;width:100%;background:var(--cream);border-bottom:2px solid #e0d0c4;margin-bottom:0}
+.actu-band-item{display:flex;align-items:flex-start;gap:12px;padding:12px 20px;border-bottom:1px solid #ece4da}
+.actu-band-item:last-child{border-bottom:none}
+.actu-band-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.actu-band-body{flex:1}
+.actu-band-titre{font-weight:700;font-size:13px;color:var(--brown);margin-bottom:2px}
+.actu-band-contenu{font-size:12px;color:#5a3a2a;line-height:1.6;white-space:pre-wrap}
+.actu-band-lien{display:inline-block;margin-top:4px;font-size:11px;color:var(--terra);text-decoration:none;font-weight:600}
+.actu-band-lien:hover{text-decoration:underline}
+.actu-band-type-info  {border-left:3px solid #1565c0;background:#f0f6ff}
+.actu-band-type-promo {border-left:3px solid #e65100;background:#fff8f0}
+.actu-band-type-alerte{border-left:3px solid #c62828;background:#fff5f5}
+.actu-band-type-lien  {border-left:3px solid #6a1b9a;background:#faf0ff}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+<!-- ── Bandeau Actualités MDM ── -->
+<div id="actus-bandeau"></div>
+
+
+
+<div style="background:#e65100;color:#fff;text-align:center;padding:8px 20px;font-family:Outfit,sans-serif;font-size:13px;font-weight:600">&#127381; galette  |  01/04/2026 → 15/04/2026</div><header class="page-header">
+  <div>
+    <div class="header-logo">Moulin <span>des</span> Moines</div>
+    <div class="header-subtitle">galette — 01/04/2026 au 15/04/2026</div>
+  </div>
+  <div class="header-actions">
+    <span style="font-size:11px;opacity:.7;margin-right:4px;display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+      <span>&#128100; <span id="user-info"></span></span>
+      <span id="commercial-info" style="display:none;font-size:10px;opacity:.8;color:var(--gold)">&#128188; <span id="commercial-name"></span></span>
+    </span>
+    <button class="btn btn-outline no-print" id="btn-admin" onclick="window.location.href='admin.html'" style="display:none;border-color:rgba(210,180,105,.6);color:#ffd580">&#9881; Admin</button>
+    <button class="btn btn-outline no-print" onclick="openHistoryModal()" style="border-color:rgba(210,180,105,.5);color:#ffd580">&#128203; Mes commandes</button>
+    <button class="btn btn-outline no-print" onclick="doPrint()">&#128424; PDF / Imprimer</button>
+    <button class="btn btn-outline no-print" onclick="exportExcel()" style="border-color:rgba(80,200,120,.5);color:#a0f0b0">&#128202; Export Excel</button>
+    <button class="btn btn-gold no-print" onclick="openModal()">&#128231; Envoyer la commande</button>
+    <button class="btn btn-outline no-print" onclick="logout()" style="border-color:rgba(255,100,80,.6);color:#ffb0a0">&#x23FB; D&#233;connexion</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <div class="card-title">Informations client</div>
+    <div class="form-grid">
+      <div class="form-group"><label>Magasin / Soci&#233;t&#233; *</label><input type="text" id="magasin" placeholder="Nom du magasin"></div>
+      <div class="form-group"><label>N&#176; Client MDM</label><input type="text" id="numclient" placeholder="Ex : MDM-0123"></div>
+      <div class="form-group"><label>Contact</label><input type="text" id="contact" placeholder="Pr&#233;nom Nom"></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="email" placeholder="votre@email.fr"></div>
+      <div class="form-group"><label>T&#233;l&#233;phone</label><input type="tel" id="tel" placeholder="06 xx xx xx xx"></div>
+      <div class="form-group"><label>Livraison souhait&#233;e</label><input type="date" id="datelivraison"></div>
+    </div>
+    <div style="margin-top:14px" id="bloc-remise">
+      <div style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Remise groupement</div>
+      <div class="remise-section" id="remise-section-badges">
+        <button class="remise-badge active" onclick="setRemise(0,this)">Aucune remise</button>
+        <button class="remise-badge" onclick="setRemise(5,this)">&minus;5 %</button>
+        <button class="remise-badge" onclick="setRemise(10,this)">&minus;10 %</button>
+        <button class="remise-badge" onclick="setRemise(15,this)">&minus;15 %</button>
+        <button class="remise-badge" onclick="setRemise(20,this)">&minus;20 %</button>
+        <input type="number" id="remise-custom" min="0" max="99" step="0.5" placeholder="Autre %" style="width:90px;padding:6px 10px;border:1.5px solid #d0c0b0;border-radius:6px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream)" oninput="setRemise(parseFloat(this.value)||0,null)">
+      </div>
+      <!-- Affichage fixe pour les clients (remise du compte, non modifiable) -->
+      <div id="remise-client-fixe" style="display:none">
+        <span id="remise-client-badge" style="display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:20px;background:var(--green);color:#fff;font-size:13px;font-weight:700"></span>
+        <span style="font-size:11px;color:#a08070;margin-left:8px">Remise groupement appliqu&#233;e automatiquement</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-bar no-print">
+    <input type="text" id="search-input" placeholder="Rechercher un produit (d&#233;signation, code article, EAN...)" oninput="doSearch()">
+    <div class="search-modes">
+      <button class="mode-btn active" data-mode="all"     onclick="setMode(this)">Tout</button>
+      <button class="mode-btn"        data-mode="libelle"  onclick="setMode(this)">D&#233;signation</button>
+      <button class="mode-btn"        data-mode="code"     onclick="setMode(this)">Code</button>
+      <button class="mode-btn"        data-mode="ean"      onclick="setMode(this)">EAN</button>
+    </div>
+    <span class="search-count" id="search-count"></span>
+    <button class="btn-clear" onclick="clearSearch()">&#10005; Effacer</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th class="th-lib">D&#233;signation</th>
+          <th>EAN / Gencod</th>
+          <th>Origine</th>
+          <th>Certif.</th>
+          <th>PCB</th>
+          <th>Poids</th>
+          <th>TVA</th>
+          <th>PU HT 2026</th>
+          <th class="no-print th-stock">Stock</th>
+          <th class="no-print">Qt&#233; (colis)</th>
+          <th>Total HT</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div id="recap-print"></div>
+
+</div>
+
+<div class="totals-bar no-print">
+  <div class="total-item"><div class="total-label">R&#233;f. command&#233;es</div><div class="total-value" id="nb-refs">0</div></div>
+  <div class="total-item"><div class="total-label">Total colis</div><div class="total-value" id="nb-colis">0</div></div>
+  <div class="total-item"><div class="total-label">Total HT brut</div><div class="total-value" id="total-brut">0,00 &#8364;</div></div>
+  <div class="total-item"><div class="total-label">Remise</div><div class="total-value" id="total-remise">0,00 &#8364;</div></div>
+  <div class="total-item"><div class="total-label">Total HT net</div><div class="total-value" id="total-net">0,00 &#8364;</div></div>
+  <div style="display:flex;gap:10px">
+    <button class="btn btn-outline" onclick="doPrint()">&#128424; PDF</button>
+    <button class="btn btn-outline" onclick="exportExcel()" style="border-color:rgba(80,200,120,.5);color:#a0f0b0">&#128202; Excel</button>
+    <button class="btn btn-gold"    onclick="openModal()">&#128231; Envoyer</button>
+  </div>
+</div>
+
+
+<!-- MODAL HISTORIQUE -->
+<div class="modal-bg" id="modal-history" onclick="if(event.target===this)closeHistoryModal()">
+  <div class="modal-history">
+    <h2>&#128203; Mes commandes</h2>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+      <span style="font-size:12px;color:#888">Historique des commandes envoy&#233;es depuis ce navigateur</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="exportHistoriqueClient()" style="background:var(--green);color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">&#128202; Export Excel</button>
+        <button onclick="clearOrderHistory()" style="background:#fdecea;color:#c62828;border:none;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">&#128465; Effacer tout</button>
+      </div>
+    </div>
+    <div id="history-container"></div>
+    <div style="margin-top:16px;text-align:right">
+      <button onclick="closeHistoryModal()" style="background:#f0e4da;color:var(--brown);border:none;padding:10px 20px;border-radius:7px;font-weight:600;cursor:pointer;font-family:Outfit,sans-serif">Fermer</button>
+    </div>
+  </div>
+</div>
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <h2>&#128231; Envoyer la commande</h2>
+    <p>Votre commande sera transmise &#224; l&#8217;&#233;quipe Moulin des Moines par email.</p>
+    <div class="fg"><label>Magasin / Soci&#233;t&#233; *</label><input type="text" id="m-magasin" placeholder="Nom du magasin"></div>
+    <div class="fg"><label>Votre email *</label><input type="email" id="m-email" placeholder="votre@email.fr"></div>
+    <div class="fg"><label>Commentaire</label><textarea id="m-comment" placeholder="Informations compl&#233;mentaires, contraintes de livraison..."></textarea></div>
+    <div class="alert" id="modal-alert"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-green" id="btn-send" onclick="sendOrder()">
+        <span class="spinner" id="spinner"></span>
+        <span id="send-label">&#128228; Envoyer la commande</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// ── PROTECTION ACCES ──────────────────────────────
+(function(){
+  var token = sessionStorage.getItem("mdm_token");
+  var valid = false;
+  try {
+    if(token) {
+      var data = JSON.parse(atob(token));
+      // Token valide 8h
+      if(data.exp && Date.now() < data.exp) valid = true;
+    }
+  } catch(e) {}
+  if(!valid) {
+    window.location.href = "index.html";
+  }
+  // Afficher le nom et appliquer la remise du compte
+  window.addEventListener("DOMContentLoaded", function(){
+    try {
+      var data = JSON.parse(atob(sessionStorage.getItem("mdm_token")));
+      // Nom utilisateur
+      var el = document.getElementById("user-info");
+      if(el) el.textContent = data.nom || data.login;
+      // Stocker l'email de destination pour FormSubmit
+      applyTheme(data);
+      window._destEmail = data.email || "cspoto@moulindesmoines.com";
+      window._userName  = data.nom  || data.login || "";
+      window._userLogin      = data.login      || "guest";
+      window._userCommercial = data.commercial  || "";
+      remisesProduitsMap = {};
+      if(data.remises_produits && Array.isArray(data.remises_produits)){
+        data.remises_produits.forEach(function(r){
+          var rval = parseFloat(r.remise)||0; if(!rval) return;
+          if(r.type==="categorie") remisesProduitsMap["~"+(r.valeur||"").toUpperCase()]=rval;
+          else remisesProduitsMap[(r.valeur||r.code||"").toUpperCase()]=rval;
+        });
+      }
+
+      // Afficher le commercial référent si compte client
+      if(data.role === "client" && data.commercial){
+        try{
+          var allComptes = JSON.parse(localStorage.getItem("mdm_comptes") || "[]");
+          var co = allComptes.find(function(x){ return x.login === data.commercial; });
+          if(co){
+            var coInfo = document.getElementById("commercial-info");
+            var coName = document.getElementById("commercial-name");
+            if(coInfo && coName){
+              coName.textContent = "Votre commercial\u00a0: " + co.nom;
+              coInfo.style.display = "inline";
+            }
+          }
+        }catch(e){}
+      }
+      // Pré-remplir automatiquement les champs du formulaire depuis les données du compte
+      function prefill(id, val){ var el=document.getElementById(id); if(el && val) el.value = val; }
+
+      if(data.role !== "user"){
+        // Client : on pré-remplit tout depuis son compte
+        prefill("magasin",   data.nom);
+        prefill("numclient", data.numclient);
+        prefill("email",     data.email);
+        prefill("tel",       data.tel);
+        // Contact = nom affiché si disponible
+        if(data.contact) prefill("contact", data.contact);
+        else prefill("contact", data.nom);
+      } else {
+        // Commercial : seuls les champs fixes (pas email ni magasin qu'il saisit pour le client)
+        prefill("numclient", data.numclient);
+      }
+      // Bouton admin visible uniquement pour role=admin
+      if(data.role === "admin"){
+        var adminBtn = document.getElementById("btn-admin");
+        if(adminBtn) adminBtn.style.display = "inline-flex";
+      }
+      // // ── Gestion de la remise selon le rôle ──
+      if(data.role === 'client'){
+        var r = parseFloat(data.remise) || 0;
+        setRemise(r, null);
+        document.getElementById('remise-section-badges').style.display = 'none';
+        var fixe = document.getElementById('remise-client-fixe');
+        var bdg  = document.getElementById('remise-client-badge');
+        if(fixe && bdg){
+          fixe.style.display = 'block';
+          bdg.textContent = r > 0 ? '\u2212'+r+'\u00a0%' : 'Aucune remise';
+          if(r === 0){ bdg.style.background='#e8ddd5'; bdg.style.color='var(--brown)'; }
+        }
+      } else {
+        if(data.remise && data.remise > 0){
+          var r = parseFloat(data.remise);
+          var badges = document.querySelectorAll('.remise-badge');
+          var found = false;
+          for(var i=0;i<badges.length;i++){
+            var txt = badges[i].textContent.trim();
+            if(txt === '-'+r+' %' || txt === '\u2212'+r+' %'){ badges[i].click(); found=true; break; }
+          }
+          if(!found){
+            var custom = document.getElementById('remise-custom');
+            if(custom) custom.value = r;
+            setRemise(r, null);
+          }
+        }
+      }
+      } catch(e) { console.error(e); }
+  });
+})();
+// ── FIN PROTECTION ────────────────────────────────
+
+var PRODUCTS = [{"code":"GAL7CE","libelle":"Galettes 7 céréales bio - 100g","pu_ht":0.94,"pcb":12,"tva":5.5,"ean":"3347430022118","origine":"UE/Non UE","certif":"BIO","poids":0.1,"stock":null},{"code":"GAL7CECAC","libelle":"Galettes 7 céréales et chocolat bio - 150g","pu_ht":2.1,"pcb":12,"tva":5.5,"ean":"3347430022019","origine":"UE/Non UE","certif":"BIO","poids":0.15,"stock":null},{"code":"GALCHA","libelle":"Galettes de blé chocolat à la châtaigne bio - 150g","pu_ht":2.1,"pcb":12,"tva":5.5,"ean":"3347430022545","origine":"UE/NON UE","certif":"BIO","poids":0.15,"stock":null},{"code":"GALBLECOC","libelle":"Galettes de blé chocolat à la noix de coco bio - 160g","pu_ht":2.1,"pcb":12,"tva":5.5,"ean":"3347430022392","origine":"UE/NON UE","certif":"BIO","poids":0.16,"stock":null},{"code":"GALBLECAC","libelle":"Galettes de blé et chocolat bio - 150g","pu_ht":2.1,"pcb":12,"tva":5.5,"ean":"3347430021647","origine":"UE/NON UE","certif":"BIO","poids":0.15,"stock":null},{"code":"GALPEP","libelle":"Galettes de petit épeautre bio - 100g","pu_ht":1.1,"pcb":12,"tva":5.5,"ean":"3347439942417","origine":"UE","certif":"BIO","poids":0.1,"stock":null},{"code":"GALPETCHOMYR","libelle":"Galettes de petit épeautre chocolat aux myrtilles bio - 160g","pu_ht":2.14,"pcb":12,"tva":5.5,"ean":"3347430009881","origine":"UE/NON UE","certif":"BIO","poids":0.16,"stock":null},{"code":"GALPEPCHO","libelle":"Galettes de petit épeautre et chocolat bio - 150g","pu_ht":2.1,"pcb":12,"tva":5.5,"ean":"3347430021920","origine":"UE/NON UE","certif":"BIO","poids":0.15,"stock":null},{"code":"GALRIZQUI","libelle":"Galettes de riz au quinoa bio - 100g","pu_ht":0.92,"pcb":12,"tva":5.5,"ean":"3347439961319","origine":"UE/Non UE","certif":"BIO","poids":0.1,"stock":null},{"code":"GALRIZ","libelle":"Galettes de riz complet bio - 100g","pu_ht":0.85,"pcb":12,"tva":5.5,"ean":"3347430020824","origine":"UE/Non UE","certif":"BIO","poids":0.1,"stock":null},{"code":"GALRIZCAC","libelle":"Galettes de riz et chocolat bio - 150g","pu_ht":1.98,"pcb":12,"tva":5.5,"ean":"3347430021807","origine":"UE/Non UE","certif":"BIO","poids":0.15,"stock":null},{"code":"GALEPESONAVO","libelle":"Galettes d'épeautre au son d'avoine bio - 100g","pu_ht":0.92,"pcb":12,"tva":5.5,"ean":"3347430006910","origine":"UE","certif":"BIO","poids":0.1,"stock":null},{"code":"GALEPE","libelle":"Galettes d'épeautre bio - 100g","pu_ht":0.92,"pcb":12,"tva":5.5,"ean":"3347430021708","origine":"UE","certif":"BIO","poids":0.1,"stock":null},{"code":"GALHYPCAC","libelle":"Galettes d'épeautre chocolat hyperproteinées bio - 150g","pu_ht":2.14,"pcb":12,"tva":5.5,"ean":"3347430005210","origine":"UE/NON UE","certif":"BIO","poids":0.15,"stock":null},{"code":"GALEPECAC","libelle":"Galettes d'épeautre et chocolat bio - 150g","pu_ht":2.1,"pcb":12,"tva":5.5,"ean":"3347430021869","origine":"UE/NON UE","certif":"BIO","poids":0.15,"stock":null},{"code":"GALEPEPBEUR","libelle":"Galettes d'épeautre pur beurre bio - 125g","pu_ht":1.7,"pcb":12,"tva":5.5,"ean":"3347436003050","origine":"UE/NON UE","certif":"BIO","poids":0.125,"stock":null},{"code":"GALSES","libelle":"Galettes d'épeautre riz chocolat sésame bio - 160g","pu_ht":2.1,"pcb":12,"tva":5.5,"ean":"3347430022446","origine":"UE/NON UE","certif":"BIO","poids":0.16,"stock":null}];
+
+var remise = 0;
+var searchMode = "all";
+var qtys = {};
+
+function fmt4(n){ return n.toFixed(2).replace(".",",") + "€"; }
+function fmt2(n){ return n.toFixed(2).replace(".",",") + "€"; }
+
+function escHtml(s){
+  return String(s||"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+}
+
+function buildTable(){
+  var rows = "";
+  for(var i=0;i<PRODUCTS.length;i++){
+    var p = PRODUCTS[i];
+    var qty = qtys[p.code] || 0;
+    var pcb = parseFloat(p.pcb) || 1;
+    var prixNet = p.pu_ht * (1 - remise/100);
+    var total = qty ? prixNet * qty * pcb : 0;
+    var hasQty = qty > 0 ? " has-qty" : "";
+    var dCode    = escHtml(p.code);
+    var dLibelle = escHtml((p.libelle||"").toLowerCase());
+    var dEan     = escHtml((p.ean||"").toLowerCase());
+    var totalStr = qty ? fmt2(total) : "";
+    rows += '<tr class="' + hasQty + '" data-code="' + dCode + '" data-libelle="' + dLibelle + '" data-ean="' + dEan + '">';
+    rows += '<td class="td-code">' + escHtml(p.code) + "</td>";
+    rows += '<td class="td-lib">'  + escHtml(p.libelle) + "</td>";
+    rows += '<td style="font-size:10px;color:#888;font-family:monospace">' + escHtml(p.ean) + "</td>";
+    rows += '<td style="font-size:11px;color:#888">' + escHtml(p.origine) + "</td>";
+    rows += '<td class="td-certif">' + escHtml((p.certif||"").trim()) + "</td>";
+    rows += "<td>" + (p.pcb||"") + "</td>";
+    rows += '<td style="font-size:11px">' + (p.poids ? p.poids+" kg" : "") + "</td>";
+    rows += '<td style="font-size:11px">' + (p.tva ? p.tva+"%" : "") + "</td>";
+    rows += '<td class="td-prix">' + fmt4(p.pu_ht) + "</td>";
+    // Colonne stock
+    var stk = (p.stock !== undefined && p.stock !== null) ? p.stock : null;
+    var stkHtml;
+    if(stk === null){
+      stkHtml = '<span class="stock-none">—</span>';
+    } else if(stk <= 0){
+      stkHtml = '<span class="stock-out">⚠ Rupture</span>';
+    } else if(stk <= 5){
+      stkHtml = '<span class="stock-low">' + stk + '</span>';
+    } else {
+      stkHtml = '<span class="stock-ok">' + stk + '</span>';
+    }
+    rows += '<td class="td-stock no-print">' + stkHtml + '</td>';
+    rows += '<td class="td-qty no-print"><input type="number" min="0" step="1" value="' + (qty||"") + '" placeholder="0" data-code="' + dCode + '" oninput="onQty(this)" onchange="onQty(this)"></td>';
+    rows += '<td class="td-total" id="t-' + dCode + '">' + totalStr + "</td>";
+    rows += "</tr>";
+  }
+  document.getElementById("tbody").innerHTML = rows;
+  updateTotals();
+}
+
+function onQty(input){
+  var code = input.dataset.code;
+  var val = parseInt(input.value) || 0;
+  if(val > 0) qtys[code] = val; else delete qtys[code];
+  var tr = input.closest("tr");
+  tr.className = tr.className.replace(" has-qty","") + (val>0?" has-qty":"");
+  var p = null;
+  for(var i=0;i<PRODUCTS.length;i++){ if(PRODUCTS[i].code===code){p=PRODUCTS[i];break;} }
+  if(!p) return;
+  var cell = document.getElementById("t-"+code);
+  var pcb = parseFloat(p.pcb) || 1;
+  if(cell) cell.textContent = val ? fmt2(p.pu_ht*(1-remise/100)*val*pcb) : "";
+  updateTotals();
+}
+
+function updateTotals(){
+  var nbRefs=0,nbColis=0,tBrut=0,tNet=0;
+  for(var i=0;i<PRODUCTS.length;i++){
+    var p=PRODUCTS[i];
+    var q=qtys[p.code]||0;
+    if(q>0){var pcb=parseFloat(p.pcb)||1;nbRefs++;nbColis+=q;tBrut+=p.pu_ht*q*pcb;tNet+=p.pu_ht*(1-remise/100)*q*pcb;}
+  }
+  document.getElementById("nb-refs").textContent=nbRefs;
+  document.getElementById("nb-colis").textContent=nbColis;
+  document.getElementById("total-brut").textContent=fmt2(tBrut);
+  document.getElementById("total-remise").textContent=fmt2(tBrut-tNet);
+  document.getElementById("total-net").textContent=fmt2(tNet);
+}
+
+function setRemise(val,btn){
+  remise=val;
+  var badges=document.querySelectorAll(".remise-badge");
+  for(var i=0;i<badges.length;i++) badges[i].classList.remove("active");
+  if(btn) btn.classList.add("active");
+  for(var i=0;i<PRODUCTS.length;i++){
+    var p=PRODUCTS[i];
+    var q=qtys[p.code]||0;
+    var cell=document.getElementById("t-"+p.code);
+    if(cell&&q>0){var pcb=parseFloat(p.pcb)||1;cell.textContent=fmt2(p.pu_ht*(1-remise/100)*q*pcb);}
+  }
+  updateTotals();
+}
+
+function setMode(btn){
+  searchMode=btn.dataset.mode;
+  var btns=document.querySelectorAll(".mode-btn");
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove("active");
+  btn.classList.add("active");
+  doSearch();
+}
+
+function doSearch(){
+  var q=document.getElementById("search-input").value.trim().toLowerCase();
+  var rows=document.querySelectorAll("#tbody tr");
+  var visible=0;
+  for(var i=0;i<rows.length;i++){
+    var tr=rows[i];
+    if(!q){tr.classList.remove("hidden");visible++;continue;}
+    var match=false;
+    var lib=tr.getAttribute("data-libelle")||"";
+    var cod=tr.getAttribute("data-code")||"";
+    var ean=tr.getAttribute("data-ean")||"";
+    if(searchMode==="all"||searchMode==="libelle") match=match||lib.indexOf(q)>=0;
+    if(searchMode==="all"||searchMode==="code")    match=match||cod.toLowerCase().indexOf(q)>=0;
+    if(searchMode==="all"||searchMode==="ean")     match=match||ean.indexOf(q)>=0;
+    if(!match&&tr.classList.contains("has-qty")) match=true;
+    if(match){tr.classList.remove("hidden");visible++;}
+    else tr.classList.add("hidden");
+  }
+  var total=PRODUCTS.length;
+  document.getElementById("search-count").textContent=q?(visible+" résultat(s) sur "+total):(total+" produits");
+}
+
+function clearSearch(){
+  document.getElementById("search-input").value="";
+  doSearch();
+}
+
+function doPrint(){
+  var ordered=[];
+  for(var i=0;i<PRODUCTS.length;i++){
+    var q=qtys[PRODUCTS[i].code]||0;
+    if(q>0) ordered.push({p:PRODUCTS[i],q:q});
+  }
+  if(!ordered.length){alert("Aucun article commandé.");return;}
+  var html='<div style="padding:12px 0;border-top:2px solid #78503C;margin-top:10px">';
+  html+='<strong style="color:#78503C;font-size:14px">Récapitulatif commande</strong><br><br>';
+  for(var i=0;i<ordered.length;i++){
+    var o=ordered[i];
+    var pcb=parseFloat(o.p.pcb)||1;
+    var net=o.p.pu_ht*(1-remise/100)*o.q*pcb;
+    html+='<div style="font-size:11px;padding:3px 0;border-bottom:1px solid #eee">'+
+      o.p.code+" — "+o.p.libelle+" — "+o.q+" colis — "+fmt2(net)+"</div>";
+  }
+  html+='<div style="margin-top:10px;font-weight:700;font-size:13px;color:#C87864">'+
+    "Total HT net : "+document.getElementById("total-net").textContent+"</div></div>";
+  document.getElementById("recap-print").innerHTML=html;
+  window.print();
+}
+
+function openModal(){
+  var ordered=[];
+  for(var i=0;i<PRODUCTS.length;i++){if((qtys[PRODUCTS[i].code]||0)>0)ordered.push(1);}
+  if(!ordered.length){alert("Veuillez saisir au moins une quantité avant d'envoyer.");return;}
+  document.getElementById("m-magasin").value=document.getElementById("magasin").value;
+  document.getElementById("m-email").value=document.getElementById("email").value;
+  document.getElementById("modal-alert").style.display="none";
+  document.getElementById("modal").classList.add("open");
+}
+function closeModal(){document.getElementById("modal").classList.remove("open");}
+
+function buildOrderText(){
+  var mag=document.getElementById("m-magasin").value.trim();
+  var mail=document.getElementById("m-email").value.trim();
+  var nc=document.getElementById("numclient").value.trim();
+  var ct=document.getElementById("contact").value.trim();
+  var tel=document.getElementById("tel").value.trim();
+  var dl=document.getElementById("datelivraison").value;
+  var com=document.getElementById("m-comment").value.trim();
+  var today=new Date().toLocaleDateString("fr-FR");
+  var lines=["BON DE COMMANDE — MOULIN DES MOINES 2026","==========================================",
+    "Magasin : "+mag];
+  if(nc) lines.push("N° Client : "+nc);
+  if(ct) lines.push("Contact : "+ct);
+  lines.push("Email : "+mail);
+  if(tel) lines.push("Tél : "+tel);
+  lines.push("Date commande : "+today);
+  if(dl) lines.push("Livraison souhaitée : "+new Date(dl).toLocaleDateString("fr-FR"));
+  if(remise>0) lines.push("Remise groupement : "+remise+"%");
+  // Nom du commercial référent
+  var commercialLogin = window._userCommercial || "";
+  if(commercialLogin){
+    try{
+      var allComptes = JSON.parse(localStorage.getItem("mdm_comptes") || "[]");
+      var co = allComptes.find(function(x){ return x.login === commercialLogin; });
+      if(co) lines.push("Commercial référent : "+co.nom+(co.email ? " ("+co.email+")" : ""));
+    }catch(err){}
+  }
+  lines.push("","ARTICLES COMMANDÉS","------------------");
+  var tBrut=0,tNet=0,nbC=0;
+  for(var i=0;i<PRODUCTS.length;i++){
+    var p=PRODUCTS[i],q=qtys[p.code]||0;
+    if(!q) continue;
+    var pcb=parseFloat(p.pcb)||1;
+    tBrut+=p.pu_ht*q*pcb;tNet+=getPrixNet(p)*q*pcb;nbC+=q;
+    var rp2=getRemiseProduit(p);var remiseLine=rp2>0?" [remise produit -"+rp2+"%]":"";
+    lines.push(p.code+" | "+p.libelle+" | Qté: "+q+" colis | PCB: "+pcb+" | PU HT: "+fmt4(p.pu_ht)+remiseLine+" | Total HT: "+fmt2(getPrixNet(p)*q*pcb));
+  }
+  lines.push("","RÉCAPITULATIF","Nb références : "+Object.keys(qtys).length,
+    "Total colis   : "+nbC,"Total HT brut : "+fmt2(tBrut));
+  if(remise>0) lines.push("Remise ("+remise+"%) : -"+fmt2(tBrut-tNet));
+  lines.push("TOTAL HT NET  : "+fmt2(tNet));
+  if(com){lines.push("","Commentaire : "+com);}
+  return lines.join("\n");
+}
+
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+async function sendOrder(){
+  var mag=document.getElementById("m-magasin").value.trim();
+  var mail=document.getElementById("m-email").value.trim();
+  if(!mag||!mail){showAlert("Veuillez renseigner le magasin et votre email.","error");return;}
+  var hasOrder=false;
+  for(var k in qtys){if(qtys[k]>0){hasOrder=true;break;}}
+  if(!hasOrder){showAlert("Aucun article commandé.","error");return;}
+  var btn=document.getElementById("btn-send");
+  var spinner=document.getElementById("spinner");
+  var label=document.getElementById("send-label");
+  btn.disabled=true;spinner.style.display="inline-block";label.textContent="Envoi…";
+  var today=new Date().toLocaleDateString("fr-FR");
+  try{
+    var destEmail = window._destEmail || "cspoto@moulindesmoines.com";
+    var userName  = window._userName  || "";
+    // FormSubmit : on envoie toujours vers cspoto (adresse activée)
+    // Le destEmail du compte est mis en CC si différent
+    var subjectUser = userName ? " [" + userName + "]" : "";
+    // _cc uniquement si l'email du compte est différent de cspoto (évite _cc:"" qui bloque FormSubmit)
+    var payload = {
+        _subject:"Bon de commande MDM 2026 — "+mag+" — "+today+subjectUser,
+        _captcha:"false",
+        magasin:mag,
+        compte:userName||"non identifié",
+        email:mail,
+        commande:buildOrderText(),
+        _template:"table"
+      };
+    // _replyto seulement si différent de la destination (FormSubmit bloque si identique)
+    if (mail && mail.toLowerCase() !== "cspoto@moulindesmoines.com") {
+      payload._replyto = mail;
+    }
+    // Trouver l'email du commercial assigné depuis localStorage
+    var commercialEmail = "";
+    var commercialLogin = window._userCommercial || "";
+    if(commercialLogin){
+      try{
+        var allComptes = JSON.parse(localStorage.getItem("mdm_comptes") || "[]");
+        var co = allComptes.find(function(x){ return x.login === commercialLogin; });
+        if(co && co.email && co.email !== "cspoto@moulindesmoines.com") commercialEmail = co.email;
+      }catch(e){}
+    }
+
+    // Construire la liste CC : email client + email commercial (si différents de MDM)
+    var ccList = [];
+    if(destEmail && destEmail !== "cspoto@moulindesmoines.com") ccList.push(destEmail);
+    if(commercialEmail && ccList.indexOf(commercialEmail) < 0) ccList.push(commercialEmail);
+    if(ccList.length) payload._cc = ccList.join(",");
+    var res=await fetch("https://formsubmit.co/ajax/cspoto@moulindesmoines.com",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    var data=await res.json();
+    if(data.success==="true"||data.success===true){
+      saveOrderToHistory(mag,mail,userName);
+      showAlert("✅ Commande envoyée avec succès ! Vous recevrez une confirmation par email.","success");
+    }else{throw new Error("err");}
+  }catch(e){
+    var msg = e && e.message ? e.message : JSON.stringify(e);
+    showAlert("❌ Erreur d'envoi : "+msg+". Réessayez ou contactez MDM directement.","error");
+    console.error('sendOrder error:', e);
+  }
+  btn.disabled=false;spinner.style.display="none";label.textContent="Envoyer la commande";
+}
+
+function showAlert(msg,type){
+  var el=document.getElementById("modal-alert");
+  el.textContent=msg;el.className="alert "+type;el.style.display="block";
+}
+
+// DECONNEXION
+function logout(){
+  sessionStorage.removeItem("mdm_token");
+  window.location.href = "index.html";
+}
+
+
+// HISTORIQUE DES COMMANDES
+function _histKey(){var l=(window._userLogin||window._userName||"guest").replace(/[^a-zA-Z0-9_-]/g,"_");return "mdm_history_"+l;}
+function saveOrderToHistory(mag,mail,uname){
+  try{
+    var h=[];try{h=JSON.parse(localStorage.getItem(_histKey()))||[];}catch(e){}
+    var lines=[],tB=0,tN=0,nbC=0,nbR=0;
+    for(var i=0;i<PRODUCTS.length;i++){
+      var p=PRODUCTS[i],q=qtys[p.code]||0;if(!q)continue;
+      var pcb=parseFloat(p.pcb)||1,net=getPrixNet(p)*q*pcb;
+      tB+=p.pu_ht*q*pcb;tN+=net;nbC+=q;nbR++;
+      lines.push({code:p.code,libelle:p.libelle,qty:q,pcb:pcb,puHT:p.pu_ht,totalHT:net});
+    }
+    h.unshift({id:Date.now(),date:new Date().toLocaleString("fr-FR"),magasin:mag,mail:mail,
+      remise:remise,nbRefs:nbR,nbColis:nbC,totalBrut:tB,totalNet:tN,articles:lines});
+    if(h.length>50)h=h.slice(0,50);
+    localStorage.setItem(_histKey(),JSON.stringify(h));
+  }catch(e){}
+}
+function getOrderHistory(){try{return JSON.parse(localStorage.getItem(_histKey()))||[];}catch(e){return [];}}
+function clearOrderHistory(){
+  if(!confirm("Supprimer tout l\u2019historique ?"))return;
+  localStorage.removeItem(_histKey());renderHistory();
+}
+function renderHistory(){
+  var c=document.getElementById("history-container");if(!c)return;
+  var h=getOrderHistory();
+  if(!h.length){c.innerHTML='<div style="text-align:center;padding:40px;color:#b0988a;font-size:13px">Aucune commande.<br>Les commandes envoy\u00e9es apparaissent ici.</div>';return;}
+  var html="";
+  h.forEach(function(cmd,idx){
+    html+='<div style="border:1px solid #e8d8cc;border-radius:10px;margin-bottom:12px;overflow:hidden">';
+    html+='<div style="background:var(--brown);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">';
+    html+='<div><strong>'+escHtml(cmd.magasin)+'</strong><span style="opacity:.7;font-size:11px;margin-left:8px">'+cmd.date+'</span></div>';
+    html+='<div style="display:flex;gap:8px">';
+    html+='<span style="background:var(--gold);color:var(--brown);padding:3px 10px;border-radius:10px;font-size:11px;font-weight:700">'+fmt2(cmd.totalNet)+'</span>';
+    html+='<button onclick="toggleHistoryDetail('+idx+')" id="hist-btn-'+idx+'" style="background:rgba(255,255,255,.15);border:none;color:#fff;padding:4px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:Outfit,sans-serif">\u25bc D\u00e9tail</button>';
+    html+='<button onclick="reorderFromHistory('+idx+')" style="background:var(--terra);border:none;color:#fff;padding:4px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:Outfit,sans-serif">\u21bb Recommander</button>';
+    html+='</div></div>';
+    html+='<div style="padding:6px 16px;background:#fdf5ee;display:flex;gap:16px;font-size:11px;color:#888;border-bottom:1px solid #e8d8cc">';
+    html+=cmd.nbRefs+' r\u00e9f. &nbsp;&bull;&nbsp; '+cmd.nbColis+' colis';
+    if(cmd.remise>0)html+=' &nbsp;&bull;&nbsp; Remise '+cmd.remise+'%';
+    html+=' &nbsp;&bull;&nbsp; Brut : '+fmt2(cmd.totalBrut);
+    html+='</div>';
+    html+='<div id="hist-detail-'+idx+'" style="display:none;padding:12px 16px">';
+    html+='<table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#f5ede5">';
+    html+='<th style="padding:5px 8px;text-align:left">Code</th><th style="padding:5px 8px;text-align:left">D\u00e9signation</th><th style="padding:5px 8px;text-align:center">Qt\u00e9</th><th style="padding:5px 8px;text-align:center">PCB</th><th style="padding:5px 8px;text-align:right">Total HT</th></tr></thead><tbody>';
+    cmd.articles.forEach(function(a,ai){
+      html+='<tr style="border-bottom:1px solid #f0e8e0'+(ai%2?' ':'')+'"><td style="padding:4px 8px;font-family:monospace;color:var(--brown)">'+escHtml(a.code)+'</td>';
+      html+='<td style="padding:4px 8px">'+escHtml(a.libelle)+'</td><td style="padding:4px 8px;text-align:center">'+a.qty+'</td>';
+      html+='<td style="padding:4px 8px;text-align:center">'+a.pcb+'</td><td style="padding:4px 8px;text-align:right;font-weight:600;color:var(--green)">'+fmt2(a.totalHT)+'</td></tr>';
+    });
+    html+='</tbody></table></div></div>';
+  });
+  c.innerHTML=html;
+}
+function toggleHistoryDetail(idx){
+  var el=document.getElementById("hist-detail-"+idx),btn=document.getElementById("hist-btn-"+idx);
+  if(!el)return;var open=el.style.display!=="none";
+  el.style.display=open?"none":"block";if(btn)btn.textContent=open?"\u25bc D\u00e9tail":"\u25b2 Fermer";
+}
+function reorderFromHistory(idx){
+  var cmd=getOrderHistory()[idx];if(!cmd)return;
+  if(!confirm("Recharger les articles de cette commande ?"))return;
+  for(var k in qtys)delete qtys[k];
+  cmd.articles.forEach(function(a){qtys[a.code]=a.qty;});
+  closeHistoryModal();buildTable();updateTotals();
+  showToast("\u2705 "+cmd.articles.length+" articles recharg\u00e9s depuis le "+cmd.date.split(" ")[0]);
+}
+function openHistoryModal(){renderHistory();document.getElementById("modal-history").classList.add("open");}
+function closeHistoryModal(){document.getElementById("modal-history").classList.remove("open");}
+
+function exportHistoriqueClient(){
+  var h = getOrderHistory();
+  if(!h.length){ showToast('\u26a0 Aucune commande \u00e0 exporter.'); return; }
+  var mag = window._userName || 'Client';
+  var brown='#78503C', terra='#C87864', gold='#D2B469', cream='#FDF5EE',
+      green='#1A5C2E', white='#FFFFFF', orange='#FFF3E0';
+
+  function xc(v,t,bd,bg,co,al){
+    var st=[];
+    if(bd) st.push('font-weight:bold');
+    if(bg) st.push('background:'+bg);
+    if(co) st.push('color:'+co);
+    if(al) st.push('text-align:'+al);
+    var sa=st.length?' style="'+st.join(';')+'"':'';
+    var tp=t==='n'?'Number':'String';
+    var v2=String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return '<Cell'+sa+'><Data ss:Type="'+tp+'">'+v2+'</Data></Cell>';
+  }
+  function xs(v,b,bg,c,a){ return xc(v,'s',b,bg,c,a||'left'); }
+  function xn(v,b,bg,c)  { return xc(v,'n',b,bg,c,'right'); }
+
+  var today = new Date().toLocaleDateString('fr-FR');
+  var rows1 = '', rows2 = '';
+
+  // ── Feuille 1 : Résumé des commandes ─────────────────────
+  rows1 += '<Row ss:Height="26"><Cell ss:MergeAcross="5" style="background:'+brown+';color:'+white+';font-weight:bold;font-size:13pt;text-align:center"><Data ss:Type="String">'+escHtml(mag)+' \u2014 Mes commandes</Data></Cell></Row>';
+  rows1 += '<Row ss:Height="16"><Cell ss:MergeAcross="5" style="background:'+cream+';color:#888;font-size:9pt;text-align:center"><Data ss:Type="String">Export\u00e9 le '+today+' \u2014 '+h.length+' commande(s)</Data></Cell></Row>';
+  rows1 += '<Row ss:Height="6"><Cell ss:MergeAcross="5"/></Row>';
+  rows1 += '<Row ss:Height="20">';
+  ['Date','Magasin','Email','Remise (%)','Nb r\u00e9f.','Total HT net'].forEach(function(hd,i){
+    rows1 += xs(hd, true, brown, white, i>=3?'center':'left');
+  });
+  rows1 += '</Row>';
+
+  var tGlobal = 0;
+  h.forEach(function(cmd, i){
+    var bg = i%2===0 ? white : cream;
+    var tn = typeof cmd.totalNet === 'number' ? cmd.totalNet : 0;
+    tGlobal += tn;
+    var dateStr = cmd.date ? cmd.date.split(' ')[0] : '';
+    rows1 += '<Row ss:Height="18">';
+    rows1 += xs(dateStr,        false, bg, '#555');
+    rows1 += xs(cmd.magasin||'',true,  bg, brown);
+    rows1 += xs(cmd.mail||'',   false, bg, '#555');
+    rows1 += (cmd.remise>0) ? xn(cmd.remise,false,orange,terra) : xs('-',false,bg,'#ccc','center');
+    rows1 += xn(cmd.nbRefs||(cmd.articles?cmd.articles.length:0), false, bg, '#555');
+    rows1 += xn(parseFloat(tn.toFixed(2)), true, orange, terra);
+    rows1 += '</Row>';
+  });
+  rows1 += '<Row ss:Height="6"><Cell ss:MergeAcross="5"/></Row>';
+  rows1 += '<Row ss:Height="20"><Cell ss:MergeAcross="4"/>' + xn(parseFloat(tGlobal.toFixed(2)), true, gold, brown) + '</Row>';
+
+  // ── Feuille 2 : Détail des articles ──────────────────────
+  rows2 += '<Row ss:Height="26"><Cell ss:MergeAcross="7" style="background:'+brown+';color:'+white+';font-weight:bold;font-size:13pt;text-align:center"><Data ss:Type="String">'+escHtml(mag)+' \u2014 D\u00e9tail des articles</Data></Cell></Row>';
+  rows2 += '<Row ss:Height="6"><Cell ss:MergeAcross="7"/></Row>';
+  rows2 += '<Row ss:Height="20">';
+  ['Date','Magasin','Code','D\u00e9signation','Qt\u00e9 colis','PCB','PU HT net','Total HT'].forEach(function(hd,i){
+    rows2 += xs(hd, true, brown, white, i>=4?'center':'left');
+  });
+  rows2 += '</Row>';
+
+  h.forEach(function(cmd){
+    var dateStr = cmd.date ? cmd.date.split(' ')[0] : '';
+    if(cmd.articles && cmd.articles.length){
+      cmd.articles.forEach(function(a, ai){
+        var bg = ai%2===0 ? white : cream;
+        rows2 += '<Row ss:Height="17">';
+        rows2 += xs(ai===0 ? dateStr : '',      false, bg, '#888');
+        rows2 += xs(ai===0 ? (cmd.magasin||'') : '', ai===0, bg, ai===0?brown:'#aaa');
+        rows2 += xs(a.code||'',    true,  bg, brown);
+        rows2 += xs(a.libelle||'', false, bg, '#3a2a20');
+        rows2 += xn(a.qty||0,      true,  orange, terra);
+        rows2 += xn(a.pcb||1,      false, bg, '#888');
+        rows2 += xn(typeof a.puHT==='number'   ? parseFloat(a.puHT.toFixed(2))   : 0, false, bg, green);
+        rows2 += xn(typeof a.totalHT==='number'? parseFloat(a.totalHT.toFixed(2)): 0, true,  orange, terra);
+        rows2 += '</Row>';
+      });
+    }
+  });
+
+  var cols1 = [80,160,140,60,60,90].map(function(w){ return '<Column ss:Width="'+w+'"/>'; }).join('');
+  var cols2 = [80,160,80,260,55,50,75,90].map(function(w){ return '<Column ss:Width="'+w+'"/>'; }).join('');
+
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Excel.Sheet"?>\n'
+    + '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n'
+    + '<Styles><Style ss:ID="Default"><Font ss:FontName="Calibri" ss:Size="10"/></Style></Styles>\n'
+    + '<Worksheet ss:Name="R\u00e9sum\u00e9"><Table>\n' + cols1 + rows1 + '</Table></Worksheet>\n'
+    + '<Worksheet ss:Name="D\u00e9tail articles"><Table>\n' + cols2 + rows2 + '</Table></Worksheet>\n'
+    + '</Workbook>';
+
+  var blob = new Blob([xml], {type:'application/vnd.ms-excel;charset=utf-8'});
+  var a = document.createElement('a');
+  a.download = 'Mes_commandes_MDM_' + today.replace(/\//g,'-') + '.xls';
+  a.href = URL.createObjectURL(blob);
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  showToast('\u2705 Export t\u00e9l\u00e9charg\u00e9 (' + h.length + ' commande(s))');
+}
+
+
+// ── EXPORT EXCEL ──────────────────────────────────────
+function exportExcel() {
+  // Collecter les articles commandés
+  var ordered = [];
+  var tBrut = 0, tNet = 0, nbColis = 0;
+
+  for (var i = 0; i < PRODUCTS.length; i++) {
+    var p = PRODUCTS[i];
+    var q = qtys[p.code] || 0;
+    if (!q) continue;
+    var pcb = parseFloat(p.pcb) || 1;
+    var puNet = p.pu_ht * (1 - remise / 100);
+    var totalHT = puNet * q * pcb;
+    tBrut += p.pu_ht * q * pcb;
+    tNet  += totalHT;
+    nbColis += q;
+    ordered.push({
+      code:    p.code,
+      libelle: p.libelle,
+      ean:     p.ean || '',
+      origine: p.origine || '',
+      certif:  p.certif || '',
+      pcb:     pcb,
+      poids:   p.poids || '',
+      tva:     p.tva || '',
+      puHT:    p.pu_ht,
+      puNet:   puNet,
+      qteColis: q,
+      totalHT: totalHT
+    });
+  }
+
+  if (!ordered.length) {
+    alert('Aucun article commandé à exporter.');
+    return;
+  }
+
+  // Infos client
+  var mag  = document.getElementById('magasin').value.trim() || 'Commande';
+  var nc   = document.getElementById('numclient').value.trim();
+  var ct   = document.getElementById('contact').value.trim();
+  var mail = document.getElementById('email').value.trim();
+  var tel  = document.getElementById('tel').value.trim();
+  var dl   = document.getElementById('datelivraison').value;
+  var today = new Date().toLocaleDateString('fr-FR');
+
+  // ── Construire le XML Excel (format SpreadsheetML)
+  var R = remise;
+  var dlStr = dl ? new Date(dl).toLocaleDateString('fr-FR') : '';
+
+  // Cellule helper
+  function cell(v, type, bold, bg, color, align, wrapText) {
+    var styleAttrs = '';
+    var styles = [];
+    if (bold)     styles.push('font-weight:bold');
+    if (bg)       styles.push('background:' + bg);
+    if (color)    styles.push('color:' + color);
+    if (align)    styles.push('text-align:' + align);
+    if (wrapText) styles.push('white-space:normal');
+    if (styles.length) styleAttrs = ' style="' + styles.join(';') + '"';
+    var t = type === 'n' ? 'Number' : 'String';
+    var vStr = String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return '<Cell' + styleAttrs + '><Data ss:Type="' + t + '">' + vStr + '</Data></Cell>';
+  }
+  function numCell(v, bold, bg, color) {
+    return cell(v, 'n', bold, bg, color, 'right');
+  }
+  function strCell(v, bold, bg, color, align) {
+    return cell(v, 's', bold, bg, color, align || 'left');
+  }
+  function emptyCell() { return '<Cell/>'; }
+
+  var brown  = '#78503C';
+  var terra  = '#C87864';
+  var gold   = '#D2B469';
+  var cream  = '#FDF5EE';
+  var green  = '#1A5C2E';
+  var white  = '#FFFFFF';
+  var orange = '#FFF3E0';
+
+  var rows = '';
+
+  // ── Ligne titre
+  rows += '<Row ss:Height="28">';
+  rows += '<Cell ss:MergeAcross="11" style="background:' + brown + ';color:' + white + ';font-weight:bold;font-size:14pt;text-align:center">';
+  rows += '<Data ss:Type="String">MOULIN DES MOINES \u2014 Bon de Commande 2026</Data></Cell>';
+  rows += '</Row>';
+
+  // ── Infos client (2 colonnes)
+  var infoRows = [
+    ['Magasin', mag],
+    nc ? ['N\u00b0 Client', nc] : null,
+    ct ? ['Contact', ct] : null,
+    mail ? ['Email', mail] : null,
+    tel ? ['T\u00e9l', tel] : null,
+    ['Date commande', today],
+    dlStr ? ['Livraison souhait\u00e9e', dlStr] : null,
+    R > 0 ? ['Remise groupement', R + ' %'] : null
+  ].filter(Boolean);
+
+  infoRows.forEach(function(row) {
+    rows += '<Row ss:Height="18">';
+    rows += strCell(row[0], true, cream, brown);
+    rows += strCell(row[1], false, cream, '#3a2a20');
+    rows += '<Cell ss:MergeAcross="10"/>';
+    rows += '</Row>';
+  });
+
+  // ── Ligne vide
+  rows += '<Row ss:Height="8"><Cell ss:MergeAcross="11"/></Row>';
+
+  // ── En-têtes colonnes
+  var headers = ['Code','D\u00e9signation','EAN / Gencod','Origine','Certif.','PCB','Poids (kg)','TVA %','PU HT 2026','PU HT Net','Qt\u00e9 (colis)','Total HT Net'];
+  rows += '<Row ss:Height="22">';
+  headers.forEach(function(h, i) {
+    var align = i >= 5 ? 'center' : 'left';
+    rows += cell(h, 's', true, brown, white, align);
+  });
+  rows += '</Row>';
+
+  // ── Lignes produits
+  ordered.forEach(function(p, idx) {
+    var bg = idx % 2 === 0 ? white : cream;
+    rows += '<Row ss:Height="18">';
+    rows += strCell(p.code,    true,  bg, brown);
+    rows += strCell(p.libelle, false, bg, '#3a2a20');
+    rows += strCell(p.ean,     false, bg, '#666');
+    rows += strCell(p.origine, false, bg, '#666');
+    rows += strCell(p.certif,  true,  bg, green);
+    rows += numCell(p.pcb,     false, bg);
+    rows += numCell(p.poids,   false, bg);
+    rows += numCell(p.tva,     false, bg);
+    rows += numCell(p.puHT.toFixed(2).replace(',','.') * 1, false, bg, green);
+    rows += numCell(p.puNet.toFixed(2).replace(',','.') * 1, false, bg, R > 0 ? terra : green);
+    rows += numCell(p.qteColis, true,  orange, terra);
+    rows += numCell(p.totalHT.toFixed(2).replace(',','.') * 1, true, orange, terra);
+    rows += '</Row>';
+  });
+
+  // ── Ligne vide
+  rows += '<Row ss:Height="8"><Cell ss:MergeAcross="11"/></Row>';
+
+  // ── Récapitulatif
+  var recapRows = [
+    ['Nombre de r\u00e9f\u00e9rences', ordered.length, false],
+    ['Nombre de colis', nbColis, false],
+    ['Total HT brut', parseFloat(tBrut.toFixed(2)), true]
+  ];
+  if (R > 0) {
+    recapRows.push(['Remise ' + R + '%', -parseFloat((tBrut - tNet).toFixed(2)), true]);
+  }
+  recapRows.push(['TOTAL HT NET', parseFloat(tNet.toFixed(2)), true]);
+
+  recapRows.forEach(function(r, i) {
+    var isTotal = r[0].indexOf('TOTAL') === 0;
+    var bg2 = isTotal ? brown : cream;
+    var col = isTotal ? white : '#3a2a20';
+    rows += '<Row ss:Height="' + (isTotal ? '22' : '18') + '">';
+    rows += '<Cell ss:MergeAcross="9"/>';
+    rows += strCell(r[0], r[2] || isTotal, bg2, col, 'right');
+    rows += numCell(r[1], r[2] || isTotal, isTotal ? gold : orange, isTotal ? brown : terra);
+    rows += '</Row>';
+  });
+
+  // ── Assembler le XML
+  var colWidths = [80, 280, 120, 90, 60, 40, 60, 40, 75, 75, 70, 90];
+  var colDefs = colWidths.map(function(w) {
+    return '<Column ss:Width="' + w + '"/>';
+  }).join('');
+
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    + '<?mso-application progid="Excel.Sheet"?>\n'
+    + '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" '
+    + 'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" '
+    + 'xmlns:x="urn:schemas-microsoft-com:office:excel">\n'
+    + '<Styles>\n'
+    + '<Style ss:ID="Default"><Font ss:FontName="Calibri" ss:Size="10"/></Style>\n'
+    + '</Styles>\n'
+    + '<Worksheet ss:Name="Commande MDM 2026">\n'
+    + '<Table>\n'
+    + colDefs
+    + rows
+    + '</Table>\n'
+    + '</Worksheet>\n'
+    + '</Workbook>';
+
+  // ── Télécharger
+  var blob = new Blob([xml], { type: 'application/vnd.ms-excel;charset=utf-8' });
+  var a = document.createElement('a');
+  var dateStr = today.replace(/\//g, '-');
+  a.download = 'BDC_MDM_2026_' + (mag || 'commande').replace(/[^a-zA-Z0-9]/g, '_') + '_' + dateStr + '.xls';
+  a.href = URL.createObjectURL(blob);
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function() { URL.revokeObjectURL(a.href); }, 1000);
+}
+
+// INIT
+buildTable();
+document.getElementById("search-count").textContent=PRODUCTS.length+" produits";
+
+// ============================================================
+// CONFIG EMAILJS — à renseigner avec vos identifiants
+// ============================================================
+var EMAILJS_PUBLIC_KEY  = "VOTRE_PUBLIC_KEY";   // Account > API Keys
+var EMAILJS_SERVICE_ID  = "VOTRE_SERVICE_ID";   // Email Services > Service ID
+var EMAILJS_TEMPLATE_ID = "VOTRE_TEMPLATE_ID";  // Email Templates > Template ID
+
+(function(){
+  if(typeof emailjs !== 'undefined'){
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  }
+})();
+
+// ============================================================
+// GÉNÉRATION PDF avec jsPDF
+// ============================================================
+function generateOrderPDF(){
+  var jsPDF = window.jspdf ? window.jspdf.jsPDF : (window.jsPDF || null);
+  if(!jsPDF){ console.error('jsPDF non chargé'); return null; }
+
+  var doc = new jsPDF({ unit:'mm', format:'a4', orientation:'portrait' });
+  var W=210, mL=15, mR=195, y=0;
+
+  // Couleurs MDM
+  var brown  = [120, 80,  60];
+  var terra  = [200,120, 100];
+  var gold   = [210,180, 105];
+  var cream  = [253,245, 238];
+  var green  = [ 26, 92,  46];
+  var white  = [255,255, 255];
+
+  function setFill(rgb){ doc.setFillColor(rgb[0],rgb[1],rgb[2]); }
+  function setTxt(rgb) { doc.setTextColor(rgb[0],rgb[1],rgb[2]); }
+  function setDraw(rgb){ doc.setDrawColor(rgb[0],rgb[1],rgb[2]); }
+
+  // ── BANDEAU EN-TÊTE ────────────────────────────────────────
+  setFill(brown); doc.rect(0,0,W,28,'F');
+  setTxt(white);
+  doc.setFont('helvetica','bold'); doc.setFontSize(18);
+  doc.text('Moulin des Moines',mL,12);
+  doc.setFont('helvetica','normal'); doc.setFontSize(8);
+  doc.setTextColor(210,180,105);
+  doc.text('Bon de Commande 2026  —  Tarif HT France',mL,18);
+  doc.setTextColor(255,255,255);
+  doc.text('Généré le '+new Date().toLocaleDateString('fr-FR'),mL,24);
+  // Logo texte droite
+  doc.setFont('helvetica','bold'); doc.setFontSize(9); setTxt(gold);
+  doc.text('MDM',mR-5,14,'right');
+  y=34;
+
+  // ── BLOC INFORMATIONS CLIENT ───────────────────────────────
+  var mag = document.getElementById('m-magasin').value.trim() || '—';
+  var mail= document.getElementById('m-email').value.trim()   || '—';
+  var nc  = document.getElementById('numclient').value.trim() || '';
+  var ct  = document.getElementById('contact').value.trim()   || '';
+  var tel = document.getElementById('tel').value.trim()       || '';
+  var dl  = document.getElementById('datelivraison').value    || '';
+  var com = document.getElementById('m-comment')
+              ? document.getElementById('m-comment').value.trim() : '';
+
+  setFill(cream); setDraw(brown);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(mL,y,W-2*mL,32,2,2,'FD');
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt(terra);
+  doc.text('INFORMATIONS CLIENT',mL+3,y+5);
+
+  var col1=mL+3, col2=110, iy=y+10;
+  doc.setFont('helvetica','normal'); doc.setFontSize(9); setTxt(brown);
+
+  function infoLine(label,val,x,cy){
+    doc.setFont('helvetica','bold');   doc.text(label,x,cy);
+    doc.setFont('helvetica','normal'); doc.text(val,x+30,cy);
+  }
+  infoLine('Magasin :',  mag,  col1, iy);
+  infoLine('Email :',    mail, col1, iy+6);
+  if(nc) infoLine('N° client :', nc, col2, iy);
+  if(ct) infoLine('Contact :',   ct, col2, iy+6);
+  if(tel)infoLine('Tél :',      tel, col2, iy+12);
+  if(dl) infoLine('Livraison :', new Date(dl).toLocaleDateString('fr-FR'), col2, iy+(ct?18:12));
+  if(remise>0){
+    doc.setFont('helvetica','bold'); setTxt(green);
+    doc.text('Remise groupement : '+remise+' %', col1, iy+12);
+  }
+  y+=38;
+
+  // ── TABLEAU DES ARTICLES ───────────────────────────────────
+  var cols=[
+    {label:'Code',     w:22, align:'left'},
+    {label:'Désignation', w:78, align:'left'},
+    {label:'PCB',      w:12, align:'center'},
+    {label:'Qté colis',w:16, align:'center'},
+    {label:'PU HT',    w:22, align:'right'},
+    {label:'Total HT', w:26, align:'right'},
+  ];
+  var tW=0; cols.forEach(function(c2){tW+=c2.w;});
+  var tX=mL, tY=y;
+
+  // En-tête tableau
+  setFill(brown); doc.rect(tX,tY,tW,7,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(7.5); setTxt(white);
+  var cx=tX+1;
+  cols.forEach(function(col){
+    if(col.align==='right') doc.text(col.label,cx+col.w-1,tY+4.8,'right');
+    else if(col.align==='center') doc.text(col.label,cx+col.w/2,tY+4.8,'center');
+    else doc.text(col.label,cx,tY+4.8);
+    cx+=col.w;
+  });
+  y=tY+7;
+
+  // Lignes articles
+  var ordered=[];
+  PRODUCTS.forEach(function(p){ var q=qtys[p.code]||0; if(q>0) ordered.push({p:p,q:q}); });
+  var tBrut=0,tNet=0,nbRef=0,nbCol=0;
+
+  ordered.forEach(function(item,idx){
+    var p=item.p, q=item.q;
+    var pcb=parseFloat(p.pcb)||1;
+    var net=p.pu_ht*(1-remise/100)*q*pcb;
+    tBrut+=p.pu_ht*q*pcb; tNet+=net; nbRef++; nbCol+=q;
+
+    // Saut de page
+    if(y>270){
+      doc.addPage();
+      y=15;
+      // Re-dessiner l'en-tête tableau
+      setFill(brown); doc.rect(tX,y,tW,7,'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(7.5); setTxt(white);
+      cx=tX+1;
+      cols.forEach(function(col){
+        if(col.align==='right') doc.text(col.label,cx+col.w-1,y+4.8,'right');
+        else if(col.align==='center') doc.text(col.label,cx+col.w/2,y+4.8,'center');
+        else doc.text(col.label,cx,y+4.8);
+        cx+=col.w;
+      });
+      y+=7;
+    }
+
+    // Fond alterné
+    if(idx%2===0){ setFill(cream); doc.rect(tX,y,tW,6,'F'); }
+    doc.setFont('helvetica','normal'); doc.setFontSize(8); setTxt(brown);
+    cx=tX+1;
+    var vals=[
+      p.code,
+      p.libelle.length>45 ? p.libelle.substring(0,44)+'\u2026' : p.libelle,
+      String(pcb),
+      String(q),
+      fmt4(p.pu_ht)+' \u20ac',
+      fmt2(net)+' \u20ac'
+    ];
+    cols.forEach(function(col,ci){
+      var v=vals[ci]||'';
+      if(ci===5){ doc.setFont('helvetica','bold'); setTxt(terra); }
+      else if(ci===3){ doc.setFont('helvetica','bold'); setTxt(green); }
+      else { doc.setFont('helvetica','normal'); setTxt(brown); }
+
+      if(col.align==='right') doc.text(v,cx+col.w-1,y+4.2,'right');
+      else if(col.align==='center') doc.text(v,cx+col.w/2,y+4.2,'center');
+      else doc.text(v,cx,y+4.2);
+      cx+=col.w;
+    });
+    // Ligne de séparation
+    setDraw([230,220,215]); doc.setLineWidth(0.15);
+    doc.line(tX,y+6,tX+tW,y+6);
+    y+=6;
+  });
+
+  // ── RÉCAPITULATIF ─────────────────────────────────────────
+  y+=6;
+  if(y>260){ doc.addPage(); y=15; }
+
+  setFill(brown); setDraw(brown); doc.setLineWidth(0.3);
+  doc.roundedRect(tX,y,tW,remise>0?28:22,2,2,'FD');
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt(gold);
+  doc.text('RÉCAPITULATIF',tX+3,y+5);
+
+  doc.setFontSize(8.5);
+  var ry=y+11;
+  function recapLine(label,val,isBold,color){
+    setTxt(white);
+    doc.setFont('helvetica',isBold?'bold':'normal');
+    doc.text(label,tX+3,ry);
+    if(color) setTxt(color); else setTxt(gold);
+    doc.setFont('helvetica','bold');
+    doc.text(val,tX+tW-2,ry,'right');
+    ry+=5.5;
+  }
+  recapLine(nbRef+' référence(s)  —  '+nbCol+' colis','Total HT brut : '+fmt2(tBrut)+' €',false,white);
+  if(remise>0){
+    recapLine('Remise groupement '+remise+' %','— '+fmt2(tBrut-tNet)+' €',false,[255,200,150]);
+  }
+  recapLine('','TOTAL HT NET : '+fmt2(tNet)+' €',true,gold);
+
+  // ── COMMENTAIRE ───────────────────────────────────────────
+  if(com){
+    y+=remise>0?34:28;
+    if(y>270){doc.addPage();y=15;}
+    doc.setFont('helvetica','italic'); doc.setFontSize(8); setTxt(brown);
+    doc.text('Commentaire : '+com,tX,y);
+  }
+
+  // ── PIED DE PAGE ──────────────────────────────────────────
+  var pY=292;
+  setFill(brown); doc.rect(0,pY-2,W,10,'F');
+  doc.setFont('helvetica','normal'); doc.setFontSize(7); setTxt([210,180,105]);
+  doc.text('Moulin des Moines — Bon de commande 2026 — Document généré automatiquement',W/2,pY+3,'center');
+
+  return doc;
+}
+
+// ============================================================
+// ENVOI COMMANDE + PDF via EmailJS
+// ============================================================
+async function sendOrderPDF(){
+  // Validations
+  var mag  = document.getElementById('m-magasin').value.trim();
+  var mail = document.getElementById('m-email').value.trim();
+  if(!mag||!mail){ showAlert('Veuillez renseigner le magasin et votre email.','error'); return; }
+  var hasOrder=false;
+  for(var k in qtys){ if(qtys[k]>0){hasOrder=true;break;} }
+  if(!hasOrder){ showAlert('Aucun article commandé.','error'); return; }
+
+  var btn     = document.getElementById('btn-send');
+  var spinner = document.getElementById('spinner');
+  var label   = document.getElementById('send-label');
+  btn.disabled=true; spinner.style.display='inline-block';
+  label.textContent='Génération PDF…';
+
+  try{
+    // 1. Générer le PDF
+    var doc = generateOrderPDF();
+    if(!doc) throw new Error('Erreur génération PDF');
+    var pdfBase64 = doc.output('datauristring'); // data:application/pdf;base64,...
+    var pdfOnly   = pdfBase64.split(',')[1];     // juste le base64
+
+    label.textContent='Envoi en cours…';
+
+    var today     = new Date().toLocaleDateString('fr-FR');
+    var userName  = window._userName  || '';
+    var destEmail = window._destEmail || 'cspoto@moulindesmoines.com';
+    var subject   = 'Bon de commande MDM 2026 — '+mag+' — '+today+(userName?' ['+userName+']':'');
+    var bodyText  = buildOrderText();
+
+    // Destinataires
+    var toMDM     = 'cspoto@moulindesmoines.com';
+    var toClient  = mail !== toMDM ? mail : '';
+    var toCC      = (destEmail && destEmail !== toMDM && destEmail !== mail) ? destEmail : '';
+
+    // 2. Envoyer via EmailJS
+    if(typeof emailjs === 'undefined'){
+      throw new Error('EmailJS non chargé — vérifiez la connexion internet');
+    }
+
+    var params = {
+      subject:     subject,
+      to_email:    toMDM,
+      cc_email:    toClient,
+      bcc_email:   toCC,
+      from_name:   mag,
+      reply_to:    mail,
+      message:     bodyText,
+      pdf_base64:  pdfOnly,
+      pdf_name:    'BDC_MDM_'+mag.replace(/[^a-zA-Z0-9]/g,'_')+'_'+today.replace(/\//g,'-')+'.pdf'
+    };
+
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
+
+    // 3. Succès
+    var userName2 = window._userName || '';
+    saveOrderToHistory(mag, mail, userName2);
+    showAlert('✅ Commande envoyée avec succès ! Un PDF a été transmis par email.','success');
+
+  } catch(e){
+    console.error('sendOrderPDF error:', e);
+    showAlert('❌ Erreur lors de l\'envoi : '+e.message+'. Réessayez ou contactez MDM directement.','error');
+  }
+
+  btn.disabled=false; spinner.style.display='none'; label.textContent='Envoyer la commande';
+}
+
+
+// ── Thème couleur par compte ──────────────────────────────
+var ROLE_THEMES = {
+  client: {brown:'#78503C',terra:'#C87864',cream:'#FDF5EE',gold:'#D2B469',green:'#1A5C2E',shadow:'rgba(120,80,60,0.12)'},
+  user:   {brown:'#4A6898',terra:'#7094C8',cream:'#F2F5FB',gold:'#90B0E0',green:'#4A7C6E',shadow:'rgba(74,104,152,0.10)'},
+  admin:  {brown:'#8B7EC8',terra:'#A094D8',cream:'#F5F3FB',gold:'#B8AEE0',green:'#5B9B7A',shadow:'rgba(139,126,200,0.10)'}
+};
+
+function applyTheme(data){
+  var base = ROLE_THEMES[data.role] || ROLE_THEMES.client;
+  var theme = {
+    brown:  base.brown,
+    terra:  base.terra,
+    cream:  base.cream,
+    gold:   base.gold,
+    green:  base.green,
+    shadow: base.shadow
+  };
+  var root = document.documentElement;
+  root.style.setProperty('--brown',  theme.brown);
+  root.style.setProperty('--terra',  theme.terra);
+  root.style.setProperty('--cream',  theme.cream);
+  root.style.setProperty('--gold',   theme.gold);
+  root.style.setProperty('--green',  theme.green);
+  root.style.setProperty('--shadow', theme.shadow);
+  root.style.setProperty('--light',  theme.cream);
+}
+
+</script>
+</body>
+</html>
