@@ -759,6 +759,7 @@ var COMPTES_DEFAULT = [
 // ============================================
 var comptes = [];
 var editIndex = -1;
+var _rpData = [];
 
 function loadComptes(){
   var saved = localStorage.getItem("mdm_comptes");
@@ -945,7 +946,7 @@ function saveCompte(){
       return;
     }
     var fe=document.getElementById("f-email").value.trim(),ft=document.getElementById("f-tel").value.trim(),fv=document.getElementById("f-ville").value.trim(),fc=document.getElementById("f-cp").value.trim(),fr=document.getElementById("f-region").value,fn=document.getElementById("f-numclient").value.trim(),fno=document.getElementById("f-notes").value.trim(),fg=document.getElementById("f-groupement").value.trim();
-    var _th=getThemeFromForm();comptes.push({login:login,password:password,nom:nom,role:role,remise:remise,email:fe,tel:ft,ville:fv,cp:fc,region:fr,numclient:fn,notes:fno,groupement:fg,commercial:(document.getElementById("f-commercial")?document.getElementById("f-commercial").value:""),theme_brown:_th.theme_brown,theme_terra:_th.theme_terra,theme_cream:_th.theme_cream,theme_gold:_th.theme_gold});
+    comptes.push({login:login,password:password,nom:nom,role:role,remise:remise,email:fe,tel:ft,ville:fv,cp:fc,region:fr,numclient:fn,notes:fno,groupement:fg,commercial:(document.getElementById("f-commercial")?document.getElementById("f-commercial").value:"")});
     showToast("\u2705 Compte cr\u00e9\u00e9 : "+login);
   } else {
     comptes[editIndex].password=password;comptes[editIndex].nom=nom;comptes[editIndex].role=role;comptes[editIndex].remise=remise;
