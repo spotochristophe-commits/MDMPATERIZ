@@ -560,6 +560,15 @@ function buildOrderText(){
   lines.push("Date commande : "+today);
   if(dl) lines.push("Livraison souhaitée : "+new Date(dl).toLocaleDateString("fr-FR"));
   if(remise>0) lines.push("Remise groupement : "+remise+"%");
+  // Nom du commercial référent
+  var commercialLogin = window._userCommercial || "";
+  if(commercialLogin){
+    try{
+      var allComptes = JSON.parse(localStorage.getItem("mdm_comptes") || "[]");
+      var co = allComptes.find(function(x){ return x.login === commercialLogin; });
+      if(co) lines.push("Commercial référent : "+co.nom+(co.email ? " ("+co.email+")" : ""));
+    }catch(err){}
+  }
   lines.push("","ARTICLES COMMANDÉS","------------------");
   var tBrut=0,tNet=0,nbC=0;
   for(var i=0;i<PRODUCTS.length;i++){
