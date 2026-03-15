@@ -278,6 +278,7 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
       // Stocker l'email de destination pour FormSubmit
       window._destEmail = data.email || "cspoto@moulindesmoines.com";
       window._userName  = data.nom  || data.login || "";
+      window._userLogin = data.login || "guest";
       // Pré-remplir automatiquement les champs du formulaire depuis les données du compte
       function prefill(id, val){ var el=document.getElementById(id); if(el && val) el.value = val; }
 
@@ -633,7 +634,7 @@ function logout(){
 
 
 // HISTORIQUE DES COMMANDES
-function _histKey(){var l=(window._userName||"guest").replace(/[^a-zA-Z0-9_-]/g,"_");return "mdm_history_"+l;}
+function _histKey(){var l=(window._userLogin||window._userName||"guest").replace(/[^a-zA-Z0-9_-]/g,"_");return "mdm_history_"+l;}
 function saveOrderToHistory(mag,mail,uname){
   try{
     var h=[];try{h=JSON.parse(localStorage.getItem(_histKey()))||[];}catch(e){}
