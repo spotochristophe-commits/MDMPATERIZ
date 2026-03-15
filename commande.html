@@ -156,15 +156,20 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
       <div class="form-group"><label>T&#233;l&#233;phone</label><input type="tel" id="tel" placeholder="06 xx xx xx xx"></div>
       <div class="form-group"><label>Livraison souhait&#233;e</label><input type="date" id="datelivraison"></div>
     </div>
-    <div style="margin-top:14px">
+    <div style="margin-top:14px" id="bloc-remise">
       <div style="font-size:10px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Remise groupement</div>
-      <div class="remise-section">
+      <div class="remise-section" id="remise-section-badges">
         <button class="remise-badge active" onclick="setRemise(0,this)">Aucune remise</button>
         <button class="remise-badge" onclick="setRemise(5,this)">&minus;5 %</button>
         <button class="remise-badge" onclick="setRemise(10,this)">&minus;10 %</button>
         <button class="remise-badge" onclick="setRemise(15,this)">&minus;15 %</button>
         <button class="remise-badge" onclick="setRemise(20,this)">&minus;20 %</button>
         <input type="number" id="remise-custom" min="0" max="99" step="0.5" placeholder="Autre %" style="width:90px;padding:6px 10px;border:1.5px solid #d0c0b0;border-radius:6px;font-family:Outfit,sans-serif;font-size:13px;background:var(--cream)" oninput="setRemise(parseFloat(this.value)||0,null)">
+      </div>
+      <!-- Affichage fixe pour les clients (remise du compte, non modifiable) -->
+      <div id="remise-client-fixe" style="display:none">
+        <span id="remise-client-badge" style="display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:20px;background:var(--green);color:#fff;font-size:13px;font-weight:700"></span>
+        <span style="font-size:11px;color:#a08070;margin-left:8px">Remise groupement appliqu&#233;e automatiquement</span>
       </div>
     </div>
   </div>
@@ -303,76 +308,35 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
         var adminBtn = document.getElementById("btn-admin");
         if(adminBtn) adminBtn.style.display = "inline-flex";
       }
-      // Remise du compte : appliquer automatiquement
-      if(data.remise && data.remise > 0){
-        var r = parseFloat(data.remise);
-        // Cliquer sur le badge correspondant ou appliquer directement
-        var badges = document.querySelectorAll(".remise-badge");
-        var found = false;
-        for(var i=0;i<badges.length;i++){
-          var txt = badges[i].textContent.trim();
-          if(txt === "-"+r+" %" || txt === "−"+r+" %"){
-            badges[i].click();
-            found = true;
-            break;
-          }
+      // // ── Gestion de la remise selon le rôle ──
+      if(data.role === 'client'){
+        var r = parseFloat(data.remise) || 0;
+        setRemise(r, null);
+        document.getElementById('remise-section-badges').style.display = 'none';
+        var fixe = document.getElementById('remise-client-fixe');
+        var bdg  = document.getElementById('remise-client-badge');
+        if(fixe && bdg){
+          fixe.style.display = 'block';
+          bdg.textContent = r > 0 ? '\u2212'+r+'\u00a0%' : 'Aucune remise';
+          if(r === 0){ bdg.style.background='#e8ddd5'; bdg.style.color='var(--brown)'; }
         }
-        if(!found){
-          // Remise personnalisée : remplir le champ + appliquer
-          var custom = document.getElementById("remise-custom");
-          if(custom){ custom.value = r; }
-          setRemise(r, null);
-          // Afficher visuellement dans un badge spécial
-          var section = document.querySelector(".remise-section");
-          if(section){
-            var badge = document.createElement("button");
-            badge.className = "remise-badge active";
-            badge.textContent = "−"+r+" % (groupement)";
-            badge.onclick = function(){ setRemise(r, badge); };
-            // Désactiver les autres badges
-            for(var i=0;i<badges.length;i++) badges[i].classList.remove("active");
-            section.insertBefore(badge, section.firstChild);
+      } else {
+        if(data.remise && data.remise > 0){
+          var r = parseFloat(data.remise);
+          var badges = document.querySelectorAll('.remise-badge');
+          var found = false;
+          for(var i=0;i<badges.length;i++){
+            var txt = badges[i].textContent.trim();
+            if(txt === '-'+r+' %' || txt === '\u2212'+r+' %'){ badges[i].click(); found=true; break; }
           }
-        }
-        // Verrouiller les badges remise si role=client
-        if(data.role === "client"){
-          var allBadges = document.querySelectorAll(".remise-badge");
-          for(var i=0;i<allBadges.length;i++){
-            allBadges[i].style.pointerEvents = "none";
-            allBadges[i].style.opacity = "0.6";
+          if(!found){
+            var custom = document.getElementById('remise-custom');
+            if(custom) custom.value = r;
+            setRemise(r, null);
           }
-          var customInput = document.getElementById("remise-custom");
-          if(customInput){ customInput.disabled = true; customInput.style.opacity="0.6"; }
-          // Afficher une info
-          var info = document.createElement("span");
-          info.style.cssText = "font-size:10px;color:var(--green);font-weight:600;margin-left:6px";
-          info.textContent = "✔ Remise groupement appliquée automatiquement";
-          var remSection = document.querySelector(".remise-section");
-          if(remSection) remSection.appendChild(info);
         }
       }
-    // ── Charger et afficher les actualités en bandeau ──
-    try {
-      var actus = JSON.parse(localStorage.getItem('mdm_actus') || '[]');
-      var actusActives = actus.filter(function(a){ return a.actif; });
-      if (actusActives.length) {
-        var TYPE_ICONS = {info:'&#128226;', promo:'&#127381;', alerte:'&#9888;&#65039;', lien:'&#128279;'};
-        var html = '';
-        actusActives.forEach(function(a){
-          var icon = TYPE_ICONS[a.type] || '&#128226;';
-          html += '<div class="actu-band-item actu-band-type-'+(a.type||'info')+'">';
-          html += '<span class="actu-band-icon">'+icon+'</span>';
-          html += '<div class="actu-band-body">';
-          html += '<div class="actu-band-titre">'+escHtml(a.titre)+'</div>';
-          html += '<div class="actu-band-contenu">'+escHtml(a.contenu)+'</div>';
-          if (a.lien) html += '<a href="'+escHtml(a.lien)+'" target="_blank" class="actu-band-lien">&#128279; Voir le document</a>';
-          html += '</div></div>';
-        });
-        var bandeau = document.getElementById('actus-bandeau');
-        if (bandeau) { bandeau.innerHTML = html; bandeau.style.display = 'block'; }
-      }
-    } catch(ex) {}
-    } catch(e) { console.error(e); }
+      } catch(e) { console.error(e); }
   });
 })();
 // ── FIN PROTECTION ────────────────────────────────
