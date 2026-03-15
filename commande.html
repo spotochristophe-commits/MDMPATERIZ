@@ -127,6 +127,8 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
 .actu-band-type-alerte{border-left:3px solid #c62828;background:#fff5f5}
 .actu-band-type-lien  {border-left:3px solid #6a1b9a;background:#faf0ff}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 <!-- ── Bandeau Actualités MDM ── -->
@@ -259,9 +261,9 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
     <div class="alert" id="modal-alert"></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-green" id="btn-send" onclick="sendOrder()">
+      <button class="btn btn-green" id="btn-send" onclick="sendOrderPDF()">
         <span class="spinner" id="spinner"></span>
-        <span id="send-label">Envoyer la commande</span>
+        <span id="send-label">&#128228; Envoyer la commande</span>
       </button>
     </div>
   </div>
@@ -293,7 +295,8 @@ tbody tr.has-qty td.td-qty input{background:#ffe0b2;border-color:var(--terra)}
       // Stocker l'email de destination pour FormSubmit
       window._destEmail = data.email || "cspoto@moulindesmoines.com";
       window._userName  = data.nom  || data.login || "";
-      window._userLogin = data.login || "guest";
+      window._userLogin      = data.login      || "guest";
+      window._userCommercial = data.commercial  || "";
       // Pré-remplir automatiquement les champs du formulaire depuis les données du compte
       function prefill(id, val){ var el=document.getElementById(id); if(el && val) el.value = val; }
 
@@ -588,10 +591,22 @@ async function sendOrder(){
     if (mail && mail.toLowerCase() !== "cspoto@moulindesmoines.com") {
       payload._replyto = mail;
     }
-    // _cc seulement si email du compte différent de cspoto
-    if (destEmail && destEmail !== "cspoto@moulindesmoines.com") {
-      payload._cc = destEmail;
+    // Trouver l'email du commercial assigné depuis localStorage
+    var commercialEmail = "";
+    var commercialLogin = window._userCommercial || "";
+    if(commercialLogin){
+      try{
+        var allComptes = JSON.parse(localStorage.getItem("mdm_comptes") || "[]");
+        var co = allComptes.find(function(x){ return x.login === commercialLogin; });
+        if(co && co.email && co.email !== "cspoto@moulindesmoines.com") commercialEmail = co.email;
+      }catch(e){}
     }
+
+    // Construire la liste CC : email client + email commercial (si différents de MDM)
+    var ccList = [];
+    if(destEmail && destEmail !== "cspoto@moulindesmoines.com") ccList.push(destEmail);
+    if(commercialEmail && ccList.indexOf(commercialEmail) < 0) ccList.push(commercialEmail);
+    if(ccList.length) payload._cc = ccList.join(",");
     var res=await fetch("https://formsubmit.co/ajax/cspoto@moulindesmoines.com",{
       method:"POST",
       headers:{"Content-Type":"application/json","Accept":"application/json"},
@@ -991,6 +1006,288 @@ function exportExcel() {
 // INIT
 buildTable();
 document.getElementById("search-count").textContent=PRODUCTS.length+" produits";
+
+// ============================================================
+// CONFIG EMAILJS — à renseigner avec vos identifiants
+// ============================================================
+var EMAILJS_PUBLIC_KEY  = "VOTRE_PUBLIC_KEY";   // Account > API Keys
+var EMAILJS_SERVICE_ID  = "VOTRE_SERVICE_ID";   // Email Services > Service ID
+var EMAILJS_TEMPLATE_ID = "VOTRE_TEMPLATE_ID";  // Email Templates > Template ID
+
+(function(){
+  if(typeof emailjs !== 'undefined'){
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  }
+})();
+
+// ============================================================
+// GÉNÉRATION PDF avec jsPDF
+// ============================================================
+function generateOrderPDF(){
+  var jsPDF = window.jspdf ? window.jspdf.jsPDF : (window.jsPDF || null);
+  if(!jsPDF){ console.error('jsPDF non chargé'); return null; }
+
+  var doc = new jsPDF({ unit:'mm', format:'a4', orientation:'portrait' });
+  var W=210, mL=15, mR=195, y=0;
+
+  // Couleurs MDM
+  var brown  = [120, 80,  60];
+  var terra  = [200,120, 100];
+  var gold   = [210,180, 105];
+  var cream  = [253,245, 238];
+  var green  = [ 26, 92,  46];
+  var white  = [255,255, 255];
+
+  function setFill(rgb){ doc.setFillColor(rgb[0],rgb[1],rgb[2]); }
+  function setTxt(rgb) { doc.setTextColor(rgb[0],rgb[1],rgb[2]); }
+  function setDraw(rgb){ doc.setDrawColor(rgb[0],rgb[1],rgb[2]); }
+
+  // ── BANDEAU EN-TÊTE ────────────────────────────────────────
+  setFill(brown); doc.rect(0,0,W,28,'F');
+  setTxt(white);
+  doc.setFont('helvetica','bold'); doc.setFontSize(18);
+  doc.text('Moulin des Moines',mL,12);
+  doc.setFont('helvetica','normal'); doc.setFontSize(8);
+  doc.setTextColor(210,180,105);
+  doc.text('Bon de Commande 2026  —  Tarif HT France',mL,18);
+  doc.setTextColor(255,255,255);
+  doc.text('Généré le '+new Date().toLocaleDateString('fr-FR'),mL,24);
+  // Logo texte droite
+  doc.setFont('helvetica','bold'); doc.setFontSize(9); setTxt(gold);
+  doc.text('MDM',mR-5,14,'right');
+  y=34;
+
+  // ── BLOC INFORMATIONS CLIENT ───────────────────────────────
+  var mag = document.getElementById('m-magasin').value.trim() || '—';
+  var mail= document.getElementById('m-email').value.trim()   || '—';
+  var nc  = document.getElementById('numclient').value.trim() || '';
+  var ct  = document.getElementById('contact').value.trim()   || '';
+  var tel = document.getElementById('tel').value.trim()       || '';
+  var dl  = document.getElementById('datelivraison').value    || '';
+  var com = document.getElementById('m-comment')
+              ? document.getElementById('m-comment').value.trim() : '';
+
+  setFill(cream); setDraw(brown);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(mL,y,W-2*mL,32,2,2,'FD');
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt(terra);
+  doc.text('INFORMATIONS CLIENT',mL+3,y+5);
+
+  var col1=mL+3, col2=110, iy=y+10;
+  doc.setFont('helvetica','normal'); doc.setFontSize(9); setTxt(brown);
+
+  function infoLine(label,val,x,cy){
+    doc.setFont('helvetica','bold');   doc.text(label,x,cy);
+    doc.setFont('helvetica','normal'); doc.text(val,x+30,cy);
+  }
+  infoLine('Magasin :',  mag,  col1, iy);
+  infoLine('Email :',    mail, col1, iy+6);
+  if(nc) infoLine('N° client :', nc, col2, iy);
+  if(ct) infoLine('Contact :',   ct, col2, iy+6);
+  if(tel)infoLine('Tél :',      tel, col2, iy+12);
+  if(dl) infoLine('Livraison :', new Date(dl).toLocaleDateString('fr-FR'), col2, iy+(ct?18:12));
+  if(remise>0){
+    doc.setFont('helvetica','bold'); setTxt(green);
+    doc.text('Remise groupement : '+remise+' %', col1, iy+12);
+  }
+  y+=38;
+
+  // ── TABLEAU DES ARTICLES ───────────────────────────────────
+  var cols=[
+    {label:'Code',     w:22, align:'left'},
+    {label:'Désignation', w:78, align:'left'},
+    {label:'PCB',      w:12, align:'center'},
+    {label:'Qté colis',w:16, align:'center'},
+    {label:'PU HT',    w:22, align:'right'},
+    {label:'Total HT', w:26, align:'right'},
+  ];
+  var tW=0; cols.forEach(function(c2){tW+=c2.w;});
+  var tX=mL, tY=y;
+
+  // En-tête tableau
+  setFill(brown); doc.rect(tX,tY,tW,7,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(7.5); setTxt(white);
+  var cx=tX+1;
+  cols.forEach(function(col){
+    if(col.align==='right') doc.text(col.label,cx+col.w-1,tY+4.8,'right');
+    else if(col.align==='center') doc.text(col.label,cx+col.w/2,tY+4.8,'center');
+    else doc.text(col.label,cx,tY+4.8);
+    cx+=col.w;
+  });
+  y=tY+7;
+
+  // Lignes articles
+  var ordered=[];
+  PRODUCTS.forEach(function(p){ var q=qtys[p.code]||0; if(q>0) ordered.push({p:p,q:q}); });
+  var tBrut=0,tNet=0,nbRef=0,nbCol=0;
+
+  ordered.forEach(function(item,idx){
+    var p=item.p, q=item.q;
+    var pcb=parseFloat(p.pcb)||1;
+    var net=p.pu_ht*(1-remise/100)*q*pcb;
+    tBrut+=p.pu_ht*q*pcb; tNet+=net; nbRef++; nbCol+=q;
+
+    // Saut de page
+    if(y>270){
+      doc.addPage();
+      y=15;
+      // Re-dessiner l'en-tête tableau
+      setFill(brown); doc.rect(tX,y,tW,7,'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(7.5); setTxt(white);
+      cx=tX+1;
+      cols.forEach(function(col){
+        if(col.align==='right') doc.text(col.label,cx+col.w-1,y+4.8,'right');
+        else if(col.align==='center') doc.text(col.label,cx+col.w/2,y+4.8,'center');
+        else doc.text(col.label,cx,y+4.8);
+        cx+=col.w;
+      });
+      y+=7;
+    }
+
+    // Fond alterné
+    if(idx%2===0){ setFill(cream); doc.rect(tX,y,tW,6,'F'); }
+    doc.setFont('helvetica','normal'); doc.setFontSize(8); setTxt(brown);
+    cx=tX+1;
+    var vals=[
+      p.code,
+      p.libelle.length>45 ? p.libelle.substring(0,44)+'\u2026' : p.libelle,
+      String(pcb),
+      String(q),
+      fmt4(p.pu_ht)+' \u20ac',
+      fmt2(net)+' \u20ac'
+    ];
+    cols.forEach(function(col,ci){
+      var v=vals[ci]||'';
+      if(ci===5){ doc.setFont('helvetica','bold'); setTxt(terra); }
+      else if(ci===3){ doc.setFont('helvetica','bold'); setTxt(green); }
+      else { doc.setFont('helvetica','normal'); setTxt(brown); }
+
+      if(col.align==='right') doc.text(v,cx+col.w-1,y+4.2,'right');
+      else if(col.align==='center') doc.text(v,cx+col.w/2,y+4.2,'center');
+      else doc.text(v,cx,y+4.2);
+      cx+=col.w;
+    });
+    // Ligne de séparation
+    setDraw([230,220,215]); doc.setLineWidth(0.15);
+    doc.line(tX,y+6,tX+tW,y+6);
+    y+=6;
+  });
+
+  // ── RÉCAPITULATIF ─────────────────────────────────────────
+  y+=6;
+  if(y>260){ doc.addPage(); y=15; }
+
+  setFill(brown); setDraw(brown); doc.setLineWidth(0.3);
+  doc.roundedRect(tX,y,tW,remise>0?28:22,2,2,'FD');
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt(gold);
+  doc.text('RÉCAPITULATIF',tX+3,y+5);
+
+  doc.setFontSize(8.5);
+  var ry=y+11;
+  function recapLine(label,val,isBold,color){
+    setTxt(white);
+    doc.setFont('helvetica',isBold?'bold':'normal');
+    doc.text(label,tX+3,ry);
+    if(color) setTxt(color); else setTxt(gold);
+    doc.setFont('helvetica','bold');
+    doc.text(val,tX+tW-2,ry,'right');
+    ry+=5.5;
+  }
+  recapLine(nbRef+' référence(s)  —  '+nbCol+' colis','Total HT brut : '+fmt2(tBrut)+' €',false,white);
+  if(remise>0){
+    recapLine('Remise groupement '+remise+' %','— '+fmt2(tBrut-tNet)+' €',false,[255,200,150]);
+  }
+  recapLine('','TOTAL HT NET : '+fmt2(tNet)+' €',true,gold);
+
+  // ── COMMENTAIRE ───────────────────────────────────────────
+  if(com){
+    y+=remise>0?34:28;
+    if(y>270){doc.addPage();y=15;}
+    doc.setFont('helvetica','italic'); doc.setFontSize(8); setTxt(brown);
+    doc.text('Commentaire : '+com,tX,y);
+  }
+
+  // ── PIED DE PAGE ──────────────────────────────────────────
+  var pY=292;
+  setFill(brown); doc.rect(0,pY-2,W,10,'F');
+  doc.setFont('helvetica','normal'); doc.setFontSize(7); setTxt([210,180,105]);
+  doc.text('Moulin des Moines — Bon de commande 2026 — Document généré automatiquement',W/2,pY+3,'center');
+
+  return doc;
+}
+
+// ============================================================
+// ENVOI COMMANDE + PDF via EmailJS
+// ============================================================
+async function sendOrderPDF(){
+  // Validations
+  var mag  = document.getElementById('m-magasin').value.trim();
+  var mail = document.getElementById('m-email').value.trim();
+  if(!mag||!mail){ showAlert('Veuillez renseigner le magasin et votre email.','error'); return; }
+  var hasOrder=false;
+  for(var k in qtys){ if(qtys[k]>0){hasOrder=true;break;} }
+  if(!hasOrder){ showAlert('Aucun article commandé.','error'); return; }
+
+  var btn     = document.getElementById('btn-send');
+  var spinner = document.getElementById('spinner');
+  var label   = document.getElementById('send-label');
+  btn.disabled=true; spinner.style.display='inline-block';
+  label.textContent='Génération PDF…';
+
+  try{
+    // 1. Générer le PDF
+    var doc = generateOrderPDF();
+    if(!doc) throw new Error('Erreur génération PDF');
+    var pdfBase64 = doc.output('datauristring'); // data:application/pdf;base64,...
+    var pdfOnly   = pdfBase64.split(',')[1];     // juste le base64
+
+    label.textContent='Envoi en cours…';
+
+    var today     = new Date().toLocaleDateString('fr-FR');
+    var userName  = window._userName  || '';
+    var destEmail = window._destEmail || 'cspoto@moulindesmoines.com';
+    var subject   = 'Bon de commande MDM 2026 — '+mag+' — '+today+(userName?' ['+userName+']':'');
+    var bodyText  = buildOrderText();
+
+    // Destinataires
+    var toMDM     = 'cspoto@moulindesmoines.com';
+    var toClient  = mail !== toMDM ? mail : '';
+    var toCC      = (destEmail && destEmail !== toMDM && destEmail !== mail) ? destEmail : '';
+
+    // 2. Envoyer via EmailJS
+    if(typeof emailjs === 'undefined'){
+      throw new Error('EmailJS non chargé — vérifiez la connexion internet');
+    }
+
+    var params = {
+      subject:     subject,
+      to_email:    toMDM,
+      cc_email:    toClient,
+      bcc_email:   toCC,
+      from_name:   mag,
+      reply_to:    mail,
+      message:     bodyText,
+      pdf_base64:  pdfOnly,
+      pdf_name:    'BDC_MDM_'+mag.replace(/[^a-zA-Z0-9]/g,'_')+'_'+today.replace(/\//g,'-')+'.pdf'
+    };
+
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
+
+    // 3. Succès
+    var userName2 = window._userName || '';
+    saveOrderToHistory(mag, mail, userName2);
+    showAlert('✅ Commande envoyée avec succès ! Un PDF a été transmis par email.','success');
+
+  } catch(e){
+    console.error('sendOrderPDF error:', e);
+    showAlert('❌ Erreur lors de l\'envoi : '+e.message+'. Réessayez ou contactez MDM directement.','error');
+  }
+
+  btn.disabled=false; spinner.style.display='none'; label.textContent='Envoyer la commande';
+}
+
 </script>
 </body>
 </html>
